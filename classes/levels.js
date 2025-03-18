@@ -3,6 +3,32 @@ class Level_Design {
     this.position = createVector(windowWidth, windowHeight);
   }
 
+  black_bars() {
+    push();
+    fill(0);
+
+    //Left black bar.
+    rect(
+      this.position.x * 0.0,
+      this.position.y * 0.0,
+      this.position.x * 0.2,
+      this.position.y * 1
+    );
+
+    //Right black bar.
+    rect(
+      this.position.x * 0.8,
+      this.position.y * 0.0,
+      this.position.x * 1,
+      this.position.y * 1
+    );
+    pop();
+  }
+
+  //List of Levels.
+
+  //Level Test
+
   level_test() {
     push();
     fill(255);
@@ -15,15 +41,26 @@ class Level_Design {
     pop();
   }
 
-  resolution_update() {
-    this.position = createVector(windowWidth, windowHeight);
+  //Level 1
+
+  level_1() {
+    push();
+    fill(235);
+    rect(
+      this.position.x * 0.2,
+      this.position.y * 0.0,
+      this.position.x * 0.6,
+      this.position.y * 1
+    );
+    pop();
   }
 }
 
 class Level_Obstacle {
-  constructor(x, y, w, h) {
+  constructor(x, y, w, h, angle) {
     this.options = {
       isStatic: true,
+      angle: angle,
     };
     this.w = w;
     this.h = h;
@@ -35,7 +72,7 @@ class Level_Obstacle {
   show() {
     push();
     noStroke();
-    fill(0);
+    fill(255, 20, 10);
     translate(this.body.position.x, this.body.position.y);
     rotate(this.body.angle);
     rectMode(CENTER);

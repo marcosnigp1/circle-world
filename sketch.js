@@ -25,6 +25,7 @@ let player;
 //Level structure and design.
 let obstacles = [];
 let levels;
+let current_level = 0; //Level control: //0 == Test level,  //1 == First Level.
 
 function setup() {
   frameRate(60); //A stable frame rate is better than one that is unpredictable. Thus, above 60 fps will make everything go too fast.
@@ -71,20 +72,37 @@ function setup() {
   //Level variables.
   levels = new Level_Design();
 
+  //------------------------
   //-----------Obstacles-------------
+  //------------------------
 
   //Test level.
 
   obstacles.push(
     new Level_Obstacle(
-      windowWidth * 0.25,
+      windowWidth * 0.5,
       windowHeight * 0.8,
-      windowWidth * 1.1,
-      windowHeight * 0.3
+      windowWidth * 0.8,
+      windowHeight * 0.1,
+      0
     )
   );
 
+  //Level 1 Obstacles
+
+  obstacles.push(
+    new Level_Obstacle(
+      windowWidth * 0.5,
+      windowHeight * 0.8,
+      windowWidth * 0.8,
+      windowHeight * 0.1,
+      180
+    )
+  );
+
+  //------------------------
   //---------------------------------
+  //------------------------
 
   //Start player
   player = new Player(windowWidth * 0.25, windowHeight * 0.5, 20);
@@ -96,13 +114,24 @@ function draw() {
   //Draw levels.
   levels.level_test();
 
-  //Draw obstacles.
-  for (let i = 0; i < obstacles.length; i++) {
-    obstacles[i].show();
+  //Draw obstacles according to level.
+  if (current_level == 0) {
+    obstacles[0].show();
+    obstacles[1].body.isSensor = true;
+  }
+
+  if (current_level == 1) {
+    obstacles[0].show();
+    obstacles[1].show();
+    obstacles[1].body.isSensor = false;
   }
 
   //Draw player.
   player.show();
+  player.checkCurrentPosition();
+
+  //Draw black bars.
+  levels.black_bars();
 
   ////////                        ////////////////
   /////// START PLAYER CONTROL.  /////////////

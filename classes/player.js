@@ -25,4 +25,24 @@ class Player {
     circle(0, 0, this.r * 2); //this.r*2 helps in visualizing correctly the circles.
     pop();
   }
+
+  checkCurrentPosition() {
+    //If in level 0.
+    if (this.body.position.x > windowWidth * 0.82 && current_level == 0) {
+      Matter.Body.setPosition(this.body, {
+        x: windowWidth * 0.19,
+        y: this.body.position.y,
+      });
+      current_level = 1;
+    }
+
+    //If in level 1.
+    if (this.body.position.x < windowWidth * 0.18 && current_level == 1) {
+      Matter.Body.setPosition(this.body, {
+        x: windowWidth * 0.79,
+        y: this.body.position.y,
+      });
+      current_level = 0;
+    }
+  }
 }

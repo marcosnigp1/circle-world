@@ -1,8 +1,8 @@
 class Player {
   constructor(x, y, r) {
     let options = {
-      friction: 1.2,
-      restitution: 0.5,
+      friction: 1.9,
+      restitution: 0.3,
     };
     this.r = r; //p5js expects a diameter, not a radius.
     this.body = Bodies.circle(x, y, this.r, options);

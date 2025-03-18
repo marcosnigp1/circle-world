@@ -72,11 +72,14 @@ function setup() {
   levels = new Level_Design();
 
   //-----------Obstacles-------------
+
+  //Test level.
+
   obstacles.push(
     new Level_Obstacle(
       windowWidth * 0.25,
       windowHeight * 0.8,
-      windowWidth * 0.1,
+      windowWidth * 1.1,
       windowHeight * 0.3
     )
   );
@@ -100,6 +103,40 @@ function draw() {
 
   //Draw player.
   player.show();
+
+  ////////                        ////////////////
+  /////// START PLAYER CONTROL.  /////////////
+  /////                     ///////////////////
+
+  /* Source where I got the help: https://p5js.org/reference/p5/keyIsDown/ */
+
+  if (keyIsDown(LEFT_ARROW) === true && keyIsDown(RIGHT_ARROW) === true) {
+    Matter.Body.applyForce(
+      player.body,
+      player.body.position,
+      createVector(0, 0)
+    );
+  }
+
+  if (keyIsDown(LEFT_ARROW) === true) {
+    Matter.Body.applyForce(
+      player.body,
+      player.body.position,
+      createVector(-0.001, 0)
+    );
+  }
+
+  if (keyIsDown(RIGHT_ARROW) === true) {
+    Matter.Body.applyForce(
+      player.body,
+      player.body.position,
+      createVector(0.001, 0)
+    );
+  }
+
+  ////////                ////////////////
+  /////// END PLAYER CONTROL /////////////
+  /////                 ///////////////////
 }
 
 function windowResized() {
@@ -124,6 +161,11 @@ window.mobileAndTabletCheck = function () {
   })(navigator.userAgent || navigator.vendor || window.opera);
   return check;
 };
+
+function keyPressed() {
+  if (keyCode == LEFT_ARROW) {
+  }
+}
 
 function handleCollisions(event) {
   for (let pair of event.pairs) {

@@ -1,28 +1,110 @@
+//Circle World - By Marcos Hernández
+
+// ------ Physics related variables ------
+let Engine = Matter.Engine,
+  //Render = Matter.Render,
+  Body = Matter.Body,
+  Runner = Matter.Runner,
+  Bodies = Matter.Bodies,
+  Composite = Matter.Composite,
+  Vector = Matter.Vector,
+  Constraint = Matter.Constraint,
+  Mouse = Matter.Mouse,
+  MouseConstraint = Matter.MouseConstraint;
+
+let mConstraint;
+
+//Inside the physics engine there is a world, where all the bodies are.
+let ground;
+let engine;
+let runner;
+
+//Player.
+let player;
+
+//Level structure and design.
+let obstacles = [];
+let levels;
+
 function setup() {
+  frameRate(60); //A stable frame rate is better than one that is unpredictable. Thus, above 60 fps will make everything go too fast.
+
   if (window.mobileAndTabletCheck() == true) {
-    createCanvas(windowHeight, windowWidth);
+    let canvas = createCanvas(windowWidth, windowHeight);
   } else {
     //The idea is to play it on portrait mode.
-    createCanvas(windowWidth, windowHeight);
+    let canvas = createCanvas(windowWidth, windowHeight);
   }
+
+  //                       //////////////
+  ///  STARTING PHYSICS   ///
+  ////                    ////////////
+
+  //Preparing Physics engine...
+  engine = Engine.create();
+  engine.gravity = Vector.create(0, 1);
+
+  runner = Runner.create();
+
+  //----- Mouse interaction (If this will be used at the end... -------
+  let canvas_mouse = Mouse.create(canvas.elt);
+  canvas_mouse.pixelRatio = pixelDensity(); //Make comfortable when selecting items on the canvas.
+
+  let mouse_options = {
+    mouse: canvas_mouse,
+  };
+
+  mConstraint = MouseConstraint.create(engine, mouse_options);
+  //------------------------------
+
+  //Add everything created so far into the engine, and run it.
+  Composite.add(engine.world, [mConstraint]);
+  Runner.run(runner, engine);
+
+  //This is for the events on collision.
+  Matter.Events.on(engine, "collisionStart", handleCollisions);
+
+  //                     //////////////
+  ///   END OF PHYSICS   ///
+  ////                  ////////////
+
+  //Level variables.
+  levels = new Level_Design();
+
+  //-----------Obstacles-------------
+  obstacles.push(
+    new Level_Obstacle(
+      windowWidth * 0.25,
+      windowHeight * 0.8,
+      windowWidth * 0.1,
+      windowHeight * 0.3
+    )
+  );
+
+  //---------------------------------
+
+  //Start player
+  player = new Player(windowWidth * 0.25, windowHeight * 0.5, 20);
 }
 
 function draw() {
   background(0, 10, 20);
 
-  //Rectangle test.
-  push();
-  rect(
-    windowWidth * 0.2,
-    windowHeight * 0.0,
-    windowWidth * 0.6,
-    windowHeight * 1
-  );
-  pop();
+  //Draw levels.
+  levels.level_test();
+
+  //Draw obstacles.
+  for (let i = 0; i < obstacles.length; i++) {
+    obstacles[i].show();
+  }
+
+  //Draw player.
+  player.show();
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  /*   resizeCanvas(windowWidth, windowHeight);
+  levels.resolution_update(); */
 }
 
 //Check if on phone.
@@ -42,3 +124,8 @@ window.mobileAndTabletCheck = function () {
   })(navigator.userAgent || navigator.vendor || window.opera);
   return check;
 };
+
+function handleCollisions(event) {
+  for (let pair of event.pairs) {
+  }
+}

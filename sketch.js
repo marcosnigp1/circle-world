@@ -25,17 +25,28 @@ let player;
 //Level structure and design.
 let obstacles = [];
 let levels;
-let current_level = 0; //Level control: //0 == Test level,  //1 == First Level.
+let current_level = 1; //Level control: //0 == Test level,  //1 == First Level.
+
+//Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
+const baseWidth = 1920;
+const baseHeight = 1080;
+const aspectRatio = baseWidth / baseHeight;
+let scaleFactor = 1;
 
 function setup() {
-  frameRate(60); //A stable frame rate is better than one that is unpredictable. Thus, above 60 fps will make everything go too fast.
+  //This canvas fits into every aspect ratio.
 
-  if (window.mobileAndTabletCheck() == true) {
-    let canvas = createCanvas(windowWidth, windowHeight);
-  } else {
-    //The idea is to play it on portrait mode.
-    let canvas = createCanvas(windowWidth, windowHeight);
-  }
+  frameRate(60); //A stable frame rate is better than one that is unpredictable. Thus, above 60 fps will make everything go too fast.
+  const { canvasWidth, canvasHeight } = updateCanvasDimensions();
+  let canvas = createCanvas(canvasWidth, canvasHeight);
+  scaleFactor = baseWidth / baseHeight;
+
+  const x = (windowWidth - canvasWidth) / 2;
+  const y = (windowHeight - canvasHeight) / 2;
+  canvas.position(x, y);
+
+  pixelDensity(window.devicePixelRatio);
+  strokeWeight(2 * scaleFactor);
 
   //                       //////////////
   ///  STARTING PHYSICS   ///
@@ -76,27 +87,55 @@ function setup() {
   //-----------Obstacles-------------
   //------------------------
 
-  //Test level.
+  //Level 0 level.
 
   obstacles.push(
-    new Level_Obstacle(
-      windowWidth * 0.5,
-      windowHeight * 0.8,
-      windowWidth * 0.8,
-      windowHeight * 0.1,
-      0
-    )
+    new Level_Obstacle(width * 0.5, height * 0.7, width * 0.8, height * 0.1, 0)
   );
 
   //Level 1 Obstacles
 
   obstacles.push(
+    new Level_Obstacle(width * 0.1, height * 0.7, width * 0.4, height * 0.1, 0)
+  );
+
+  obstacles.push(
     new Level_Obstacle(
-      windowWidth * 0.5,
-      windowHeight * 0.8,
-      windowWidth * 0.8,
-      windowHeight * 0.1,
-      180
+      width * 0.303,
+      height * 0.715,
+      width * 0.06,
+      height * 0.1,
+      54
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.37,
+      height * 0.743,
+      width * 0.4,
+      height * 0.1,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.575,
+      height * 0.757,
+      width * 0.06,
+      height * 0.1,
+      54
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.72,
+      height * 0.783,
+      width * 0.3,
+      height * 0.1,
+      0
     )
   );
 
@@ -105,7 +144,7 @@ function setup() {
   //------------------------
 
   //Start player
-  player = new Player(windowWidth * 0.25, windowHeight * 0.5, 20);
+  player = new Player(width * 0.25, height * 0.5, width * 0.01);
 }
 
 function draw() {
@@ -114,24 +153,34 @@ function draw() {
   //Draw levels.
   levels.level_test();
 
+  //Draw player.
+  player.show();
+  player.clampVelocity(); //Check if surpasses fixed values of velocity, and if does, clamp it. Also makes sure the mass stays the same.
+  player.checkCurrentPosition();
+
   //Draw obstacles according to level.
   if (current_level == 0) {
     obstacles[0].show();
+
+    //Disable/Enable collisions.
+    obstacles[0].body.isSensor = false;
     obstacles[1].body.isSensor = true;
   }
 
   if (current_level == 1) {
-    obstacles[0].show();
     obstacles[1].show();
+    obstacles[2].show();
+    obstacles[3].show();
+    obstacles[4].show();
+    obstacles[5].show();
+
+    //Disable/Enable collisions.
+    obstacles[0].body.isSensor = true;
     obstacles[1].body.isSensor = false;
   }
 
-  //Draw player.
-  player.show();
-  player.checkCurrentPosition();
-
   //Draw black bars.
-  levels.black_bars();
+  //levels.black_bars();
 
   ////////                        ////////////////
   /////// START PLAYER CONTROL.  /////////////
@@ -168,10 +217,39 @@ function draw() {
   /////                 ///////////////////
 }
 
-function windowResized() {
-  /*   resizeCanvas(windowWidth, windowHeight);
-  levels.resolution_update(); */
+/* function windowResized() {
+  fixResolution();
+} */
+
+function fixResolution() {
+  const { canvasWidth, canvasHeight } = updateCanvasDimensions();
+  let canvas = createCanvas(canvasWidth, canvasHeight);
+  scaleFactor = baseWidth / baseHeight;
+
+  const x = (windowWidth - canvasWidth) / 2;
+  const y = (windowHeight - canvasHeight) / 2;
+  canvas.position(x, y);
+
+  pixelDensity(window.devicePixelRatio);
+  strokeWeight(2 * scaleFactor);
+  levels.position = createVector(canvasWidth, canvasHeight);
+  player.fixValues();
 }
+
+//Source: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
+const updateCanvasDimensions = () => {
+  if (windowWidth / windowHeight > aspectRatio) {
+    return {
+      canvasWidth: windowHeight * aspectRatio,
+      canvasHeight: windowHeight,
+    };
+  }
+
+  return {
+    canvasWidth: windowWidth,
+    canvasHeight: windowWidth / aspectRatio,
+  };
+};
 
 //Check if on phone.
 //https://editor.p5js.org/nun.fall202/sketches/Sj_DIYfwQ

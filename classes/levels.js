@@ -1,6 +1,6 @@
 class Level_Design {
   constructor() {
-    this.position = createVector(windowWidth, windowHeight);
+    this.position = createVector(width, height);
   }
 
   black_bars() {

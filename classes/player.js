@@ -11,6 +11,43 @@ class Player {
     Composite.add(engine.world, this.body); //Without this, it will not render.
   }
 
+  ///Check that velocity does not surpasses the fixed value.
+  clampVelocity() {
+    //X axis
+
+    Matter.Body.setMass(this.body, 1.9);
+
+    if (this.body.velocity.x > 5) {
+      Matter.Body.setVelocity(this.body, {
+        x: 5,
+        y: this.body.velocity.y,
+      });
+    }
+
+    if (this.body.velocity.x < -5) {
+      Matter.Body.setVelocity(this.body, {
+        x: -5,
+        y: this.body.velocity.y,
+      });
+    }
+
+    //Y Axis.
+
+    if (this.body.velocity.y > 5) {
+      Matter.Body.setVelocity(this.body, {
+        x: this.body.velocity.x,
+        y: 5,
+      });
+    }
+
+    if (this.body.velocity.y < -5) {
+      Matter.Body.setVelocity(this.body, {
+        x: this.body.velocity.x,
+        y: -5,
+      });
+    }
+  }
+
   show() {
     let pos = this.body.position;
     let angle = this.body.angle;
@@ -28,21 +65,31 @@ class Player {
 
   checkCurrentPosition() {
     //If in level 0.
-    if (this.body.position.x > windowWidth * 0.82 && current_level == 0) {
+    if (this.body.position.x > width * 0.82 && current_level == 0) {
       Matter.Body.setPosition(this.body, {
-        x: windowWidth * 0.19,
-        y: this.body.position.y,
+        x: width * 0.19,
+        y: this.body.position.y - 2,
       });
       current_level = 1;
     }
 
     //If in level 1.
-    if (this.body.position.x < windowWidth * 0.18 && current_level == 1) {
+    if (this.body.position.x < width * 0.18 && current_level == 1) {
       Matter.Body.setPosition(this.body, {
-        x: windowWidth * 0.79,
-        y: this.body.position.y,
+        x: width * 0.79,
+        y: this.body.position.y - 2,
       });
       current_level = 0;
     }
+
+    if (this.body.position.x > width * 0.82 && current_level == 1) {
+      Matter.Body.setPosition(this.body, {
+        x: width * 0.19,
+        y: this.body.position.y - 2,
+      });
+      current_level = 2;
+    }
+
+    //If in level 2.
   }
 }

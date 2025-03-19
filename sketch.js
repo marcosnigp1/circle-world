@@ -191,8 +191,10 @@ window.mobileAndTabletCheck = function () {
   return check;
 };
 
+//This should only be used for electron.
 function keyPressed() {
-  if (keyCode == LEFT_ARROW) {
+  if (key === "q") {
+    window.close(); ///Closes Electron.
   }
 }
 

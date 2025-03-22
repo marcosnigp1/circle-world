@@ -64,32 +64,40 @@ class Player {
   }
 
   checkCurrentPosition() {
-    //If in level 0.
-    if (this.body.position.x > width * 0.82 && current_level == 0) {
+    //If in section 0.
+    if (this.body.position.x > width * 0.82 && current_section == 0) {
       Matter.Body.setPosition(this.body, {
         x: width * 0.19,
         y: this.body.position.y - 2,
       });
-      current_level = 1;
+      current_section = 1;
     }
 
-    //If in level 1.
-    if (this.body.position.x < width * 0.18 && current_level == 1) {
+    //If in section 1.
+    if (this.body.position.x < width * 0.18 && current_section == 1) {
       Matter.Body.setPosition(this.body, {
         x: width * 0.79,
         y: this.body.position.y - 2,
       });
-      current_level = 0;
+      current_section = 0;
     }
 
-    if (this.body.position.x > width * 0.82 && current_level == 1) {
+    if (this.body.position.x > width * 0.82 && current_section == 1) {
       Matter.Body.setPosition(this.body, {
         x: width * 0.19,
         y: this.body.position.y - 2,
       });
-      current_level = 2;
+      current_section = 2;
     }
 
-    //If in level 2.
+    if (this.body.position.x < width * 0.18 && current_section == 2) {
+      Matter.Body.setPosition(this.body, {
+        x: width * 0.79,
+        y: this.body.position.y - 2,
+      });
+      current_section = 1;
+    }
+
+    //If in section 2.
   }
 }

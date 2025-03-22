@@ -25,7 +25,9 @@ let player;
 //Level structure and design.
 let obstacles = [];
 let levels;
-let current_level = 1; //Level control: //0 == Test level,  //1 == First Level.
+let current_section = 2; //Level control: //0 == Test level,  //1 == First Level.
+let platform_movement_started = false;
+let platform_activation_started = false;
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920;
@@ -87,13 +89,13 @@ function setup() {
   //-----------Obstacles-------------
   //------------------------
 
-  //Level 0 level.
+  //Section 0.
 
   obstacles.push(
     new Level_Obstacle(width * 0.5, height * 0.7, width * 0.8, height * 0.1, 0)
   );
 
-  //Level 1 Obstacles
+  //Section 1 Obstacles
 
   obstacles.push(
     new Level_Obstacle(width * 0.1, height * 0.7, width * 0.4, height * 0.1, 0)
@@ -101,8 +103,8 @@ function setup() {
 
   obstacles.push(
     new Level_Obstacle(
-      width * 0.303,
-      height * 0.715,
+      width * 0.308,
+      height * 0.7199,
       width * 0.06,
       height * 0.1,
       54
@@ -121,8 +123,8 @@ function setup() {
 
   obstacles.push(
     new Level_Obstacle(
-      width * 0.575,
-      height * 0.757,
+      width * 0.579,
+      height * 0.7635,
       width * 0.06,
       height * 0.1,
       54
@@ -136,6 +138,99 @@ function setup() {
       width * 0.3,
       height * 0.1,
       0
+    )
+  );
+
+  //Section 2 Obstacles
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.28,
+      height * 0.783,
+      width * 0.3,
+      height * 0.1,
+      0
+    )
+  );
+
+  //These are movable obstacles!
+  obstacles.push(
+    new Movable_Level_Obstacle(
+      width * 0.45,
+      height * 0.74,
+      width * 0.05,
+      height * 0.01,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Movable_Level_Obstacle(
+      width * 0.5,
+      height * 0.74,
+      width * 0.05,
+      height * 0.01,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.673,
+      height * 0.783,
+      width * 0.3,
+      height * 0.1,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.79,
+      height * 0.47,
+      width * 0.6,
+      height * 0.1,
+      11
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.551,
+      height * 0.95,
+      width * 0.2,
+      height * 0.1,
+      11
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.401,
+      height * 0.95,
+      width * 0.2,
+      height * 0.1,
+      11
+    )
+  );
+
+  obstacles.push(
+    new Activable_Level_Obstacle(
+      width * 0.725,
+      height * 0.727,
+      width * 0.073,
+      height * 0.06,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.68,
+      height * 0.76,
+      width * 0.05,
+      height * 0.1,
+      9
     )
   );
 
@@ -159,24 +254,52 @@ function draw() {
   player.checkCurrentPosition();
 
   //Draw obstacles according to level.
-  if (current_level == 0) {
-    obstacles[0].show();
-
-    //Disable/Enable collisions.
-    obstacles[0].body.isSensor = false;
-    obstacles[1].body.isSensor = true;
+  if (current_section == 0) {
+    for (let i = 0; i < obstacles.length; i++) {
+      if (i == 0) {
+        obstacles[i].show();
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = false;
+      } else {
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = true;
+      }
+    }
   }
 
-  if (current_level == 1) {
-    obstacles[1].show();
-    obstacles[2].show();
-    obstacles[3].show();
-    obstacles[4].show();
-    obstacles[5].show();
+  if (current_section == 1) {
+    for (let i = 0; i < obstacles.length; i++) {
+      if (i >= 1 && i <= 5) {
+        obstacles[i].show();
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = false;
+      } else {
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = true;
+      }
+    }
+  }
 
-    //Disable/Enable collisions.
-    obstacles[0].body.isSensor = true;
-    obstacles[1].body.isSensor = false;
+  if (current_section == 2) {
+    for (let i = 0; i < obstacles.length; i++) {
+      if (i >= 6) {
+        obstacles[i].show();
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = false;
+      } else {
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = true;
+      }
+    }
+  }
+
+  // The platforms.
+  if (platform_movement_started == true) {
+    move_platforms();
+  }
+
+  if (platform_activation_started == true) {
+    activate_platform();
   }
 
   //Draw black bars.
@@ -274,6 +397,26 @@ function keyPressed() {
   if (key === "q") {
     window.close(); ///Closes Electron.
   }
+
+  if (key == "z") {
+    move_platforms();
+  }
+
+  if (key == "x") {
+    activate_platform();
+  }
+}
+
+//The platforms have to be a specific index value...
+function move_platforms() {
+  platform_movement_started = true;
+  obstacles[7].open_platform("positive");
+  obstacles[8].open_platform("negative");
+}
+
+function activate_platform() {
+  platform_activation_started = true;
+  obstacles[13].toggle_platform();
 }
 
 function handleCollisions(event) {

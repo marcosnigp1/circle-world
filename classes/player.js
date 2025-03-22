@@ -90,6 +90,7 @@ class Player {
       current_section = 2;
     }
 
+    //If in section 2.
     if (this.body.position.x < width * 0.18 && current_section == 2) {
       Matter.Body.setPosition(this.body, {
         x: width * 0.79,
@@ -98,6 +99,12 @@ class Player {
       current_section = 1;
     }
 
-    //If in section 2.
+    if (this.body.position.y > height && current_section == 2) {
+      Matter.Body.setPosition(this.body, {
+        x: this.body.position.x,
+        y: 2,
+      });
+      current_section = 3;
+    }
   }
 }

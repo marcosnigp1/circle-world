@@ -25,7 +25,7 @@ let player;
 //Level structure and design.
 let obstacles = [];
 let levels;
-let current_section = 2; //Level control: //0 == Test level,  //1 == First Level.
+let current_section = 0; //Level control: //0 == Test level,  //1 == First Level.
 let platform_movement_started = false;
 let platform_activation_started = false;
 
@@ -89,13 +89,13 @@ function setup() {
   //-----------Obstacles-------------
   //------------------------
 
-  //Section 0.
+  //--------- Section 0 Obstacles ----------
 
   obstacles.push(
     new Level_Obstacle(width * 0.5, height * 0.7, width * 0.8, height * 0.1, 0)
   );
 
-  //Section 1 Obstacles
+  //--------- Section 1 Obstacles ----------
 
   obstacles.push(
     new Level_Obstacle(width * 0.1, height * 0.7, width * 0.4, height * 0.1, 0)
@@ -141,7 +141,7 @@ function setup() {
     )
   );
 
-  //Section 2 Obstacles
+  //--------- Section 2 Obstacles ----------
 
   obstacles.push(
     new Level_Obstacle(
@@ -234,6 +234,12 @@ function setup() {
     )
   );
 
+  //--------- Section 3 Obstacles ----------
+
+  obstacles.push(
+    new Level_Obstacle(width * 0.5, height * 0.76, width * 0.6, height * 0.1, 0)
+  );
+
   //------------------------
   //---------------------------------
   //------------------------
@@ -282,7 +288,20 @@ function draw() {
 
   if (current_section == 2) {
     for (let i = 0; i < obstacles.length; i++) {
-      if (i >= 6) {
+      if (i >= 6 && i <= 14) {
+        obstacles[i].show();
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = false;
+      } else {
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = true;
+      }
+    }
+  }
+
+  if (current_section == 3) {
+    for (let i = 0; i < obstacles.length; i++) {
+      if (i >= 15) {
         obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
@@ -404,6 +423,10 @@ function keyPressed() {
 
   if (key == "x") {
     activate_platform();
+  }
+
+  if (key == "c") {
+    console.log(obstacles.length);
   }
 }
 

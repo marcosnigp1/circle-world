@@ -157,6 +157,11 @@ class Activable_Level_Obstacle extends Level_Obstacle {
         y: this.body.position.y - height * 0.00175,
       });
     } else if (this.body.position.y < height * 0.728 && this.push == true) {
+      Matter.Body.applyForce(
+        player.body,
+        createVector(player.body.position.x, player.body.position.y),
+        createVector(0, -0.12)
+      );
       platform_activation_started = false;
       this.push = false;
     }

@@ -144,7 +144,7 @@ class Activable_Level_Obstacle extends Level_Obstacle {
     if (this.body.position.y < height * 0.755 && this.push == false) {
       Matter.Body.setPosition(this.body, {
         x: this.body.position.x,
-        y: this.body.position.y + height * 0.00055,
+        y: this.body.position.y + height * 0.00015,
       });
     } else {
       this.push = true;
@@ -157,13 +157,57 @@ class Activable_Level_Obstacle extends Level_Obstacle {
         y: this.body.position.y - height * 0.00175,
       });
     } else if (this.body.position.y < height * 0.728 && this.push == true) {
-      Matter.Body.applyForce(
-        player.body,
-        createVector(player.body.position.x, player.body.position.y),
-        createVector(0, -0.12)
-      );
+      //I need to change how force is applied to objects here...
+      if (
+        player.body.position.x > width * 0.725 &&
+        player.body.position.x < width * 0.725 + width * 0.073
+      ) {
+        Matter.Body.applyForce(
+          player.body,
+          createVector(player.body.position.x, player.body.position.y),
+          createVector(0, -0.12)
+        );
+      }
+
       platform_activation_started = false;
       this.push = false;
     }
+  }
+}
+
+class Water_Level_Obstacle extends Level_Obstacle {
+  constructor(x, y, w, h, angle) {
+    super(x, y, w, h, angle);
+    this.push = false;
+  }
+
+  show() {
+    push();
+    noStroke();
+    fill(20, 20, 200, 200);
+    translate(this.body.position.x, this.body.position.y);
+    rotate(this.body.angle);
+    rectMode(CENTER);
+    rect(0, 0, this.w, this.h);
+    pop();
+  }
+}
+
+class Water_Disabler_Level_Obstacle extends Level_Obstacle {
+  constructor(x, y, w, h, angle) {
+    super(x, y, w, h, angle);
+    this.push = false;
+    //This does not have any collision
+  }
+
+  show() {
+    push();
+    noStroke();
+    fill(20, 200, 200, 200);
+    translate(this.body.position.x, this.body.position.y);
+    rotate(this.body.angle);
+    rectMode(CENTER);
+    rect(0, 0, this.w, this.h);
+    pop();
   }
 }

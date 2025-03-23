@@ -48,6 +48,10 @@ class Player {
     }
   }
 
+  float() {
+    this.body.force = { x: 0, y: -0.003 };
+  }
+
   show() {
     let pos = this.body.position;
     let angle = this.body.angle;

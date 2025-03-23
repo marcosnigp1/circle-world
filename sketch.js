@@ -21,11 +21,12 @@ let runner;
 
 //Player.
 let player;
+let swimming = 0; //Swimming mode.
 
 //Level structure and design.
 let obstacles = [];
 let levels;
-let current_section = 0; //Level control: //0 == Test level,  //1 == First Level.
+let current_section = 3; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
 
@@ -74,9 +75,6 @@ function setup() {
   //Add everything created so far into the engine, and run it.
   Composite.add(engine.world, [mConstraint]);
   Runner.run(runner, engine);
-
-  //This is for the events on collision.
-  Matter.Events.on(engine, "collisionStart", handleCollisions);
 
   //                     //////////////
   ///   END OF PHYSICS   ///
@@ -237,7 +235,33 @@ function setup() {
   //--------- Section 3 Obstacles ----------
 
   obstacles.push(
-    new Level_Obstacle(width * 0.5, height * 0.76, width * 0.6, height * 0.1, 0)
+    new Water_Level_Obstacle(
+      width * 0.39,
+      height * 0.88,
+      width * 0.6,
+      height * 0.3,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Water_Disabler_Level_Obstacle(
+      width * 0.39,
+      height * 0.66,
+      width * 0.6,
+      height * 0.05,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.2,
+      height * 0.88,
+      width * 0.6,
+      height * 0.1,
+      11
+    )
   );
 
   //------------------------
@@ -246,6 +270,7 @@ function setup() {
 
   //Start player
   player = new Player(width * 0.25, height * 0.5, width * 0.01);
+  Matter.Events.on(engine, "collisionStart", handleCollisions);
 }
 
 function draw() {
@@ -305,6 +330,14 @@ function draw() {
         obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
+
+        if (i == 15) {
+          obstacles[i].body.isSensor = true;
+        }
+
+        if (i == 16) {
+          obstacles[i].body.isSensor = true;
+        }
       } else {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;
@@ -312,13 +345,18 @@ function draw() {
     }
   }
 
-  // The platforms.
+  // The platforms actions.
   if (platform_movement_started == true) {
     move_platforms();
   }
 
   if (platform_activation_started == true) {
     activate_platform();
+  }
+
+  //Detect if in swimming mode.
+  if (swimming == 1) {
+    player.float();
   }
 
   //Draw black bars.
@@ -421,9 +459,9 @@ function keyPressed() {
     move_platforms();
   }
 
-  if (key == "x") {
-    activate_platform();
-  }
+  /*   if (key == "x") {
+    player.jump();
+  } */
 
   if (key == "c") {
     console.log(obstacles.length);
@@ -442,7 +480,43 @@ function activate_platform() {
   obstacles[13].toggle_platform();
 }
 
+function swim_mode() {
+  swimming = 1;
+  player.float();
+}
+
 function handleCollisions(event) {
   for (let pair of event.pairs) {
+    let bodyA = pair.bodyA;
+    let bodyB = pair.bodyB;
+
+    //Retrieve the particles associated with the colliding bodies via the plugin.
+    let particleA = bodyA.plugin.particle;
+    let particleB = bodyB.plugin.particle;
+
+    if (
+      particleA instanceof Activable_Level_Obstacle &&
+      particleB instanceof Player &&
+      current_section == 2
+    ) {
+      activate_platform();
+    }
+
+    if (
+      particleA instanceof Water_Level_Obstacle &&
+      particleB instanceof Player &&
+      current_section == 3
+    ) {
+      console.log("Hello?");
+      swim_mode();
+    }
+
+    if (
+      particleA instanceof Water_Disabler_Level_Obstacle &&
+      particleB instanceof Player &&
+      current_section == 3
+    ) {
+      swimming = 0; //Disable swimming.
+    }
   }
 }

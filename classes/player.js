@@ -110,5 +110,57 @@ class Player {
       });
       current_section = 3;
     }
+
+    //If in section 3.
+    if (this.body.position.x > width * 0.82 && current_section == 3) {
+      Matter.Body.setPosition(this.body, {
+        x: width * 0.19,
+        y: this.body.position.y - 2,
+      });
+      current_section = 4;
+    }
+
+    //If in section 4.
+    if (this.body.position.x < width * 0.18 && current_section == 4) {
+      Matter.Body.setPosition(this.body, {
+        x: width * 0.79,
+        y: this.body.position.y - 2,
+      });
+      current_section = 3;
+    }
+
+    if (this.body.position.x > width * 0.82 && current_section == 4) {
+      Matter.Body.setPosition(this.body, {
+        x: width * 0.19,
+        y: height * 0.4,
+      });
+      current_section = 5;
+    }
+
+    //If in section 5.
+    if (this.body.position.x < width * 0.18 && current_section == 5) {
+      Matter.Body.setPosition(this.body, {
+        x: width * 0.79,
+        y: this.body.position.y - 2,
+      });
+      current_section = 4;
+    }
+
+    if (this.body.position.x > width * 0.82 && current_section == 5) {
+      Matter.Body.setPosition(this.body, {
+        x: width * 0.22,
+        y: this.body.position.y - 9,
+      });
+      current_section = 6;
+    }
+
+    //If in section 6.
+    if (this.body.position.x < width * 0.18 && current_section == 6) {
+      Matter.Body.setPosition(this.body, {
+        x: width * 0.79,
+        y: this.body.position.y - 2,
+      });
+      current_section = 5;
+    }
   }
 }

@@ -26,7 +26,7 @@ let swimming = 0; //Swimming mode.
 //Level structure and design.
 let obstacles = [];
 let levels;
-let current_section = 3; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
+let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
 
@@ -236,9 +236,9 @@ function setup() {
 
   obstacles.push(
     new Water_Level_Obstacle(
-      width * 0.39,
+      width * 0.29,
       height * 0.88,
-      width * 0.6,
+      width * 0.3,
       height * 0.3,
       0
     )
@@ -246,12 +246,16 @@ function setup() {
 
   obstacles.push(
     new Water_Disabler_Level_Obstacle(
-      width * 0.39,
+      width * 0.29,
       height * 0.66,
       width * 0.6,
       height * 0.05,
       0
     )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(width * 0.2, height * 0.88, width * 1, height * 0.1, 11)
   );
 
   obstacles.push(
@@ -264,12 +268,108 @@ function setup() {
     )
   );
 
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.34,
+      height * 0.85,
+      width * 0.3,
+      height * 0.1,
+      9
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.715,
+      height * 0.744,
+      width * 0.5,
+      height * 0.1,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.515,
+      height * 0.09,
+      width * 0.2,
+      height * 0.05,
+      9
+    )
+  );
+
+  //--------- Section 4 Obstacles ----------
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.015,
+      height * 0.744,
+      width * 0.6,
+      height * 0.1,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.59,
+      height * 0.894,
+      width * 0.6,
+      height * 0.1,
+      16
+    )
+  );
+
+  //--------- Section 5 Obstacles ----------
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.19,
+      height * 0.494,
+      width * 1.6,
+      height * 0.1,
+      16
+    )
+  );
+
+  //--------- Section 6 Obstacles ----------
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.19,
+      height * 0.8,
+      width * 1.6,
+      height * 0.1,
+      16
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.19,
+      height * 0.894,
+      width * 1.6,
+      height * 0.1,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Obstacle(
+      width * 0.8,
+      height * 0.894,
+      width * 1.6,
+      height * 0.1,
+      11
+    )
+  );
+
   //------------------------
   //---------------------------------
   //------------------------
 
   //Start player
-  player = new Player(width * 0.25, height * 0.5, width * 0.01);
+  player = new Player(width * 0.25, height * 0.4, width * 0.01);
   Matter.Events.on(engine, "collisionStart", handleCollisions);
 }
 
@@ -326,7 +426,7 @@ function draw() {
 
   if (current_section == 3) {
     for (let i = 0; i < obstacles.length; i++) {
-      if (i >= 15) {
+      if (i >= 15 && i <= 21) {
         obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
@@ -338,6 +438,45 @@ function draw() {
         if (i == 16) {
           obstacles[i].body.isSensor = true;
         }
+      } else {
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = true;
+      }
+    }
+  }
+
+  if (current_section == 4) {
+    for (let i = 0; i < obstacles.length; i++) {
+      if (i >= 22 && i <= 23) {
+        obstacles[i].show();
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = false;
+      } else {
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = true;
+      }
+    }
+  }
+
+  if (current_section == 5) {
+    for (let i = 0; i < obstacles.length; i++) {
+      if (i == 24) {
+        obstacles[i].show();
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = false;
+      } else {
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = true;
+      }
+    }
+  }
+
+  if (current_section == 6) {
+    for (let i = 0; i < obstacles.length; i++) {
+      if (i >= 25) {
+        obstacles[i].show();
+        //Disable/Enable collisions.
+        obstacles[i].body.isSensor = false;
       } else {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;

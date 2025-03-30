@@ -56,6 +56,8 @@ class Level_Design {
   }
 }
 
+//Obstacles
+
 class Level_Obstacle {
   constructor(x, y, w, h, angle) {
     this.options = {
@@ -204,6 +206,24 @@ class Water_Disabler_Level_Obstacle extends Level_Obstacle {
     push();
     noStroke();
     fill(20, 200, 200, 200);
+    translate(this.body.position.x, this.body.position.y);
+    rotate(this.body.angle);
+    rectMode(CENTER);
+    rect(0, 0, this.w, this.h);
+    pop();
+  }
+}
+
+//Activator
+class Level_Activator extends Level_Obstacle {
+  constructor(x, y, w, h, angle) {
+    super(x, y, w, h, angle);
+  }
+
+  show() {
+    push();
+    noStroke();
+    fill(0, 255, 10, 100);
     translate(this.body.position.x, this.body.position.y);
     rotate(this.body.angle);
     rectMode(CENTER);

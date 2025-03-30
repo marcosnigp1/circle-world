@@ -9,6 +9,10 @@ class Player {
 
     this.body.plugin.particle = this; //Associated with collisions events.
     Composite.add(engine.world, this.body); //Without this, it will not render.
+
+    //HUD
+    this.interact = 0;
+    this.currentPlayer = 0; //0 == Circle,  1 == Triangle;  2 == Square.
   }
 
   ///Check that velocity does not surpasses the fixed value.
@@ -65,6 +69,31 @@ class Player {
     rectMode(CENTER);
     circle(0, 0, this.r * 2); //this.r*2 helps in visualizing correctly the circles.
     pop();
+
+    //Show pop up messages.
+    if (this.interact == 1) {
+      if (seconds % 2 == 1) {
+        push();
+        fill(150);
+        text(
+          "(INSERT SPACEBAR ICON)",
+          this.body.position.x - width * 0.07,
+          this.body.position.y - height * 0.05
+        );
+        textSize(width * 0.12);
+        pop();
+      } else {
+        push();
+        fill(0);
+        text(
+          "(INSERT SPACEBAR ICON)",
+          this.body.position.x - width * 0.07,
+          this.body.position.y - height * 0.05
+        );
+        textSize(width * 0.12);
+        pop();
+      }
+    }
   }
 
   checkCurrentPosition() {
@@ -161,6 +190,33 @@ class Player {
         y: this.body.position.y - 2,
       });
       current_section = 5;
+    }
+  }
+
+  detectActivator() {
+    if (
+      Matter.Bounds.overlaps(this.body.bounds, obstacles[28].body.bounds) &&
+      current_section == 6
+    ) {
+      this.interact = 1;
+    } else {
+      this.interact = 0;
+    }
+  }
+
+  //This will be to finish level or grab item.
+  startInteraction() {
+    if (this.interact == 1) {
+      if (keyIsDown(32) === true) {
+        current_section = 0;
+
+        //Quick line of code, as a concept.
+        player = new Player(width * 0.25, height * 0.4, width * 0.01);
+
+        //Again, this is to keep track of the current part in the game. Since different characters will have different variations on the level.
+        part += 1;
+        this.interact = 0;
+      }
     }
   }
 }

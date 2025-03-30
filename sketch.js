@@ -26,15 +26,21 @@ let swimming = 0; //Swimming mode.
 //Level structure and design.
 let obstacles = [];
 let levels;
-let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
+let current_section = 6; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
+let part = 0; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920;
 const baseHeight = 1080;
 const aspectRatio = baseWidth / baseHeight;
 let scaleFactor = 1;
+
+//Time variables. Made with help of the following sketch: https://editor.p5js.org/D10D3/sketches/h-OfMV0at
+let seconds = 0;
+let half_seconds = 0;
+let d = 0; //For animations.
 
 function setup() {
   //This canvas fits into every aspect ratio.
@@ -364,6 +370,16 @@ function setup() {
     )
   );
 
+  obstacles.push(
+    new Level_Activator(
+      width * 0.6,
+      height * 0.71,
+      width * 0.15,
+      height * 0.4,
+      11
+    )
+  );
+
   //------------------------
   //---------------------------------
   //------------------------
@@ -376,6 +392,11 @@ function setup() {
 function draw() {
   background(0, 10, 20);
 
+  //Calculate seconds spent.
+  d += deltaTime / 1000; //Counts seconds since start.
+  seconds = round(d); //Round to nearest second.
+  console.log("Seconds spent:" + seconds);
+
   //Draw levels.
   levels.level_test();
 
@@ -383,6 +404,10 @@ function draw() {
   player.show();
   player.clampVelocity(); //Check if surpasses fixed values of velocity, and if does, clamp it. Also makes sure the mass stays the same.
   player.checkCurrentPosition();
+
+  //Check collisions and activation.
+  player.detectActivator();
+  player.startInteraction();
 
   //Draw obstacles according to level.
   if (current_section == 0) {
@@ -477,6 +502,10 @@ function draw() {
         obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
+
+        if (i == 28) {
+          obstacles[i].body.isSensor = true;
+        }
       } else {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;

@@ -29,7 +29,7 @@ let levels;
 let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 2; //Tracks current position.
+let part = 1; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920;
@@ -44,7 +44,7 @@ let d = 0; //For animations.
 
 //Cinematics
 let cinematics;
-let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle.
+let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Player has jetpack.
 let cinematic_seconds = 0; //Keep track of cinematic internal time.
 
 function setup() {
@@ -556,9 +556,13 @@ function draw() {
   /////// START CINEMATICS.  /////////////
   /////                     ///////////////////
 
-  //Check where cinematics is currently at, right now.
+  //Check where in cinematics the player currently at. This will help create animations and item specific variations.
   if (cinematic_scene == 1) {
     cinematics.start_cinematic_scene_1();
+  }
+
+  if (cinematic_scene == 2) {
+    player.showJetpack(); //Only possible with triangle and rectangle. If tried with circle, it will crash.
   }
 
   //This is helpful, since I need to compare values to count seconds.
@@ -580,8 +584,17 @@ function checkPlayerSpawn() {
       player = new Player(width * 0.25, height * 0.4, width * 0.01);
       break;
 
+    //Part 2 and 3 are for triangle...
     case 2:
       player = new Player_Triangle(width * 0.25, height * 0.4, width * 0.02); //Left for testing purposes.
+      break;
+
+    case 3:
+      player = new Player_Triangle(width * 0.25, height * 0.4, width * 0.02); //Left for testing purposes.
+      break;
+
+    //Part 4 is rectangle.
+    case 4:
       break;
 
     default:
@@ -630,9 +643,16 @@ function checkInputs() {
     }
   }
 
-  //Once cinematic passes into 2, the character can move.
+  //Once cinematic passes into 2, give player ability to fly.
   if (part == 2 && cinematic_scene == 2) {
-    //Nothing yet.
+    if (keyIsDown(32) === true) {
+      console.log("Hello!!");
+      Matter.Body.applyForce(
+        player.body,
+        player.body.position,
+        createVector(0, -0.01)
+      );
+    }
   }
 }
 

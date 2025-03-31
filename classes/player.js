@@ -298,5 +298,17 @@ class Player_Triangle extends Player {
         pop();
       }
     }
+
+    if (cinematic_scene == 1 && cinematics.internal_seconds < 5) {
+      push();
+      fill(0);
+      text(
+        "I can't move!" + cinematics.internal_seconds,
+        this.body.position.x - width * 0.07,
+        this.body.position.y - height * 0.05
+      );
+      textSize(width * 0.12);
+      pop();
+    }
   }
 }

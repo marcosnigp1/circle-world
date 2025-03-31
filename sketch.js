@@ -26,10 +26,10 @@ let swimming = 0; //Swimming mode.
 //Level structure and design.
 let obstacles = [];
 let levels;
-let current_section = 6; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
+let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 1; //Tracks current position.
+let part = 2; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920;
@@ -41,6 +41,11 @@ let scaleFactor = 1;
 let seconds = 0;
 let half_seconds = 0;
 let d = 0; //For animations.
+
+//Cinematics
+let cinematics;
+let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle.
+let cinematic_seconds = 0; //Keep track of cinematic internal time.
 
 function setup() {
   //This canvas fits into every aspect ratio.
@@ -386,9 +391,11 @@ function setup() {
 
   //Start player
 
-  //player = new Player_Triangle(width * 0.25, height * 0.4, width * 0.02); //Left for testing purposes.
-  player = new Player(width * 0.25, height * 0.4, width * 0.01);
+  checkPlayerSpawn();
   Matter.Events.on(engine, "collisionStart", handleCollisions);
+
+  //For cinematics.
+  cinematics = new Cinematics();
 }
 
 function draw() {
@@ -544,13 +551,46 @@ function draw() {
   ////////                ////////////////
   /////// END PLAYER CONTROL /////////////
   /////                 ///////////////////
+
+  ////////                        ////////////////
+  /////// START CINEMATICS.  /////////////
+  /////                     ///////////////////
+
+  //Check where cinematics is currently at, right now.
+  if (cinematic_scene == 1) {
+    cinematics.start_cinematic_scene_1();
+  }
+
+  //This is helpful, since I need to compare values to count seconds.
+  cinematic_seconds = seconds;
+
+  ////////                ////////////////
+  /////// END CINEMATICS  /////////////
+  /////                 ///////////////////
 }
 
 /* function windowResized() {
   fixResolution();
 } */
 
+function checkPlayerSpawn() {
+  //Look, the second switch! Incredible :D
+  switch (part) {
+    case 1:
+      player = new Player(width * 0.25, height * 0.4, width * 0.01);
+      break;
+
+    case 2:
+      player = new Player_Triangle(width * 0.25, height * 0.4, width * 0.02); //Left for testing purposes.
+      break;
+
+    default:
+      break;
+  }
+}
+
 function checkInputs() {
+  // ------- Part 1 controls. ----------
   if (part == 1) {
     if (keyIsDown(LEFT_ARROW) === true && keyIsDown(RIGHT_ARROW) === true) {
       Matter.Body.applyForce(
@@ -575,6 +615,24 @@ function checkInputs() {
         createVector(0.001, 0)
       );
     }
+  }
+
+  // ------- Part 2 controls. ----------
+  //The idea here is that the character cannot move,
+  //and upon the text appears, it will spawn a circle which will lend a jetpack.
+  if (part == 2 && cinematic_scene == 0) {
+    if (keyIsDown(LEFT_ARROW) === true) {
+      cinematic_scene = 1;
+    }
+
+    if (keyIsDown(RIGHT_ARROW) === true) {
+      cinematic_scene = 1;
+    }
+  }
+
+  //Once cinematic passes into 2, the character can move.
+  if (part == 2 && cinematic_scene == 2) {
+    //Nothing yet.
   }
 }
 

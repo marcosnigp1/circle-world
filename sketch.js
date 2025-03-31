@@ -29,7 +29,7 @@ let levels;
 let current_section = 6; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 0; //Tracks current position.
+let part = 1; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920;
@@ -385,6 +385,8 @@ function setup() {
   //------------------------
 
   //Start player
+
+  //player = new Player_Triangle(width * 0.25, height * 0.4, width * 0.02); //Left for testing purposes.
   player = new Player(width * 0.25, height * 0.4, width * 0.01);
   Matter.Events.on(engine, "collisionStart", handleCollisions);
 }
@@ -536,29 +538,8 @@ function draw() {
 
   /* Source where I got the help: https://p5js.org/reference/p5/keyIsDown/ */
 
-  if (keyIsDown(LEFT_ARROW) === true && keyIsDown(RIGHT_ARROW) === true) {
-    Matter.Body.applyForce(
-      player.body,
-      player.body.position,
-      createVector(0, 0)
-    );
-  }
-
-  if (keyIsDown(LEFT_ARROW) === true) {
-    Matter.Body.applyForce(
-      player.body,
-      player.body.position,
-      createVector(-0.001, 0)
-    );
-  }
-
-  if (keyIsDown(RIGHT_ARROW) === true) {
-    Matter.Body.applyForce(
-      player.body,
-      player.body.position,
-      createVector(0.001, 0)
-    );
-  }
+  //Check inputs according to the part of the experience.
+  checkInputs();
 
   ////////                ////////////////
   /////// END PLAYER CONTROL /////////////
@@ -568,6 +549,34 @@ function draw() {
 /* function windowResized() {
   fixResolution();
 } */
+
+function checkInputs() {
+  if (part == 1) {
+    if (keyIsDown(LEFT_ARROW) === true && keyIsDown(RIGHT_ARROW) === true) {
+      Matter.Body.applyForce(
+        player.body,
+        player.body.position,
+        createVector(0, 0)
+      );
+    }
+
+    if (keyIsDown(LEFT_ARROW) === true) {
+      Matter.Body.applyForce(
+        player.body,
+        player.body.position,
+        createVector(-0.001, 0)
+      );
+    }
+
+    if (keyIsDown(RIGHT_ARROW) === true) {
+      Matter.Body.applyForce(
+        player.body,
+        player.body.position,
+        createVector(0.001, 0)
+      );
+    }
+  }
+}
 
 function fixResolution() {
   const { canvasWidth, canvasHeight } = updateCanvasDimensions();

@@ -1,3 +1,4 @@
+//Default player is a circle.
 class Player {
   constructor(x, y, r) {
     let options = {
@@ -67,6 +68,7 @@ class Player {
     translate(pos.x, pos.y);
     rotate(angle);
     rectMode(CENTER);
+    console.log(this.body);
     circle(0, 0, this.r * 2); //this.r*2 helps in visualizing correctly the circles.
     pop();
 
@@ -210,12 +212,90 @@ class Player {
       if (keyIsDown(32) === true) {
         current_section = 0;
 
-        //Quick line of code, as a concept.
-        player = new Player(width * 0.25, height * 0.4, width * 0.01);
+        //The only switch statement in this code haha.
+        switch (part) {
+          case 1:
+            player = new Player_Triangle(
+              width * 0.25,
+              height * 0.4,
+              width * 0.02
+            );
+            part += 1; //Again, this is to keep track of the current part in the game. Since different characters will have different variations on the level.
+            break;
 
-        //Again, this is to keep track of the current part in the game. Since different characters will have different variations on the level.
-        part += 1;
+          case 2:
+            player = new Player(width * 0.25, height * 0.4, width * 0.01);
+            part += 1; //Again, this is to keep track of the current part in the game. Since different characters will have different variations on the level.
+            break;
+
+          default:
+            break;
+        }
         this.interact = 0;
+      }
+    }
+  }
+}
+
+//For the second part.
+class Player_Triangle extends Player {
+  constructor(x, y, r) {
+    super(x, y, r);
+
+    //Replace the whole body as a triangle.
+    let options = {
+      friction: 3,
+      restitution: 0.5,
+    };
+    this.r = r; //p5js expects a diameter, not a radius.
+    print(this.r);
+    this.body = Bodies.polygon(x, y, 3, this.r, options);
+
+    this.body.plugin.particle = this; //Associated with collisions events.
+    Composite.add(engine.world, this.body); //Without this, it will not render.
+
+    //HUD
+    this.interact = 0;
+    this.currentPlayer = 0; //0 == Circle,  1 == Triangle;  2 == Square.
+  }
+
+  show() {
+    push();
+
+    noStroke();
+    fill(50, 50, 50);
+    triangle(
+      this.body.vertices[0].x,
+      this.body.vertices[0].y,
+      this.body.vertices[1].x,
+      this.body.vertices[1].y,
+      this.body.vertices[2].x,
+      this.body.vertices[2].y
+    ); //this.r*2 helps in visualizing correctly the circles.
+    pop();
+
+    //Show pop up messages.
+    if (this.interact == 1) {
+      if (seconds % 2 == 1) {
+        push();
+        fill(150);
+        text(
+          "(INSERT SPACEBAR ICON)",
+          this.body.position.x - width * 0.07,
+          this.body.position.y - height * 0.05
+        );
+        textSize(width * 0.12);
+        pop();
+      } else {
+        push();
+        fill(0);
+        text(
+          "(INSERT SPACEBAR ICON)",
+          this.body.position.x - width * 0.07,
+          this.body.position.y - height * 0.05
+        );
+        textSize(width * 0.12);
+        pop();
       }
     }
   }

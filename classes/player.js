@@ -222,6 +222,7 @@ class Player {
         //The only switch statement in this code haha.
         switch (part) {
           case 1:
+            Matter.World.remove(engine.world, this.body);
             player = new Player_Triangle(
               width * 0.25,
               height * 0.4,

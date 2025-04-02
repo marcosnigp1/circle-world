@@ -68,7 +68,6 @@ class Player {
     translate(pos.x, pos.y);
     rotate(angle);
     rectMode(CENTER);
-    console.log(this.body);
     circle(0, 0, this.r * 2); //this.r*2 helps in visualizing correctly the circles.
     pop();
 
@@ -143,6 +142,14 @@ class Player {
     }
 
     //If in section 3.
+    if (this.body.position.y < 0 && current_section == 3) {
+      Matter.Body.setPosition(this.body, {
+        x: width * 0.5,
+        y: height * 0.98,
+      });
+      current_section = 2;
+    }
+
     if (this.body.position.x > width * 0.82 && current_section == 3) {
       Matter.Body.setPosition(this.body, {
         x: width * 0.19,
@@ -351,7 +358,6 @@ class Player_Triangle extends Player {
     fill(200, 150, 50);
     translate(0, 0);
 
-    print(this.rectangle);
     //Draw vertices, there are no simpler solution it seems..
     beginShape();
     vertex(this.rectangle.vertices[0].x, this.rectangle.vertices[0].y);

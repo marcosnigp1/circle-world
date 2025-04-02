@@ -29,7 +29,7 @@ let levels;
 let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 2; //Tracks current position.
+let part = 1; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920;
@@ -44,7 +44,7 @@ let d = 0; //For animations.
 
 //Cinematics
 let cinematics;
-let cinematic_scene = 2; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Player has jetpack.
+let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Player has jetpack.
 let cinematic_seconds = 0; //Keep track of cinematic internal time.
 
 function setup() {
@@ -258,9 +258,9 @@ function setup() {
   obstacles.push(
     new Water_Disabler_Level_Obstacle(
       width * 0.29,
-      height * 0.66,
+      height * 0.57,
       width * 0.6,
-      height * 0.05,
+      height * 0.16,
       0
     )
   );
@@ -385,6 +385,24 @@ function setup() {
     )
   );
 
+  //--------- Section 1 EXTRA Obstacles ----------
+
+  obstacles.push(
+    new Level_Obstacle(width * 0.16, height * 0.21, width * 0.15, height * 1, 0)
+  );
+
+  //------- THE ROOOOFFFF!!!!!!!!!! ----------------
+
+  obstacles.push(
+    new Level_Obstacle(width * 0.5, height * 0.01, width * 1, height * 0.11, 0)
+  );
+
+  //---- And the specific roof for that water section.
+
+  obstacles.push(
+    new Level_Obstacle(width * 1.1, height * 0, width * 1, height * 0.11, 0)
+  );
+
   //------------------------
   //---------------------------------
   //------------------------
@@ -429,6 +447,17 @@ function draw() {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;
       }
+
+      if (i == 29) {
+        obstacles[i].show();
+        obstacles[i].body.isSensor = false;
+      }
+
+      //The roof
+      if (i == 30) {
+        obstacles[i].show();
+        obstacles[i].body.isSensor = false;
+      }
     }
   }
 
@@ -442,6 +471,11 @@ function draw() {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;
       }
+
+      if (i == 30) {
+        obstacles[i].show();
+        obstacles[i].body.isSensor = false;
+      }
     }
   }
 
@@ -454,6 +488,11 @@ function draw() {
       } else {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;
+      }
+
+      if (i == 30) {
+        obstacles[i].show();
+        obstacles[i].body.isSensor = false;
       }
     }
   }
@@ -476,6 +515,12 @@ function draw() {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;
       }
+
+      //Specific roof made for this specific section.
+      if (i == 31) {
+        obstacles[i].show();
+        obstacles[i].body.isSensor = false;
+      }
     }
   }
 
@@ -488,6 +533,11 @@ function draw() {
       } else {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;
+      }
+
+      if (i == 30) {
+        obstacles[i].show();
+        obstacles[i].body.isSensor = false;
       }
     }
   }
@@ -502,12 +552,17 @@ function draw() {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;
       }
+
+      if (i == 30) {
+        obstacles[i].show();
+        obstacles[i].body.isSensor = false;
+      }
     }
   }
 
   if (current_section == 6) {
     for (let i = 0; i < obstacles.length; i++) {
-      if (i >= 25) {
+      if (i >= 25 && i <= 28) {
         obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
@@ -518,6 +573,11 @@ function draw() {
       } else {
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = true;
+      }
+
+      if (i == 30) {
+        obstacles[i].show();
+        obstacles[i].body.isSensor = false;
       }
     }
   }
@@ -646,11 +706,11 @@ function checkInputs() {
   //Once cinematic passes into 2, give player ability to fly.
   if (part == 2 && cinematic_scene == 2) {
     if (keyIsDown(32) === true) {
-      console.log(Body.getAngularVelocity(player.body));
+      //console.log(Body.getAngularVelocity(player.body));
 
       //Done with help of the following material: https://stackoverflow.com/questions/35827012/matter-js-calculating-force-needed
       Matter.Body.applyForce(player.body, player.body.position, {
-        x: cos(player.body.angle) * -0.03,
+        x: cos(player.body.angle) * 0.04,
         y: sin(player.body.angle) * -0.01,
       });
     }

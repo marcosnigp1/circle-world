@@ -276,6 +276,7 @@ class Player_Triangle extends Player {
       });
       this.rectangle.plugin.particle = this; //Associated with collisions events.
     }
+    Matter.Body.setAngle(this.body, 39);
 
     this.body.plugin.particle = this; //Associated with collisions events.
     Composite.add(engine.world, this.body); //Without this, it will not render.
@@ -349,8 +350,8 @@ class Player_Triangle extends Player {
     noStroke();
     fill(200, 150, 50);
     translate(0, 0);
-    console.log(this.rectangle);
 
+    print(this.rectangle);
     //Draw vertices, there are no simpler solution it seems..
     beginShape();
     vertex(this.rectangle.vertices[0].x, this.rectangle.vertices[0].y);

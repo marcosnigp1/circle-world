@@ -29,7 +29,7 @@ let levels;
 let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 1; //Tracks current position.
+let part = 2; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920;
@@ -44,7 +44,7 @@ let d = 0; //For animations.
 
 //Cinematics
 let cinematics;
-let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Player has jetpack.
+let cinematic_scene = 2; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Player has jetpack.
 let cinematic_seconds = 0; //Keep track of cinematic internal time.
 
 function setup() {
@@ -586,12 +586,12 @@ function checkPlayerSpawn() {
 
     //Part 2 and 3 are for triangle...
     case 2:
-      player = new Player_Triangle(width * 0.25, height * 0.4, width * 0.02); //Left for testing purposes.
+      player = new Player_Triangle(width * 0.25, height * 0.48, width * 0.02); //Left for testing purposes.
       break;
 
-    case 3:
+    /*     case 3:
       player = new Player_Triangle(width * 0.25, height * 0.4, width * 0.02); //Left for testing purposes.
-      break;
+      break; */
 
     //Part 4 is rectangle.
     case 4:
@@ -646,14 +646,36 @@ function checkInputs() {
   //Once cinematic passes into 2, give player ability to fly.
   if (part == 2 && cinematic_scene == 2) {
     if (keyIsDown(32) === true) {
-      console.log("Hello!!");
-      Matter.Body.applyForce(
+      console.log(Body.getAngularVelocity(player.body));
+
+      //Done with help of the following material: https://stackoverflow.com/questions/35827012/matter-js-calculating-force-needed
+      Matter.Body.applyForce(player.body, player.body.position, {
+        x: cos(player.body.angle) * -0.03,
+        y: sin(player.body.angle) * -0.01,
+      });
+    }
+
+    //Restart Key, exclusive to second part.
+    if (keyIsDown(82) == true) {
+      current_section = 0;
+      part = 2;
+      Matter.Body.setPosition(
         player.body,
-        player.body.position,
-        createVector(0, -0.01)
+        createVector(width * 0.25, height * 0.6)
       );
+      Matter.Body.setAngle(player.body, 39);
     }
   }
+
+  /*   if (part == 2 && cinematic_scene == 2 && player.jetpack_state == 1) {
+    if (keyIsDown(LEFT_ARROW) === true) {
+      Matter.Body.setAngle(player.body, +0.01);
+    }
+
+    if (keyIsDown(RIGHT_ARROW) === true) {
+      Matter.Body.setAngle(player.body, -0.01);
+    }
+  } */
 }
 
 function fixResolution() {

@@ -733,6 +733,7 @@ function checkInputs() {
     if (keyIsDown(82) == true) {
       current_section = 0;
       part = 2;
+      swimming = 0;
       Matter.Body.setPosition(
         player.body,
         createVector(width * 0.25, height * 0.6)

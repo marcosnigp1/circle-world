@@ -662,6 +662,20 @@ function checkPlayerSpawn() {
   }
 }
 
+function resetLevelValues() {
+  /* Reset values of moving platforms */
+  Matter.Body.setAngle(obstacles[7].body, 0);
+  Matter.Body.setPosition(
+    obstacles[7].body,
+    createVector(width * 0.45, height * 0.74)
+  );
+  Matter.Body.setAngle(obstacles[8].body, 0);
+  Matter.Body.setPosition(
+    obstacles[8].body,
+    createVector(width * 0.5, height * 0.74)
+  );
+}
+
 function checkInputs() {
   // ------- Part 1 controls. ----------
   if (part == 1) {
@@ -794,6 +808,10 @@ function keyPressed() {
 
   if (key === "w") {
     console.log(engine.world.bodies);
+  }
+
+  if (key === "t") {
+    resetLevelValues();
   }
 
   if (key == "z") {

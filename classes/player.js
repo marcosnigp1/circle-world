@@ -224,7 +224,10 @@ class Player {
       if (keyIsDown(32) === true) {
         current_section = 0;
 
-        //The only switch statement in this code haha.
+        //Reset Level Values (For example, it resets the value of the platform.)
+        resetLevelValues();
+
+        //This is not the only switch statement anymore... I think...
         switch (part) {
           case 1:
             this.removeFromWorld();

@@ -792,6 +792,10 @@ function keyPressed() {
     window.close(); ///Closes Electron.
   }
 
+  if (key === "w") {
+    console.log(engine.world.bodies);
+  }
+
   if (key == "z") {
     move_platforms();
   }

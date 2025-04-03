@@ -90,6 +90,7 @@ class Cinematics {
         this.internal_seconds = 0;
 
         //CREATE BODY AGAIN!
+        player.removeFromWorld();
         player = new Player_Triangle(
           player.body.position.x,
           player.body.position.y,

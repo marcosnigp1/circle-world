@@ -53,6 +53,11 @@ class Player {
     }
   }
 
+  //Make object impossible to collide with things.
+  removeFromWorld() {
+    Composite.remove(engine.world, this.body);
+  }
+
   float() {
     this.body.force = { x: 0, y: -0.003 };
   }
@@ -222,7 +227,7 @@ class Player {
         //The only switch statement in this code haha.
         switch (part) {
           case 1:
-            Matter.World.remove(engine.world, this.body);
+            this.removeFromWorld();
             player = new Player_Triangle(
               width * 0.25,
               height * 0.4,
@@ -254,7 +259,8 @@ class Player {
 class Player_Triangle extends Player {
   constructor(x, y, r) {
     super(x, y, r);
-
+    this.removeFromWorld();
+    Composite.remove(engine.world, this.body);
     //Replace the whole body as a triangle.
     let options = {
       friction: 3,

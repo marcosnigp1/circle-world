@@ -44,7 +44,7 @@ let d = 0; //For animations.
 
 //Cinematics
 let cinematics;
-let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Player has jetpack.
+let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Triangle has jetpack. 3 == Square appears and questions why this place does not have automatic roads.
 let cinematic_seconds = 0; //Keep track of cinematic internal time.
 
 function setup() {
@@ -625,6 +625,14 @@ function draw() {
     player.showJetpack(); //Only possible with triangle and rectangle. If tried with circle, it will crash.
   }
 
+  if (cinematic_scene == 3 || cinematic_scene == 4) {
+    cinematics.start_cinematic_scene_2();
+  }
+
+  if (cinematic_scene == 5) {
+    player.showJetpack(); //Only possible with triangle and rectangle. If tried with circle, it will crash.
+  }
+
   //This is helpful, since I need to compare values to count seconds.
   cinematic_seconds = seconds;
 
@@ -640,21 +648,19 @@ function draw() {
 function checkPlayerSpawn() {
   //Look, the second switch! Incredible :D
   switch (part) {
+    //Part 1 is Circle.
     case 1:
       player = new Player(width * 0.25, height * 0.4, width * 0.01);
       break;
 
-    //Part 2 and 3 are for triangle...
+    //Part 2 is Triangle.
     case 2:
-      player = new Player_Triangle(width * 0.25, height * 0.48, width * 0.02); //Left for testing purposes.
+      player = new Player_Triangle(width * 0.25, height * 0.48, width * 0.02);
       break;
 
-    /*     case 3:
-      player = new Player_Triangle(width * 0.25, height * 0.4, width * 0.02); //Left for testing purposes.
-      break; */
-
-    //Part 4 is rectangle.
-    case 4:
+    //Part 3 is Rectangle.
+    case 3:
+      player = new Player_Rectangle(width * 0.25, height * 0.4, width * 0.02);
       break;
 
     default:
@@ -742,15 +748,42 @@ function checkInputs() {
     }
   }
 
-  /*   if (part == 2 && cinematic_scene == 2 && player.jetpack_state == 1) {
+  // ------- Part 3 controls. ----------
+  //The idea here is that the character cannot move,
+  //and upon the text appears, the character will be able to pick the jetpack from the supplier.
+  if (part == 3 && cinematic_scene == 3) {
     if (keyIsDown(LEFT_ARROW) === true) {
-      Matter.Body.setAngle(player.body, +0.01);
+      cinematic_scene = 4;
     }
 
     if (keyIsDown(RIGHT_ARROW) === true) {
-      Matter.Body.setAngle(player.body, -0.01);
+      cinematic_scene = 4;
     }
-  } */
+  }
+
+  //Once cinematic passes into 2, give player ability to fly.
+  if (part == 3 && cinematic_scene == 5) {
+    if (keyIsDown(32) === true) {
+      //console.log(Body.getAngularVelocity(player.body));
+      //Done with help of the following material: https://stackoverflow.com/questions/35827012/matter-js-calculating-force-needed
+      Matter.Body.applyForce(player.body, player.body.position, {
+        x: cos(player.body.angle) * 0.04,
+        y: sin(player.body.angle) * -0.01,
+      });
+    }
+
+    //Restart Key, exclusive to second part.
+    if (keyIsDown(82) == true) {
+      current_section = 0;
+      part = 3;
+      swimming = 0;
+      Matter.Body.setPosition(
+        player.body,
+        createVector(width * 0.25, height * 0.6)
+      );
+      Matter.Body.setAngle(player.body, 39);
+    }
+  }
 }
 
 function fixResolution() {

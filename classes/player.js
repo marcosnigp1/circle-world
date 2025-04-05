@@ -13,7 +13,6 @@ class Player {
 
     //HUD
     this.interact = 0;
-    this.currentPlayer = 0; //0 == Circle,  1 == Triangle;  2 == Square.
   }
 
   ///Check that velocity does not surpasses the fixed value.
@@ -241,12 +240,14 @@ class Player {
 
           //Player rectangle.
           case 2:
-            player = new Player_Triangle(
+            this.removeFromWorld();
+            player = new Player_Rectangle(
               width * 0.25,
               height * 0.4,
               width * 0.02
             );
             part += 1;
+            cinematic_scene++;
             break;
 
           default:
@@ -303,7 +304,6 @@ class Player_Triangle extends Player {
 
     //HUD
     this.interact = 0;
-    this.currentPlayer = 0; //0 == Circle,  1 == Triangle;  2 == Square.
   }
 
   show() {
@@ -374,6 +374,125 @@ class Player_Triangle extends Player {
     vertex(this.rectangle.vertices[1].x, this.rectangle.vertices[1].y);
     vertex(this.rectangle.vertices[2].x, this.rectangle.vertices[2].y);
     vertex(this.rectangle.vertices[3].x, this.rectangle.vertices[3].y);
+    endShape(CLOSE);
+
+    if (this.jetpack_state == 1) {
+      //Show animation.
+    }
+
+    pop();
+  }
+}
+
+//For the third part.
+class Player_Rectangle extends Player {
+  constructor(x, y, r) {
+    super(x, y, r);
+    this.removeFromWorld();
+    Composite.remove(engine.world, this.body);
+    //Replace the whole body as a rectangle.
+    let options = {
+      friction: 3,
+      restitution: 0.5,
+    };
+    this.r = r; //p5js expects a diameter, not a radius.
+
+    //Rectangle with no jetpack.
+    if (cinematic_scene == 2 || cinematic_scene == 3) {
+      this.body = Bodies.rectangle(x, y, this.r, this.r, options);
+    }
+
+    //Rectangle with jetpack.
+    if (cinematic_scene == 5) {
+      this.rectangle = Bodies.rectangle(x, y, this.r, this.r, { mass: 0 });
+      this.jetpack = Bodies.rectangle(
+        x - width * 0.01,
+        y + height * 0.02,
+        width * 0.02,
+        height * 0.02,
+        { angle: 10, mass: 0 }
+      );
+      this.body = Body.create({
+        parts: [this.rectangle, this.jetpack],
+        friction: 3,
+        restitution: 0.5,
+      });
+      this.rectangle.plugin.particle = this; //Associated with collisions events.
+    }
+    Matter.Body.setAngle(this.body, 39);
+
+    this.body.plugin.particle = this; //Associated with collisions events.
+    Composite.add(engine.world, this.body); //Without this, it will not render.
+
+    //Jetpack
+    this.jetpack_state = 0; //0 == OFF,  1 == ON;
+
+    //HUD
+    this.interact = 0;
+  }
+
+  show() {
+    if (cinematic_scene < 5) {
+      push();
+      noStroke();
+      fill(50, 50, 50);
+      beginShape();
+      vertex(this.body.vertices[0].x, this.body.vertices[0].y);
+      vertex(this.body.vertices[1].x, this.body.vertices[1].y);
+      vertex(this.body.vertices[2].x, this.body.vertices[2].y);
+      vertex(this.body.vertices[3].x, this.body.vertices[3].y);
+      endShape(CLOSE);
+      pop();
+    } else if (cinematic_scene == 5) {
+      push();
+      noStroke();
+      fill(50, 50, 50);
+      beginShape();
+      vertex(this.rectangle.vertices[0].x, this.rectangle.vertices[0].y);
+      vertex(this.rectangle.vertices[1].x, this.rectangle.vertices[1].y);
+      vertex(this.rectangle.vertices[2].x, this.rectangle.vertices[2].y);
+      vertex(this.rectangle.vertices[3].x, this.rectangle.vertices[3].y);
+      endShape(CLOSE);
+      pop();
+    }
+
+    //Show pop up messages.
+    if (this.interact == 1) {
+      if (seconds % 2 == 1) {
+        push();
+        fill(150);
+        text(
+          "(INSERT SPACEBAR ICON)",
+          this.body.position.x - width * 0.07,
+          this.body.position.y - height * 0.05
+        );
+        textSize(width * 0.12);
+        pop();
+      } else {
+        push();
+        fill(0);
+        text(
+          "(INSERT SPACEBAR ICON)",
+          this.body.position.x - width * 0.07,
+          this.body.position.y - height * 0.05
+        );
+        textSize(width * 0.12);
+        pop();
+      }
+    }
+  }
+  showJetpack() {
+    push();
+    noStroke();
+    fill(200, 150, 50);
+    translate(0, 0);
+
+    //Draw vertices, there are no simpler solution it seems..
+    beginShape();
+    vertex(this.jetpack.vertices[0].x, this.jetpack.vertices[0].y);
+    vertex(this.jetpack.vertices[1].x, this.jetpack.vertices[1].y);
+    vertex(this.jetpack.vertices[2].x, this.jetpack.vertices[2].y);
+    vertex(this.jetpack.vertices[3].x, this.jetpack.vertices[3].y);
     endShape(CLOSE);
 
     if (this.jetpack_state == 1) {

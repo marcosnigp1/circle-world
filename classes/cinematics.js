@@ -38,7 +38,7 @@ class Cinematics {
 
     //Circle appears and give a jetpack.
     if (this.internal_seconds > 4 && this.internal_seconds < 18) {
-      pop();
+      push();
       fill(0, 20, 50);
 
       if (this.internal_seconds >= 5 && this.internal_seconds <= 7) {
@@ -76,7 +76,6 @@ class Cinematics {
       if (this.internal_seconds >= 16) {
         this.jetpack_stays = 1;
       }
-      push();
     }
 
     //Jetpack and circle wonders what happened.
@@ -96,6 +95,63 @@ class Cinematics {
           player.body.position.y,
           width * 0.02
         );
+      }
+    }
+  }
+
+  start_cinematic_scene_2() {
+    //Initialize position.
+    if (this.cinematic_started == 0) {
+      this.position = createVector(width * 0.85, height * 0.6);
+      this.jetpack_position = createVector(width * 0.3, height * 0.58);
+      this.cinematic_started = 1;
+    }
+
+    if (cinematic_scene == 3) {
+      rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+    }
+
+    if (cinematic_scene == 4) {
+      //A second has passed.
+
+      //Draw jetpack placeholder.
+      rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+
+      if (cinematic_seconds != seconds) {
+        this.internal_seconds++;
+        console.log(cinematic_seconds);
+      }
+
+      //I cant move!
+      if (this.internal_seconds < 5) {
+        push();
+        fill(0);
+        text(
+          "Why have they not build automatic roads?! " +
+            cinematics.internal_seconds,
+          player.body.position.x - width * 0.07,
+          player.body.position.y - height * 0.05
+        );
+        textSize(width * 0.12);
+        pop();
+      }
+
+      if (this.internal_seconds > 5) {
+        player.interact = 1;
+        rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04); //Draw jetpack.
+        if (keyIsDown(32) === true) {
+          player.interact = 0;
+          cinematic_scene = 5;
+          this.internal_seconds = 0;
+
+          //CREATE BODY AGAIN!
+          player.removeFromWorld();
+          player = new Player_Rectangle(
+            player.body.position.x,
+            player.body.position.y,
+            width * 0.02
+          );
+        }
       }
     }
   }

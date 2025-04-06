@@ -231,3 +231,53 @@ class Level_Activator extends Level_Obstacle {
     pop();
   }
 }
+
+class Level_Detector {
+  constructor(x, y, w, h, angle) {
+    this.options = {
+      isStatic: true,
+      angle: angle,
+    };
+    this.w = w;
+    this.h = h;
+    this.body = Bodies.rectangle(x, y, w, h, this.options);
+    this.body.plugin.particle = this; //Associated with collisions events.
+    Composite.add(engine.world, this.body);
+  }
+
+  show() {
+    push();
+    noStroke();
+    fill(200, 200, 10, 100);
+    translate(this.body.position.x, this.body.position.y);
+    rotate(this.body.angle);
+    rectMode(CENTER);
+    rect(0, 0, this.w, this.h);
+    pop();
+  }
+}
+
+class Level_Detector_Crasher {
+  constructor(x, y, w, h, angle) {
+    this.options = {
+      isStatic: true,
+      angle: angle,
+    };
+    this.w = w;
+    this.h = h;
+    this.body = Bodies.rectangle(x, y, w, h, this.options);
+    this.body.plugin.particle = this; //Associated with collisions events.
+    Composite.add(engine.world, this.body);
+  }
+
+  show() {
+    push();
+    noStroke();
+    fill(0, 200, 200, 100);
+    translate(this.body.position.x, this.body.position.y);
+    rotate(this.body.angle);
+    rectMode(CENTER);
+    rect(0, 0, this.w, this.h);
+    pop();
+  }
+}

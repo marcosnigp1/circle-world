@@ -26,10 +26,10 @@ let swimming = 0; //Swimming mode.
 //Level structure and design.
 let obstacles = [];
 let levels;
-let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
+let current_section = 2; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 1; //Tracks current position.
+let part = 3; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920;
@@ -44,7 +44,7 @@ let d = 0; //For animations.
 
 //Cinematics
 let cinematics;
-let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Triangle has jetpack. 3 == Square appears and questions why this place does not have automatic roads.
+let cinematic_scene = 5; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Triangle has jetpack. 3 == Square appears and questions why this place does not have automatic roads.
 let cinematic_seconds = 0; //Keep track of cinematic internal time.
 
 function setup() {
@@ -391,16 +391,94 @@ function setup() {
     new Level_Obstacle(width * 0.16, height * 0.21, width * 0.15, height * 1, 0)
   );
 
-  //------- THE ROOOOFFFF!!!!!!!!!! ----------------
+  //THE ROOOOFFFF!!!!!!!!!!
 
   obstacles.push(
     new Level_Obstacle(width * 0.5, height * 0.01, width * 1, height * 0.11, 0)
   );
 
-  //---- And the specific roof for that water section.
+  //And the specific roof for that water section.
 
   obstacles.push(
     new Level_Obstacle(width * 1.1, height * 0, width * 1, height * 0.11, 0)
+  );
+
+  //Part 3 Prepare for cinematic walls
+
+  obstacles.push(
+    new Level_Detector(width * 0.475, height * 0.5, width * 0.15, height * 1, 0)
+  );
+
+  //Mimics of the section 2 walls.
+
+  obstacles.push(
+    new Level_Detector_Crasher(
+      width * 0.28,
+      height * 0.783,
+      width * 0.3,
+      height * 0.1,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Detector_Crasher(
+      width * 0.673,
+      height * 0.783,
+      width * 0.3,
+      height * 0.1,
+      0
+    )
+  );
+
+  obstacles.push(
+    new Level_Detector_Crasher(
+      width * 0.79,
+      height * 0.47,
+      width * 0.6,
+      height * 0.1,
+      11
+    )
+  );
+
+  obstacles.push(
+    new Level_Detector_Crasher(
+      width * 0.551,
+      height * 0.95,
+      width * 0.2,
+      height * 0.1,
+      11
+    )
+  );
+
+  obstacles.push(
+    new Level_Detector_Crasher(
+      width * 0.401,
+      height * 0.95,
+      width * 0.2,
+      height * 0.1,
+      11
+    )
+  );
+
+  obstacles.push(
+    new Level_Detector_Crasher(
+      width * 0.68,
+      height * 0.76,
+      width * 0.05,
+      height * 0.1,
+      9
+    )
+  );
+
+  obstacles.push(
+    new Level_Detector_Crasher(
+      width * 0.5,
+      height * 0.01,
+      width * 1,
+      height * 0.11,
+      0
+    )
   );
 
   //------------------------
@@ -435,6 +513,12 @@ function draw() {
   //Check collisions and activation.
   player.detectActivator();
   player.startInteraction();
+
+  ///Check detector for cinematic #3 (where the player crashes and the screen shows a animated crack)
+
+  if (part == 3) {
+    player.detectCinematic3Starter();
+  }
 
   //Draw obstacles according to level.
   if (current_section == 0) {
@@ -493,6 +577,11 @@ function draw() {
       if (i == 30) {
         obstacles[i].show();
         obstacles[i].body.isSensor = false;
+      }
+
+      if (i >= 32 && i <= 39 && part == 3) {
+        obstacles[i].show();
+        obstacles[i].body.isSensor = true;
       }
     }
   }
@@ -629,8 +718,12 @@ function draw() {
     cinematics.start_cinematic_scene_2();
   }
 
-  if (cinematic_scene == 5) {
+  if (cinematic_scene == 5 || cinematic_scene == 6) {
     player.showJetpack(); //Only possible with triangle and rectangle. If tried with circle, it will crash.
+  }
+
+  if (cinematic_scene == 6) {
+    cinematics.start_cinematic_scene_3();
   }
 
   //This is helpful, since I need to compare values to count seconds.
@@ -762,7 +855,7 @@ function checkInputs() {
   }
 
   //Once cinematic passes into 2, give player ability to fly.
-  if (part == 3 && cinematic_scene == 5) {
+  if (part == 3 && cinematic_scene == 5 && player.crashed == 0) {
     if (keyIsDown(32) === true) {
       //console.log(Body.getAngularVelocity(player.body));
       //Done with help of the following material: https://stackoverflow.com/questions/35827012/matter-js-calculating-force-needed
@@ -910,6 +1003,16 @@ function handleCollisions(event) {
       current_section == 3
     ) {
       swimming = 0; //Disable swimming.
+    }
+
+    if (
+      particleA instanceof Level_Detector_Crasher &&
+      particleB instanceof Player &&
+      current_section == 2 &&
+      part == 3 &&
+      player.cancrash == 1
+    ) {
+      cinematic_scene = 6;
     }
   }
 }

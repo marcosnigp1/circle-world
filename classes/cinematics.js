@@ -9,6 +9,7 @@ class Cinematics {
     this.jetpack_stays = 0;
   }
 
+  //Circle gives Jetpack to the player (triangle).
   start_cinematic_scene_1() {
     //Initialize position.
     if (this.cinematic_started == 0) {
@@ -99,6 +100,7 @@ class Cinematics {
     }
   }
 
+  //Player (rectangle) is confused as to why there has not yet been improvements.
   start_cinematic_scene_2() {
     //Initialize position.
     if (this.cinematic_started == 0) {
@@ -155,4 +157,52 @@ class Cinematics {
       }
     }
   }
+
+  //Screen shows a rupture to then show the player hurt.
+  start_cinematic_scene_3() {
+    if (this.cinematic_started == 0) {
+      this.position = createVector(width * 0.85, height * 0.6);
+      this.jetpack_position = createVector(width * 0.3, height * 0.58);
+      this.cinematic_started = 1;
+    }
+
+    if (cinematic_seconds != seconds) {
+      this.internal_seconds++;
+      console.log(cinematic_seconds);
+    }
+
+    //I cant move!
+    if (this.internal_seconds < 1) {
+      push();
+      fill(0);
+      rect(0, 0, width * 1, height * 1);
+
+      fill(255);
+      text("Crack #1", width * 0.5, height * 0.5);
+      pop();
+    }
+
+    if (this.internal_seconds == 1) {
+      push();
+      fill(0);
+      rect(0, 0, width * 1, height * 1);
+
+      fill(255);
+      text("Crack #2", width * 0.5, height * 0.5);
+      pop();
+    }
+
+    if (this.internal_seconds == 2) {
+      push();
+      fill(0);
+      rect(0, 0, width * 1, height * 1);
+
+      fill(255);
+      text("Crack #3", width * 0.5, height * 0.5);
+      pop();
+    }
+  }
+
+  //Final reflective message.
+  start_cinematic_scene_4() {}
 }

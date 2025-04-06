@@ -429,6 +429,23 @@ class Player_Rectangle extends Player {
 
     //HUD
     this.interact = 0;
+
+    //Give permission to start cinematic #3 (where a crack appears indicating the player received damage).
+    this.cancrash = 0;
+
+    //And if crashed, stop player from using jetpack.
+    this.crashed = 0;
+  }
+
+  //This has to be started after the second part finishes, otherwise it will crash.
+  detectCinematic3Starter() {
+    if (
+      Matter.Bounds.overlaps(this.body.bounds, obstacles[32].body.bounds) &&
+      current_section == 2 &&
+      player.body.position.y < height * 0.6
+    ) {
+      this.cancrash = 1;
+    }
   }
 
   show() {
@@ -443,7 +460,7 @@ class Player_Rectangle extends Player {
       vertex(this.body.vertices[3].x, this.body.vertices[3].y);
       endShape(CLOSE);
       pop();
-    } else if (cinematic_scene == 5) {
+    } else if (cinematic_scene == 5 || cinematic_scene == 6) {
       push();
       noStroke();
       fill(50, 50, 50);

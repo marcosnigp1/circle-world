@@ -1012,6 +1012,7 @@ function handleCollisions(event) {
       part == 3 &&
       player.cancrash == 1
     ) {
+      player.crashed = 1;
       cinematic_scene = 6;
     }
   }

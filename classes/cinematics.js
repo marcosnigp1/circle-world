@@ -7,6 +7,9 @@ class Cinematics {
 
     //Permanency of objects.
     this.jetpack_stays = 0;
+
+    //White screen fulfill effect.
+    this.transparency_effect = 0.0;
   }
 
   //Circle gives Jetpack to the player (triangle).
@@ -166,7 +169,8 @@ class Cinematics {
       this.cinematic_started = 1;
     }
 
-    if (cinematic_seconds != seconds) {
+    //Do not start counting seconds until the player crashes.
+    if (cinematic_seconds != seconds && player.crashed == 1) {
       this.internal_seconds++;
       console.log(cinematic_seconds);
     }
@@ -201,6 +205,15 @@ class Cinematics {
       text("Crack #3", width * 0.5, height * 0.5);
       pop();
     }
+
+    if (this.internal_seconds > 5 && this.internal_seconds < 16) {
+      push();
+      fill(255, 255, 255, this.transparency_effect);
+      rect(0, 0, width * 1, height * 1);
+      pop();
+    }
+
+    this.transparency_effect += 0.3;
   }
 
   //Final reflective message.

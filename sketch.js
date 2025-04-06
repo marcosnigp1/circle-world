@@ -26,10 +26,10 @@ let swimming = 0; //Swimming mode.
 //Level structure and design.
 let obstacles = [];
 let levels;
-let current_section = 2; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
+let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 3; //Tracks current position.
+let part = 1; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920;
@@ -44,8 +44,13 @@ let d = 0; //For animations.
 
 //Cinematics
 let cinematics;
-let cinematic_scene = 5; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Triangle has jetpack. 3 == Square appears and questions why this place does not have automatic roads.
+let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Triangle has jetpack. 3 == Square appears and questions why this place does not have automatic roads.
 let cinematic_seconds = 0; //Keep track of cinematic internal time.
+
+//User Interface and variables to keep control of the game.
+let ui;
+let ui_seconds = 0;
+let showing_results = 0;
 
 function setup() {
   //This canvas fits into every aspect ratio.
@@ -62,6 +67,9 @@ function setup() {
   pixelDensity(window.devicePixelRatio);
   strokeWeight(2 * scaleFactor);
 
+  //Prepare UI according to current dimension of screen.
+  ui = new UI(x, y);
+
   //                       //////////////
   ///  STARTING PHYSICS   ///
   ////                    ////////////
@@ -72,19 +80,19 @@ function setup() {
 
   runner = Runner.create();
 
-  //----- Mouse interaction (If this will be used at the end... -------
-  let canvas_mouse = Mouse.create(canvas.elt);
+  //----- Mouse interaction (For testing) -------
+  /*   let canvas_mouse = Mouse.create(canvas.elt);
   canvas_mouse.pixelRatio = pixelDensity(); //Make comfortable when selecting items on the canvas.
 
   let mouse_options = {
     mouse: canvas_mouse,
   };
 
-  mConstraint = MouseConstraint.create(engine, mouse_options);
+  mConstraint = MouseConstraint.create(engine, mouse_options); */
+  //Composite.add(engine.world, [mConstraint]);
   //------------------------------
 
   //Add everything created so far into the engine, and run it.
-  Composite.add(engine.world, [mConstraint]);
   Runner.run(runner, engine);
 
   //                     //////////////
@@ -497,11 +505,49 @@ function setup() {
 function draw() {
   background(0, 10, 20);
 
+  trackTime();
+
+  if (ui.playerisat == 0) {
+    ui.languageSelection();
+  }
+
+  if (ui.playerisat == 1) {
+    ui.startMenu();
+  }
+
+  if (ui.playerisat == 2) {
+    gameLogic();
+  }
+
+  if (ui.playerisat == 3) {
+    ui.theCredits();
+  }
+
+  if (ui.playerisat == 4) {
+    ui.theMessage();
+  }
+
+  //Check for animation transitions.
+  if (ui.animation_in_progress == 1) {
+    ui.transition();
+  }
+
+  if (showing_results == 1) {
+    ui.results();
+  }
+
+  ui_seconds = seconds;
+}
+
+function trackTime() {
   //Calculate seconds spent.
   d += deltaTime / 1000; //Counts seconds since start.
   seconds = round(d); //Round to nearest second.
   console.log("Seconds spent:" + seconds);
+}
 
+//Everything that is supposed to be the playable experience is here, just to make everything look nicer.
+function gameLogic() {
   //Draw levels.
   levels.level_test();
 
@@ -743,7 +789,7 @@ function checkPlayerSpawn() {
   switch (part) {
     //Part 1 is Circle.
     case 1:
-      player = new Player(width * 0.25, height * 0.4, width * 0.01);
+      player = new Player(width * 0.3, height * 0.2, width * 0.01);
       break;
 
     //Part 2 is Triangle.
@@ -761,6 +807,10 @@ function checkPlayerSpawn() {
   }
 }
 
+function showResults() {
+  showing_results = 1;
+}
+
 function resetLevelValues() {
   /* Reset values of moving platforms */
   Matter.Body.setAngle(obstacles[7].body, 0);
@@ -775,9 +825,126 @@ function resetLevelValues() {
   );
 }
 
+function resetGameValues() {
+  part = 1;
+  cinematic_scene = 0;
+  current_section = 0;
+  player.removeFromWorld();
+  checkPlayerSpawn();
+}
+
+//Interaction with UIs.
+function mouseClicked() {
+  //Language selection.
+  if (ui.playerisat == 0 && ui.animation_in_progress == 0) {
+    if (
+      mouseX >= width * 0.4 &&
+      mouseX <= width * 0.4 + width * 0.2 &&
+      mouseY >= height * 0.3 &&
+      mouseY <= height * 0.3 + height * 0.2
+    ) {
+      console.log("English!");
+      ui.animation_in_progress = 1;
+      ui.transition();
+      ui.language = 0;
+      ui.playerisat = 1;
+    }
+
+    if (
+      mouseX >= width * 0.4 &&
+      mouseX <= width * 0.4 + width * 0.2 &&
+      mouseY >= height * 0.63 &&
+      mouseY <= height * 0.63 + height * 0.2
+    ) {
+      console.log("Arabic!");
+      ui.animation_in_progress = 1;
+      ui.language = 1;
+      ui.playerisat = 1;
+    }
+  }
+
+  //Start menu.
+  if (ui.playerisat == 1 && ui.animation_in_progress == 0) {
+    if (
+      mouseX >= width * 0.4 &&
+      mouseX <= width * 0.4 + width * 0.2 &&
+      mouseY >= height * 0.3 &&
+      mouseY <= height * 0.3 + height * 0.2
+    ) {
+      //Add transition animation here.
+      console.log("Game start!");
+      ui.animation_in_progress = 1;
+
+      //Apply force upwards to avoid player being stuck in something.
+      Matter.Body.setPosition(
+        player.body,
+        createVector(width * 0.25, height * 0.6)
+      );
+
+      ui.playerisat = 2;
+    }
+
+    if (
+      mouseX >= width * 0.4 &&
+      mouseX <= width * 0.4 + width * 0.2 &&
+      mouseY >= height * 0.63 &&
+      mouseY <= height * 0.63 + height * 0.2
+    ) {
+      //Add transition animation here.
+      console.log("Credits!");
+      ui.animation_in_progress = 1;
+      ui.playerisat = 3;
+    }
+  }
+
+  //Credits.
+  if (ui.playerisat == 3 && ui.animation_in_progress == 0) {
+    if (
+      mouseX >= width * 0.4 &&
+      mouseX <= width * 0.4 + width * 0.2 &&
+      mouseY >= height * 0.63 &&
+      mouseY <= height * 0.63 + height * 0.2
+    ) {
+      console.log("Exit credits!");
+      ui.animation_in_progress = 1;
+
+      ui.playerisat = 1;
+    }
+  }
+
+  //The message.
+  if (ui.playerisat == 4 && ui.animation_in_progress == 0) {
+    if (
+      mouseX >= width * 0.4 &&
+      mouseX <= width * 0.4 + width * 0.2 &&
+      mouseY >= height * 0.63 &&
+      mouseY <= height * 0.63 + height * 0.2
+    ) {
+      console.log("Exit message!");
+      ui.animation_in_progress = 1;
+      ui.playerisat = 1;
+      resetGameValues();
+      resetLevelValues();
+    }
+  }
+
+  //Results
+  if (showing_results == 1 && ui.animation_in_progress == 0) {
+    if (
+      mouseX >= width * 0.4 &&
+      mouseX <= width * 0.4 + width * 0.2 &&
+      mouseY >= height * 0.63 &&
+      mouseY <= height * 0.63 + height * 0.2
+    ) {
+      console.log("Continuing");
+      showing_results = 0;
+    }
+  }
+}
+
 function checkInputs() {
   // ------- Part 1 controls. ----------
-  if (part == 1) {
+  if (part == 1 && showing_results == 0) {
     if (keyIsDown(LEFT_ARROW) === true && keyIsDown(RIGHT_ARROW) === true) {
       Matter.Body.applyForce(
         player.body,
@@ -806,7 +973,7 @@ function checkInputs() {
   // ------- Part 2 controls. ----------
   //The idea here is that the character cannot move,
   //and upon the text appears, it will spawn a circle which will lend a jetpack.
-  if (part == 2 && cinematic_scene == 0) {
+  if (part == 2 && cinematic_scene == 0 && showing_results == 0) {
     if (keyIsDown(LEFT_ARROW) === true) {
       cinematic_scene = 1;
     }
@@ -817,7 +984,7 @@ function checkInputs() {
   }
 
   //Once cinematic passes into 2, give player ability to fly.
-  if (part == 2 && cinematic_scene == 2) {
+  if (part == 2 && cinematic_scene == 2 && showing_results == 0) {
     if (keyIsDown(32) === true) {
       //console.log(Body.getAngularVelocity(player.body));
 
@@ -844,7 +1011,7 @@ function checkInputs() {
   // ------- Part 3 controls. ----------
   //The idea here is that the character cannot move,
   //and upon the text appears, the character will be able to pick the jetpack from the supplier.
-  if (part == 3 && cinematic_scene == 3) {
+  if (part == 3 && cinematic_scene == 3 && showing_results == 0) {
     if (keyIsDown(LEFT_ARROW) === true) {
       cinematic_scene = 4;
     }
@@ -855,7 +1022,12 @@ function checkInputs() {
   }
 
   //Once cinematic passes into 2, give player ability to fly.
-  if (part == 3 && cinematic_scene == 5 && player.crashed == 0) {
+  if (
+    part == 3 &&
+    cinematic_scene == 5 &&
+    player.crashed == 0 &&
+    showing_results == 0
+  ) {
     if (keyIsDown(32) === true) {
       //console.log(Body.getAngularVelocity(player.body));
       //Done with help of the following material: https://stackoverflow.com/questions/35827012/matter-js-calculating-force-needed

@@ -226,6 +226,10 @@ class Player {
         //Reset Level Values (For example, it resets the value of the platform.)
         resetLevelValues();
 
+        //Trigger transition animation and show results UI.
+        ui.animation_in_progress = 1;
+        showResults();
+
         //This is not the only switch statement anymore... I think...
         switch (part) {
           case 1:

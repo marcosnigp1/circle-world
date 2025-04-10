@@ -10,6 +10,9 @@ class Cinematics {
 
     //White screen fulfill effect.
     this.transparency_effect = 0.0;
+
+    //Angle value for circle.
+    this.angle = 0;
   }
 
   //Circle gives Jetpack to the player (triangle).
@@ -44,25 +47,64 @@ class Cinematics {
       //Circle appears and give a jetpack.
       if (this.internal_seconds > 4 && this.internal_seconds < 18) {
         push();
-        fill(0, 20, 50);
+        stroke(0, 20, 50);
+        noFill();
 
         if (this.internal_seconds >= 5 && this.internal_seconds <= 7) {
           this.position.x -= width * 0.002;
+
           circle(this.position.x, this.position.y, width * 0.05);
+
+          //The Eyes.
+          translate(this.position.x, this.position.y);
+          rotate(this.angle);
+          rectMode(CENTER);
+          line(0, height * 0.002, 0, height * 0.006);
+          line(-width * 0.004, height * 0.002, -width * 0.004, height * 0.006);
+
+          pop();
+
+          //Increase angle value.
+          this.angle -= 0.2;
         }
 
         if (this.internal_seconds >= 8 && this.internal_seconds <= 9) {
           this.jetpack_position.x -= width * 0.0015;
           rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
           circle(this.position.x, this.position.y, width * 0.05);
+
+          //The Eyes.
+          translate(this.position.x, this.position.y);
+          rotate(this.angle);
+          rectMode(CENTER);
+          line(0, height * 0.002, 0, height * 0.006);
+          line(-width * 0.004, height * 0.002, -width * 0.004, height * 0.006);
+
+          pop();
         }
 
         //Only circle moves.
         if (this.internal_seconds >= 10 && this.internal_seconds <= 12) {
           this.position.x += width * 0.002;
           rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+
           circle(this.position.x, this.position.y, width * 0.05);
+
+          //Display eyes for random circle.
+
+          //The Eyes.
+          translate(this.position.x, this.position.y);
+          rotate(this.angle);
+          rectMode(CENTER);
+          line(0, height * 0.002, 0, height * 0.006);
+          line(-width * 0.004, height * 0.002, -width * 0.004, height * 0.006);
+
+          pop();
+
+          //Increase angle value.
+          this.angle += 0.2;
         }
+        pop();
 
         if (this.internal_seconds >= 13 && this.internal_seconds <= 15) {
           push();
@@ -157,7 +199,7 @@ class Cinematics {
             player = new Player_Rectangle(
               player.body.position.x,
               player.body.position.y,
-              width * 0.02
+              width * 0.025
             );
           }
         }

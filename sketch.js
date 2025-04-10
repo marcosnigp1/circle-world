@@ -860,7 +860,7 @@ function checkPlayerSpawn() {
 
     //Part 3 is Rectangle.
     case 3:
-      player = new Player_Rectangle(width * 0.25, height * 0.4, width * 0.02);
+      player = new Player_Rectangle(width * 0.25, height * 0.4, width * 0.025);
       break;
 
     default:
@@ -1056,8 +1056,9 @@ function checkInputs() {
       });
     }
 
-    //Restart Key, exclusive to second part.
+    //Restart Key, exclusive to second and third part.
     if (keyIsDown(82) == true) {
+      ui.transition();
       current_section = 0;
       part = 2;
       swimming = 0;
@@ -1098,8 +1099,9 @@ function checkInputs() {
       });
     }
 
-    //Restart Key, exclusive to second part.
+    //Restart Key, exclusive to second and third part.
     if (keyIsDown(82) == true) {
+      ui.transition();
       current_section = 0;
       part = 3;
       swimming = 0;

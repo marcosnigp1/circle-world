@@ -68,11 +68,18 @@ class Player {
     push();
 
     noStroke();
-    fill(50, 50, 50);
+    strokeWeight(2);
+    stroke(50, 50, 50);
+    noFill();
     translate(pos.x, pos.y);
     rotate(angle);
     rectMode(CENTER);
     circle(0, 0, this.r * 2); //this.r*2 helps in visualizing correctly the circles.
+
+    //The Eyes.
+    line(0, height * 0.002, 0, height * 0.006);
+    line(-width * 0.004, height * 0.002, -width * 0.004, height * 0.006);
+
     pop();
 
     //Show pop up messages.
@@ -248,7 +255,7 @@ class Player {
             player = new Player_Rectangle(
               width * 0.25,
               height * 0.4,
-              width * 0.02
+              width * 0.025
             );
             part += 1;
             cinematic_scene++;
@@ -311,10 +318,14 @@ class Player_Triangle extends Player {
   }
 
   show() {
+    let pos = this.body.position;
+    let angle = this.body.angle;
+
     if (cinematic_scene < 2) {
       push();
-      noStroke();
-      fill(50, 50, 50);
+      strokeWeight(2);
+      stroke(50, 50, 50);
+      noFill();
       triangle(
         this.body.vertices[0].x,
         this.body.vertices[0].y,
@@ -323,13 +334,22 @@ class Player_Triangle extends Player {
         this.body.vertices[2].x,
         this.body.vertices[2].y
       ); //this.r*2 helps in visualizing correctly the circles.
+
+      //The Eyes.
+      translate(pos.x, pos.y);
+      rotate(angle);
+      rectMode(CENTER);
+
+      line(-width * 0.006, -height * 0.006, width * 0.006, -height * 0.005);
+      line(-width * 0.005, -height * 0.015, width * 0.005, -height * 0.015);
       pop();
     }
 
     if (cinematic_scene == 2) {
       push();
-      noStroke();
-      fill(50, 50, 50);
+      strokeWeight(2);
+      stroke(50, 50, 50);
+      noFill();
       //I have to do this, there is no other way from what I can recall.
       //translate(0, 0);
       beginShape();
@@ -337,6 +357,14 @@ class Player_Triangle extends Player {
       vertex(this.triangle.vertices[1].x, this.triangle.vertices[1].y);
       vertex(this.triangle.vertices[2].x, this.triangle.vertices[2].y);
       endShape(CLOSE);
+
+      //The Eyes.
+      translate(pos.x, pos.y);
+      rotate(angle);
+      rectMode(CENTER);
+
+      line(-width * 0.006, -height * 0.006, width * 0.006, -height * 0.005);
+      line(-width * 0.005, -height * 0.015, width * 0.005, -height * 0.015);
       pop();
     }
 
@@ -453,27 +481,49 @@ class Player_Rectangle extends Player {
   }
 
   show() {
+    let pos = this.body.position;
+    let angle = this.body.angle;
+
     if (cinematic_scene < 5) {
       push();
-      noStroke();
-      fill(50, 50, 50);
+      strokeWeight(2);
+      stroke(50, 50, 50);
+      noFill();
       beginShape();
       vertex(this.body.vertices[0].x, this.body.vertices[0].y);
       vertex(this.body.vertices[1].x, this.body.vertices[1].y);
       vertex(this.body.vertices[2].x, this.body.vertices[2].y);
       vertex(this.body.vertices[3].x, this.body.vertices[3].y);
       endShape(CLOSE);
+
+      //The Eyes.
+      translate(pos.x, pos.y);
+      rotate(angle);
+      rectMode(CENTER);
+
+      line(-width * 0.006, -height * 0.006, width * 0.006, -height * 0.005);
+      line(-width * 0.005, -height * 0.015, width * 0.005, -height * 0.015);
+
       pop();
     } else if (cinematic_scene == 5 || cinematic_scene == 6) {
       push();
-      noStroke();
-      fill(50, 50, 50);
+      strokeWeight(2);
+      stroke(50, 50, 50);
+      noFill();
       beginShape();
       vertex(this.rectangle.vertices[0].x, this.rectangle.vertices[0].y);
       vertex(this.rectangle.vertices[1].x, this.rectangle.vertices[1].y);
       vertex(this.rectangle.vertices[2].x, this.rectangle.vertices[2].y);
       vertex(this.rectangle.vertices[3].x, this.rectangle.vertices[3].y);
       endShape(CLOSE);
+
+      translate(pos.x, pos.y);
+      rotate(angle);
+      rectMode(CENTER);
+
+      line(-width * 0.006, -height * 0.006, width * 0.006, -height * 0.005);
+      line(-width * 0.005, -height * 0.015, width * 0.005, -height * 0.015);
+
       pop();
     }
 

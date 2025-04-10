@@ -5,6 +5,7 @@ class UI {
     this.animation_in_progress = 0; //Check if there is an animation in progress.
     this.time = 0; //For transition animations.
     this.fade = 255;
+    this.restarted = 0;
   }
 
   //BACKGROUNDS
@@ -191,6 +192,7 @@ class UI {
       this.animation_in_progress = 0;
       this.time = 0;
       this.fade = 255;
+      this.restarted = 0;
     }
   }
 

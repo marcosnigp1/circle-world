@@ -4,6 +4,7 @@ class UI {
     this.language = 0; //0 == English  //1 == Arabic.
     this.animation_in_progress = 0; //Check if there is an animation in progress.
     this.time = 0; //For transition animations.
+    this.fade = 255;
   }
 
   //BACKGROUNDS
@@ -109,10 +110,10 @@ class UI {
     //-------- Language selection ------------
 
     //English
-    push();
+    /*     push();
     fill(0, 0, 255);
     rect(width * 0.4, height * 0.3, width * 0.2, height * 0.2); //Parameters to use for condition.
-    pop();
+    pop(); */
 
     push();
     fill(255);
@@ -121,10 +122,10 @@ class UI {
     pop();
 
     //Arabic
-    push();
+    /*     push();
     fill(0, 0, 255);
     rect(width * 0.4, height * 0.63, width * 0.2, height * 0.2); //Parameters to use for condition.
-    pop();
+    pop(); */
 
     push();
     fill(255);
@@ -177,9 +178,19 @@ class UI {
       console.log("AAAA");
     }
 
+    if (this.time >= 0 && this.time < 3) {
+      push();
+      fill(0, 0, 0, this.fade);
+      rect(width * 0.2, -1, width * 0.6, height * 1.1);
+      pop();
+
+      this.fade -= 2;
+    }
+
     if (this.time == 3) {
       this.animation_in_progress = 0;
       this.time = 0;
+      this.fade = 255;
     }
   }
 

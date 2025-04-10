@@ -112,7 +112,7 @@ class Activable_Level_Obstacle extends Level_Obstacle {
   show() {
     push();
     noStroke();
-    fill(0, 180, 10);
+    fill(71, 242, 90);
     translate(this.body.position.x, this.body.position.y);
     rotate(this.body.angle);
     rectMode(CENTER);

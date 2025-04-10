@@ -53,18 +53,42 @@ let ui_seconds = 0;
 let showing_results = 0;
 
 //-- Media variables --.
-//Images
-
+//Menu Images
 let main_menu;
 let main_hud;
 let gameplay_hud;
 let language_selection_menu;
 
+//Section Images
+let section_0_img;
+let section_1_img;
+let section_2_img;
+let section_3_img;
+let section_4_img;
+let section_5_img;
+let section_6_img;
+
+//Font
+let font;
+
 function preload() {
+  //Menu Images
   main_menu = loadImage("media/images/main_menu.png");
   main_hud = loadImage("media/images/menu_hud.png");
   gameplay_hud = loadImage("media/images/gameplay_hud.png");
   language_selection_menu = loadImage("media/images/language_selection.png");
+
+  //Sections Images
+  section_0_img = loadImage("media/images/sections/section_0.png");
+  section_1_img = loadImage("media/images/sections/section_1.png");
+  section_2_img = loadImage("media/images/sections/section_2.png");
+  section_3_img = loadImage("media/images/sections/section_3.png");
+  section_4_img = loadImage("media/images/sections/section_4.png");
+  section_5_img = loadImage("media/images/sections/section_5.png");
+  section_6_img = loadImage("media/images/sections/section_6.png");
+
+  //Font
+  font = loadFont("media/font/Comic_Neue/ComicNeue-bold.ttf");
 }
 
 function setup() {
@@ -518,6 +542,9 @@ function setup() {
 }
 
 function draw() {
+  //Use this text font.
+  textFont(font);
+
   background(0, 10, 20);
 
   trackTime();
@@ -567,8 +594,6 @@ function gameLogic() {
   //Draw levels.
   levels.level_test();
 
-  //Draw player.
-  player.show();
   player.clampVelocity(); //Check if surpasses fixed values of velocity, and if does, clamp it. Also makes sure the mass stays the same.
   player.checkCurrentPosition();
 
@@ -584,9 +609,12 @@ function gameLogic() {
 
   //Draw obstacles according to level.
   if (current_section == 0) {
+    image(section_0_img, 0, 0);
+    section_0_img.resize(width, height);
+
     for (let i = 0; i < obstacles.length; i++) {
       if (i == 0) {
-        obstacles[i].show();
+        //obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
       } else {
@@ -595,22 +623,24 @@ function gameLogic() {
       }
 
       if (i == 29) {
-        obstacles[i].show();
+        //obstacles[i].show();
         obstacles[i].body.isSensor = false;
       }
 
       //The roof
       if (i == 30) {
-        obstacles[i].show();
+        //obstacles[i].show();
         obstacles[i].body.isSensor = false;
       }
     }
   }
 
   if (current_section == 1) {
+    image(section_1_img, 0, 0);
+    section_1_img.resize(width, height);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 1 && i <= 5) {
-        obstacles[i].show();
+        //obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
       } else {
@@ -619,16 +649,21 @@ function gameLogic() {
       }
 
       if (i == 30) {
-        obstacles[i].show();
+        //obstacles[i].show();
         obstacles[i].body.isSensor = false;
       }
     }
   }
 
   if (current_section == 2) {
+    image(section_2_img, 0, 0);
+    section_2_img.resize(width, height);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 6 && i <= 14) {
-        obstacles[i].show();
+        if ((i >= 7 && i <= 8) || i == 13) {
+          obstacles[i].show();
+        }
+
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
       } else {
@@ -637,21 +672,23 @@ function gameLogic() {
       }
 
       if (i == 30) {
-        obstacles[i].show();
+        //obstacles[i].show();
         obstacles[i].body.isSensor = false;
       }
 
       if (i >= 32 && i <= 39 && part == 3) {
-        obstacles[i].show();
+        //obstacles[i].show();
         obstacles[i].body.isSensor = true;
       }
     }
   }
 
   if (current_section == 3) {
+    image(section_3_img, 0, 0);
+    section_3_img.resize(width, height);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 15 && i <= 21) {
-        obstacles[i].show();
+        //obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
 
@@ -669,16 +706,18 @@ function gameLogic() {
 
       //Specific roof made for this specific section.
       if (i == 31) {
-        obstacles[i].show();
+        //obstacles[i].show();
         obstacles[i].body.isSensor = false;
       }
     }
   }
 
   if (current_section == 4) {
+    image(section_4_img, 0, 0);
+    section_4_img.resize(width, height);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 22 && i <= 23) {
-        obstacles[i].show();
+        //obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
       } else {
@@ -687,16 +726,18 @@ function gameLogic() {
       }
 
       if (i == 30) {
-        obstacles[i].show();
+        //obstacles[i].show();
         obstacles[i].body.isSensor = false;
       }
     }
   }
 
   if (current_section == 5) {
+    image(section_5_img, 0, 0);
+    section_5_img.resize(width, height);
     for (let i = 0; i < obstacles.length; i++) {
       if (i == 24) {
-        obstacles[i].show();
+        //obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
       } else {
@@ -705,16 +746,18 @@ function gameLogic() {
       }
 
       if (i == 30) {
-        obstacles[i].show();
+        //obstacles[i].show();
         obstacles[i].body.isSensor = false;
       }
     }
   }
 
   if (current_section == 6) {
+    image(section_6_img, 0, 0);
+    section_6_img.resize(width, height);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 25 && i <= 28) {
-        obstacles[i].show();
+        //obstacles[i].show();
         //Disable/Enable collisions.
         obstacles[i].body.isSensor = false;
 
@@ -727,11 +770,14 @@ function gameLogic() {
       }
 
       if (i == 30) {
-        obstacles[i].show();
+        //obstacles[i].show();
         obstacles[i].body.isSensor = false;
       }
     }
   }
+
+  //Draw player.
+  player.show();
 
   // The platforms actions.
   if (platform_movement_started == true) {

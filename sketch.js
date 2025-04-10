@@ -52,6 +52,21 @@ let ui;
 let ui_seconds = 0;
 let showing_results = 0;
 
+//-- Media variables --.
+//Images
+
+let main_menu;
+let main_hud;
+let gameplay_hud;
+let language_selection_menu;
+
+function preload() {
+  main_menu = loadImage("media/images/main_menu.png");
+  main_hud = loadImage("media/images/menu_hud.png");
+  gameplay_hud = loadImage("media/images/gameplay_hud.png");
+  language_selection_menu = loadImage("media/images/language_selection.png");
+}
+
 function setup() {
   //This canvas fits into every aspect ratio.
 
@@ -517,6 +532,7 @@ function draw() {
 
   if (ui.playerisat == 2) {
     gameLogic();
+    ui.gameplay_bars();
   }
 
   if (ui.playerisat == 3) {
@@ -732,7 +748,6 @@ function gameLogic() {
   }
 
   //Draw black bars.
-  //levels.black_bars();
 
   ////////                        ////////////////
   /////// START PLAYER CONTROL.  /////////////

@@ -6,12 +6,55 @@ class UI {
     this.time = 0; //For transition animations.
   }
 
+  //BACKGROUNDS
+
+  gameplay_bars() {
+    push();
+    image(gameplay_hud, 0, 0);
+    gameplay_hud.resize(width, height); //Alwayds do this for each element.
+    pop();
+  }
+
+  side_bars() {
+    push();
+    /* fill(0); */
+
+    image(main_hud, 0, 0);
+    main_hud.resize(width, height); //Alwayds do this for each element.
+
+    //Left black bar.
+    /*     rect(
+      this.position.x * 0.0,
+      this.position.y * 0.0,
+      this.position.x * 0.2,
+      this.position.y * 1
+    );
+
+    //Right black bar.
+    rect(
+      this.position.x * 0.8,
+      this.position.y * 0.0,
+      this.position.x * 1,
+      this.position.y * 1
+    ); */
+    pop();
+  }
+
+  //------SELECTIONS------
+
   //Player is at 0.
   languageSelection() {
     //-------- Background ------------
-    push();
+    /*     push();
     fill(255);
     rect(width * 0.2, height * 0, width * 0.6, height * 1);
+    pop(); */
+
+    this.side_bars();
+
+    push();
+    image(language_selection_menu, 0, 0);
+    language_selection_menu.resize(width, height); //Alwayds do this for each element.
     pop();
 
     //-------- Language selection ------------
@@ -24,10 +67,10 @@ class UI {
     pop();
 
     //English
-    push();
+    /*     push();
     fill(0, 0, 255);
     rect(width * 0.4, height * 0.3, width * 0.2, height * 0.2); //Parameters to use for condition.
-    pop();
+    pop(); */
 
     push();
     fill(255);
@@ -36,10 +79,10 @@ class UI {
     pop();
 
     //Arabic
-    push();
+    /*     push();
     fill(0, 0, 255);
     rect(width * 0.4, height * 0.63, width * 0.2, height * 0.2); //Parameters to use for condition.
-    pop();
+    pop(); */
 
     push();
     fill(255);
@@ -51,19 +94,19 @@ class UI {
   //Player is at 1.
   startMenu() {
     //-------- Background ------------
-    push();
+    /*     push();
     fill(255);
     rect(width * 0.2, height * 0, width * 0.6, height * 1);
+    pop(); */
+
+    this.side_bars();
+
+    push();
+    image(main_menu, 0, 0);
+    main_menu.resize(width, height); //Alwayds do this for each element.
     pop();
 
     //-------- Language selection ------------
-
-    //Text
-    push();
-    fill(0);
-    textSize(width * 0.05);
-    text("Circled World", width * 0.345, height * 0.15);
-    pop();
 
     //English
     push();

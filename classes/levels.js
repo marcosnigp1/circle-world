@@ -3,28 +3,6 @@ class Level_Design {
     this.position = createVector(width, height);
   }
 
-  black_bars() {
-    push();
-    fill(0);
-
-    //Left black bar.
-    rect(
-      this.position.x * 0.0,
-      this.position.y * 0.0,
-      this.position.x * 0.2,
-      this.position.y * 1
-    );
-
-    //Right black bar.
-    rect(
-      this.position.x * 0.8,
-      this.position.y * 0.0,
-      this.position.x * 1,
-      this.position.y * 1
-    );
-    pop();
-  }
-
   //List of Levels.
 
   //Level Test

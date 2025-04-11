@@ -107,9 +107,10 @@ function preload() {
   section_5_img = loadImage("media/images/sections/section_5.png");
   section_6_img = loadImage("media/images/sections/section_6.png");
 
+  //This is really lagging the game...
   //HUD Images
-  arrow_keys = loadImage("media/images/hud/arrowkeys.png");
-  spacebar = loadImage("media/images/hud/spacebar.png");
+  /*   arrow_keys = loadImage("media/images/hud/arrowkeys.png");
+  spacebar = loadImage("media/images/hud/spacebar.png"); */
 
   //Elements
   jetpack = loadImage("media/images/elements/jetpack.png");

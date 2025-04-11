@@ -280,7 +280,7 @@ class UI {
     fill(0);
     textSize(width * 0.018);
     text(
-      "We can not assume that this world meets every single, there are\nthere people who are different and need us to adapt our world\nto theirs.\n\nJust like that, we will be able to have a world where every single\nof us can coexist peacefully.",
+      "We can not assume that this world meets every single need, there\nare people who are different and need us to adapt the world\nto them.\n\nJust like that, we will be able to have a world where every single\nof us can coexist peacefully.",
       width * 0.25,
       height * 0.25
     );

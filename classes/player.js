@@ -510,25 +510,56 @@ class Player_Rectangle extends Player {
 
       pop();
     } else if (cinematic_scene == 5 || cinematic_scene == 6) {
-      push();
-      strokeWeight(2);
-      stroke(50, 50, 50);
-      noFill();
-      beginShape();
-      vertex(this.rectangle.vertices[0].x, this.rectangle.vertices[0].y);
-      vertex(this.rectangle.vertices[1].x, this.rectangle.vertices[1].y);
-      vertex(this.rectangle.vertices[2].x, this.rectangle.vertices[2].y);
-      vertex(this.rectangle.vertices[3].x, this.rectangle.vertices[3].y);
-      endShape(CLOSE);
+      if (this.crashed == 0) {
+        push();
+        strokeWeight(2);
+        stroke(50, 50, 50);
+        noFill();
+        beginShape();
+        vertex(this.rectangle.vertices[0].x, this.rectangle.vertices[0].y);
+        vertex(this.rectangle.vertices[1].x, this.rectangle.vertices[1].y);
+        vertex(this.rectangle.vertices[2].x, this.rectangle.vertices[2].y);
+        vertex(this.rectangle.vertices[3].x, this.rectangle.vertices[3].y);
+        endShape(CLOSE);
 
-      translate(pos.x, pos.y);
-      rotate(angle);
-      rectMode(CENTER);
+        translate(pos.x, pos.y);
+        rotate(angle);
+        rectMode(CENTER);
 
-      line(-width * 0.006, -height * 0.006, width * 0.006, -height * 0.005);
-      line(-width * 0.005, -height * 0.015, width * 0.005, -height * 0.015);
+        line(-width * 0.006, -height * 0.006, width * 0.006, -height * 0.005);
+        line(-width * 0.005, -height * 0.015, width * 0.005, -height * 0.015);
 
-      pop();
+        pop();
+      } else if (this.crashed == 1) {
+        push();
+        strokeWeight(2);
+        stroke(50, 50, 50);
+        noFill();
+        beginShape();
+        vertex(this.rectangle.vertices[0].x, this.rectangle.vertices[0].y);
+        vertex(this.rectangle.vertices[1].x, this.rectangle.vertices[1].y);
+        vertex(this.rectangle.vertices[2].x, this.rectangle.vertices[2].y);
+        vertex(this.rectangle.vertices[3].x, this.rectangle.vertices[3].y);
+        endShape(CLOSE);
+
+        translate(pos.x, pos.y);
+        rotate(angle);
+        rectMode(CENTER);
+
+        //Eyes do change here.
+        line(-width * 0.003, -height * 0.006, width * 0.00005, -height * 0.005);
+        line(-width * 0.003, -height * 0.015, width * 0.00005, -height * 0.015);
+
+        //Damages.
+        stroke(50, 50, 50, 120);
+        line(-width * 0.01, -height * 0.025, width * 0.00005, height * 0.01);
+
+        line(width * 0.01, -height * 0.025, width * 0.00005, height * 0.01);
+
+        line(width * 0.015, -height * 0.01, width * 0.0025, height * 0.015);
+
+        pop();
+      }
     }
 
     //Show pop up messages.

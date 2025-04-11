@@ -85,25 +85,52 @@ class Player {
     //Show pop up messages.
     if (this.interact == 1) {
       if (seconds % 2 == 1) {
-        push();
-        fill(150);
-        text(
-          "PRESS SPACEBAR",
-          this.body.position.x - width * 0.07,
-          this.body.position.y - height * 0.05
-        );
-        textSize(width * 0.12);
-        pop();
+        if (ui.language == 0) {
+          push();
+          fill(150);
+          text(
+            "PRESS SPACEBAR",
+            this.body.position.x - width * 0.07,
+            this.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+          pop();
+        } else if (ui.language == 1) {
+          push();
+          fill(150);
+          let reshaped_text = ArabicReshaper.convertArabic("اضغط على RABECAPS");
+          let display_text = reshaped_text.split("").reverse().join("");
+          text(
+            display_text,
+            this.body.position.x - width * 0.07,
+            this.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+          pop();
+        }
       } else {
-        push();
-        fill(0);
-        text(
-          "PRESS SPACEBAR",
-          this.body.position.x - width * 0.07,
-          this.body.position.y - height * 0.05
-        );
-        textSize(width * 0.12);
-        pop();
+        if (ui.language == 0) {
+          push();
+          fill(0);
+          text(
+            "PRESS SPACEBAR",
+            this.body.position.x - width * 0.07,
+            this.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+          pop();
+        } else if (ui.language == 1) {
+          push();
+          fill(0);
+          let reshaped_text = ArabicReshaper.convertArabic("اضغط على RABECAPS");
+          let display_text = reshaped_text.split("").reverse().join("");
+          text(
+            display_text,
+            this.body.position.x - width * 0.07,
+            this.body.position.y - height * 0.05
+          );
+          pop();
+        }
       }
     }
   }
@@ -368,25 +395,52 @@ class Player_Triangle extends Player {
     //Show pop up messages.
     if (this.interact == 1) {
       if (seconds % 2 == 1) {
-        push();
-        fill(150);
-        text(
-          "PRESS SPACEBAR",
-          this.body.position.x - width * 0.07,
-          this.body.position.y - height * 0.05
-        );
-        textSize(width * 0.12);
-        pop();
+        if (ui.language == 0) {
+          push();
+          fill(150);
+          text(
+            "PRESS SPACEBAR",
+            this.body.position.x - width * 0.07,
+            this.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+          pop();
+        } else if (ui.language == 1) {
+          push();
+          fill(150);
+          let reshaped_text = ArabicReshaper.convertArabic("اضغط على RABECAPS");
+          let display_text = reshaped_text.split("").reverse().join("");
+          text(
+            display_text,
+            this.body.position.x - width * 0.05,
+            this.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+          pop();
+        }
       } else {
-        push();
-        fill(0);
-        text(
-          "PRESS SPACEBAR",
-          this.body.position.x - width * 0.07,
-          this.body.position.y - height * 0.05
-        );
-        textSize(width * 0.12);
-        pop();
+        if (ui.language == 0) {
+          push();
+          fill(0);
+          text(
+            "PRESS SPACEBAR",
+            this.body.position.x - width * 0.05,
+            this.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+          pop();
+        } else if (ui.language == 1) {
+          push();
+          fill(0);
+          let reshaped_text = ArabicReshaper.convertArabic("اضغط على RABECAPS");
+          let display_text = reshaped_text.split("").reverse().join("");
+          text(
+            display_text,
+            this.body.position.x - width * 0.05,
+            this.body.position.y - height * 0.05
+          );
+          pop();
+        }
       }
     }
   }
@@ -565,25 +619,52 @@ class Player_Rectangle extends Player {
     //Show pop up messages.
     if (this.interact == 1) {
       if (seconds % 2 == 1) {
-        push();
-        fill(150);
-        text(
-          "PRESS SPACEBAR",
-          this.body.position.x - width * 0.015,
-          this.body.position.y - height * 0.05
-        );
-        textSize(width * 0.12);
-        pop();
+        if (ui.language == 0) {
+          push();
+          fill(150);
+          text(
+            "PRESS SPACEBAR",
+            this.body.position.x - width * 0.04,
+            this.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+          pop();
+        } else if (ui.language == 1) {
+          push();
+          fill(150);
+          let reshaped_text = ArabicReshaper.convertArabic("اضغط على RABECAPS");
+          let display_text = reshaped_text.split("").reverse().join("");
+          text(
+            display_text,
+            this.body.position.x - width * 0.04,
+            this.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+          pop();
+        }
       } else {
-        push();
-        fill(0);
-        text(
-          "PRESS SPACEBAR",
-          this.body.position.x - width * 0.015,
-          this.body.position.y - height * 0.05
-        );
-        textSize(width * 0.12);
-        pop();
+        if (ui.language == 0) {
+          push();
+          fill(0);
+          text(
+            "PRESS SPACEBAR",
+            this.body.position.x - width * 0.04,
+            this.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+          pop();
+        } else if (ui.language == 1) {
+          push();
+          fill(0);
+          let reshaped_text = ArabicReshaper.convertArabic("اضغط على RABECAPS");
+          let display_text = reshaped_text.split("").reverse().join("");
+          text(
+            display_text,
+            this.body.position.x - width * 0.04,
+            this.body.position.y - height * 0.05
+          );
+          pop();
+        }
       }
     }
   }

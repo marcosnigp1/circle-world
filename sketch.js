@@ -1,4 +1,6 @@
 //Circle World - By Marcos Hernández
+//Matter.JS for the physics. https://brm.io/matter-js/
+//Javascript-Arabic-Reshaper by Iouy  https://github.com/louy/Javascript-Arabic-Reshaper/releases/tag/v1.1.0
 
 // ------ Physics related variables ------
 let Engine = Matter.Engine,
@@ -85,7 +87,8 @@ let crack2;
 let crack3;
 
 //Font
-let font;
+let font_english;
+let font_arabic;
 
 function preload() {
   //Menu Images
@@ -121,7 +124,8 @@ function preload() {
   crack3 = loadImage("media/images/effects/crack3.png");
 
   //Font
-  font = loadFont("media/font/Comic_Neue/ComicNeue-bold.ttf");
+  font_english = loadFont("media/font/Comic_Neue/ComicNeue-bold.ttf");
+  font_arabic = loadFont("media/font/Noto_Sans_Arabic/NotoSansArabic-Bold.ttf");
 }
 
 function setup() {
@@ -572,11 +576,18 @@ function setup() {
 
   //For cinematics.
   cinematics = new Cinematics();
+
+  //For arabic font.
 }
 
 function draw() {
   //Use this text font.
-  textFont(font);
+  if (ui.language == 0) {
+    textFont(font_english);
+  } else if (ui.language == 1) {
+    //Enable right-to-left text direction
+    textFont(font_arabic);
+  }
 
   background(0, 10, 20);
 
@@ -1061,7 +1072,7 @@ function checkInputs() {
       Matter.Body.applyForce(
         player.body,
         player.body.position,
-        createVector(-0.001, 0)
+        createVector(-0.0011, 0)
       );
     }
 
@@ -1069,7 +1080,7 @@ function checkInputs() {
       Matter.Body.applyForce(
         player.body,
         player.body.position,
-        createVector(0.001, 0)
+        createVector(0.0011, 0)
       );
     }
   }

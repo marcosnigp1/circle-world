@@ -40,12 +40,24 @@ class Cinematics {
       if (this.internal_seconds < 5) {
         push();
         fill(0);
-        text(
-          "I can not move!",
-          player.body.position.x - width * 0.02,
-          player.body.position.y - height * 0.05
-        );
-        textSize(width * 0.12);
+        if (ui.language == 0) {
+          text(
+            "I can not move!",
+            player.body.position.x - width * 0.02,
+            player.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+        } else if (ui.language == 1) {
+          let reshaped_text = ArabicReshaper.convertArabic("لا أستطيع التحرك!");
+          let display_text = reshaped_text.split("").reverse().join("");
+          text(
+            display_text,
+            player.body.position.x - width * 0.02,
+            player.body.position.y - height * 0.05
+          );
+          textSize(width * 0.12);
+        }
+
         pop();
       }
 
@@ -155,12 +167,26 @@ class Cinematics {
 
           push();
           fill(0);
-          text(
-            "Will this work?",
-            player.body.position.x - width * 0.02,
-            player.body.position.y - height * 0.05
-          );
-          textSize(width * 0.12);
+          if (ui.language == 0) {
+            text(
+              "Will this work?",
+              player.body.position.x - width * 0.02,
+              player.body.position.y - height * 0.05
+            );
+            textSize(width * 0.12);
+          } else if (ui.language == 1) {
+            let reshaped_text = ArabicReshaper.convertArabic(
+              "هل سينجح هذا الأمر؟"
+            );
+            let display_text = reshaped_text.split("").reverse().join("");
+            text(
+              display_text,
+              player.body.position.x - width * 0.02,
+              player.body.position.y - height * 0.05
+            );
+            textSize(width * 0.12);
+          }
+
           noFill();
           pop();
         }
@@ -243,25 +269,50 @@ class Cinematics {
         //I cant move!
         if (this.internal_seconds < 5) {
           //White background for text.
-          push();
-          noStroke();
-          fill(255);
-          rect(
-            player.body.position.x - width * 0.01,
-            player.body.position.y - height * 0.066,
-            width * 0.42,
-            height * 0.02
-          );
-          pop();
 
           push();
           fill(0);
-          text(
-            "Why have they not build automatic roads?! There is only a jetpack?!",
-            player.body.position.x - width * 0.01,
-            player.body.position.y - height * 0.05
-          );
-          textSize(width * 0.12);
+          if (ui.language == 0) {
+            push();
+            noStroke();
+            fill(255);
+            rect(
+              player.body.position.x - width * 0.01,
+              player.body.position.y - height * 0.066,
+              width * 0.42,
+              height * 0.02
+            );
+            pop();
+
+            text(
+              "Why have they not build automatic roads?! There is only a jetpack?!",
+              player.body.position.x - width * 0.01,
+              player.body.position.y - height * 0.05
+            );
+            textSize(width * 0.12);
+          } else if (ui.language == 1) {
+            push();
+            noStroke();
+            fill(255);
+            rect(
+              player.body.position.x - width * 0.01,
+              player.body.position.y - height * 0.066,
+              width * 0.14,
+              height * 0.02
+            );
+            pop();
+            let reshaped_text = ArabicReshaper.convertArabic(
+              "لماذا لم يبنوا طرقاً آلية؟"
+            );
+            let display_text = reshaped_text.split("").reverse().join("");
+            text(
+              display_text,
+              player.body.position.x - width * 0.01,
+              player.body.position.y - height * 0.05
+            );
+            textSize(width * 0.12);
+          }
+
           pop();
         }
 

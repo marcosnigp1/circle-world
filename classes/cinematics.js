@@ -36,7 +36,7 @@ class Cinematics {
         push();
         fill(0);
         text(
-          "I can't move! " + cinematics.internal_seconds,
+          "I can not move!",
           player.body.position.x - width * 0.07,
           player.body.position.y - height * 0.05
         );
@@ -185,8 +185,7 @@ class Cinematics {
           push();
           fill(0);
           text(
-            "Why have they not build automatic roads?! There is only a jetpack?!" +
-              cinematics.internal_seconds,
+            "Why have they not build automatic roads?! There is only a jetpack?!",
             player.body.position.x - width * 0.07,
             player.body.position.y - height * 0.05
           );

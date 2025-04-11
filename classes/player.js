@@ -367,13 +367,11 @@ class Player_Triangle extends Player {
 
     //Show pop up messages.
     if (this.interact == 1) {
-      console.log("Hello??!");
       if (seconds % 2 == 1) {
-        console.log("Hello??!");
         push();
         fill(150);
         text(
-          "(INSERT SPACEBAR ICON)",
+          "PRESS SPACEBAR",
           this.body.position.x - width * 0.07,
           this.body.position.y - height * 0.05
         );
@@ -383,7 +381,7 @@ class Player_Triangle extends Player {
         push();
         fill(0);
         text(
-          "(INSERT SPACEBAR ICON)",
+          "PRESS SPACEBAR",
           this.body.position.x - width * 0.07,
           this.body.position.y - height * 0.05
         );

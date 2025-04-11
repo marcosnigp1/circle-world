@@ -30,7 +30,7 @@ let levels;
 let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 1; //Tracks current position.
+let part = 2; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920; //Game should be created as a window, since this is lagging most machines...
@@ -70,6 +70,10 @@ let section_4_img;
 let section_5_img;
 let section_6_img;
 
+//HUD Images
+let arrow_keys;
+let spacebar;
+
 //Font
 let font;
 
@@ -88,6 +92,10 @@ function preload() {
   section_4_img = loadImage("media/images/sections/section_4.png");
   section_5_img = loadImage("media/images/sections/section_5.png");
   section_6_img = loadImage("media/images/sections/section_6.png");
+
+  //HUD Images
+  arrow_keys = loadImage("media/images/hud/arrowkeys.png");
+  spacebar = loadImage("media/images/hud/spacebar.png");
 
   //Font
   font = loadFont("media/font/Comic_Neue/ComicNeue-bold.ttf");
@@ -1187,7 +1195,11 @@ function keyPressed() {
     window.close(); ///Closes Electron.
   }
 
-  if (key == "r" || key == "R") {
+  if (
+    (key == "r" || key == "R") &&
+    (part == 2 || part == 3) &&
+    (cinematic_scene == 2 || cinematic_scene == 5)
+  ) {
     attempts++;
   }
   if (key === "w") {

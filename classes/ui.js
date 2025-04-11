@@ -1,6 +1,6 @@
 class UI {
   constructor() {
-    this.playerisat = 0; //Track where the player is in the UI or game.  //0 == Game Menu.
+    this.playerisat = 2; //Track where the player is in the UI or game.  //0 == Game Menu.
     this.language = 0; //0 == English  //1 == Arabic.
     this.animation_in_progress = 0; //Check if there is an animation in progress.
     this.time = 0; //For transition animations.
@@ -299,6 +299,15 @@ class UI {
       text(attempts, width * 0.89, height * 0.44);
       pop();
 
+      //How to restart?
+      if (cinematic_scene == 2 || cinematic_scene == 5) {
+        push();
+        fill(255);
+        textSize(width * 0.014);
+        text("(Press R to restart.)", width * 0.84, height * 0.5);
+        pop();
+      }
+
       //----- Controls (They vary depending on the character.) ----//
       push();
       fill(255);
@@ -312,7 +321,12 @@ class UI {
         (part == 2 && cinematic_scene == 0) ||
         (part == 3 && cinematic_scene == 3)
       ) {
-        //Left arrow
+        push();
+        image(arrow_keys, 0, 0);
+        arrow_keys.resize(width, height);
+        pop();
+
+        /*         //Left arrow
         push();
         fill(0);
         rect(width * 0.83, height * 0.66, width * 0.05, height * 0.1);
@@ -322,7 +336,7 @@ class UI {
         push();
         fill(0);
         rect(width * 0.92, height * 0.66, width * 0.05, height * 0.1);
-        pop();
+        pop(); */
       } else if (cinematic_scene == 1 || cinematic_scene == 4) {
         push();
         fill(255);
@@ -331,10 +345,16 @@ class UI {
         pop();
       } else if (cinematic_scene == 2 || cinematic_scene == 5) {
         //Spacebar
+
         push();
+        image(spacebar, 0, 0);
+        spacebar.resize(width, height);
+        pop();
+
+        /*         push();
         fill(0);
         rect(width * 0.83, height * 0.66, width * 0.145, height * 0.1);
-        pop();
+        pop(); */
       }
     }
   }

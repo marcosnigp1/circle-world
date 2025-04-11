@@ -1,6 +1,6 @@
 class UI {
   constructor() {
-    this.playerisat = 2; //Track where the player is in the UI or game.  //0 == Game Menu.
+    this.playerisat = 0; //Track where the player is in the UI or game.  //0 == Game Menu.
     this.language = 0; //0 == English  //1 == Arabic.
     this.animation_in_progress = 0; //Check if there is an animation in progress.
     this.time = 0; //For transition animations.
@@ -176,7 +176,7 @@ class UI {
   transition() {
     if (ui_seconds != seconds) {
       this.time++;
-      console.log("AAAA");
+      //console.log("AAAA");
     }
 
     if (this.time >= 0 && this.time < 3) {

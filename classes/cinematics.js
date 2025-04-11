@@ -28,7 +28,7 @@ class Cinematics {
       //A second has passed.
       if (cinematic_seconds != seconds) {
         this.internal_seconds++;
-        console.log(cinematic_seconds);
+        //console.log(cinematic_seconds);
       }
 
       //I cant move!
@@ -37,7 +37,7 @@ class Cinematics {
         fill(0);
         text(
           "I can not move!",
-          player.body.position.x - width * 0.07,
+          player.body.position.x - width * 0.03,
           player.body.position.y - height * 0.05
         );
         textSize(width * 0.12);
@@ -71,8 +71,18 @@ class Cinematics {
 
         if (this.internal_seconds >= 8 && this.internal_seconds <= 9) {
           push();
+
+          translate(
+            this.jetpack_position.x,
+            this.jetpack_position.y - height * 0.042
+          );
           this.jetpack_position.x -= width * 0.0015;
-          rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+          image(jetpack, 0, 0);
+          //rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+          pop();
+
+          push();
+
           circle(this.position.x, this.position.y, width * 0.05);
 
           //The Eyes.
@@ -88,9 +98,16 @@ class Cinematics {
         //Only circle moves.
         if (this.internal_seconds >= 10 && this.internal_seconds <= 12) {
           push();
-          this.position.x += width * 0.002;
-          rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+          translate(
+            this.jetpack_position.x,
+            this.jetpack_position.y - height * 0.042
+          );
+          image(jetpack, 0, 0);
+          //rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+          pop();
 
+          push();
+          this.position.x += width * 0.002;
           circle(this.position.x, this.position.y, width * 0.05);
 
           //Display eyes for random circle.
@@ -111,16 +128,35 @@ class Cinematics {
 
         if (this.internal_seconds >= 13 && this.internal_seconds <= 15) {
           push();
+          translate(
+            this.jetpack_position.x,
+            this.jetpack_position.y - height * 0.042
+          );
+          image(jetpack, 0, 0);
+          pop();
+
+          //White background for text.
+
+          push();
+          noStroke();
+          fill(255);
+          rect(
+            player.body.position.x - width * 0.01,
+            player.body.position.y - height * 0.066,
+            width * 0.07,
+            height * 0.02
+          );
+          pop();
+
+          push();
           fill(0);
           text(
-            "I guess this will work...",
-            player.body.position.x - width * 0.07,
+            "Will this work?",
+            player.body.position.x - width * 0.02,
             player.body.position.y - height * 0.05
           );
           textSize(width * 0.12);
           noFill();
-          rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
-
           pop();
         }
 
@@ -133,14 +169,20 @@ class Cinematics {
       if (this.jetpack_stays == 1) {
         player.interact = 1;
         push();
-        noFill();
-        rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+        translate(
+          this.jetpack_position.x,
+          this.jetpack_position.y - height * 0.042
+        );
+        image(jetpack, 0, 0);
         pop();
         if (keyIsDown(32) === true) {
           player.interact = 0;
           this.jetpack_stays = 0;
           cinematic_scene = 2;
           this.internal_seconds = 0;
+
+          this.position = (width * 0.85, height * 0.6);
+          this.jetpack_position = (width * 0.5, height * 0.58);
           this.cinematic_started = 0;
 
           //CREATE BODY AGAIN!
@@ -161,32 +203,57 @@ class Cinematics {
       //Initialize position.
       if (this.cinematic_started == 0) {
         this.position = createVector(width * 0.85, height * 0.6);
-        this.jetpack_position = createVector(width * 0.3, height * 0.58);
+        this.jetpack_position = createVector(width * 0.33, height * 0.58);
         this.cinematic_started = 1;
       }
 
       if (cinematic_scene == 3) {
-        rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+        push();
+        translate(
+          this.jetpack_position.x,
+          this.jetpack_position.y - height * 0.042
+        );
+        image(jetpack, 0, 0);
+        pop();
+        //rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
       }
 
       if (cinematic_scene == 4) {
         //A second has passed.
 
-        //Draw jetpack placeholder.
-        rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+        //Draw jetpack.
+        push();
+        translate(
+          this.jetpack_position.x,
+          this.jetpack_position.y - height * 0.042
+        );
+        image(jetpack, 0, 0);
+        pop();
 
         if (cinematic_seconds != seconds) {
           this.internal_seconds++;
-          console.log(cinematic_seconds);
+          //console.log(cinematic_seconds);
         }
 
         //I cant move!
         if (this.internal_seconds < 5) {
+          //White background for text.
+          push();
+          noStroke();
+          fill(255);
+          rect(
+            player.body.position.x - width * 0.01,
+            player.body.position.y - height * 0.066,
+            width * 0.32,
+            height * 0.02
+          );
+          pop();
+
           push();
           fill(0);
           text(
             "Why have they not build automatic roads?! There is only a jetpack?!",
-            player.body.position.x - width * 0.07,
+            player.body.position.x - width * 0.01,
             player.body.position.y - height * 0.05
           );
           textSize(width * 0.12);
@@ -195,11 +262,19 @@ class Cinematics {
 
         if (this.internal_seconds > 5) {
           player.interact = 1;
-          rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04); //Draw jetpack.
+          push();
+          translate(
+            this.jetpack_position.x,
+            this.jetpack_position.y - height * 0.042
+          );
+          image(jetpack, 0, 0);
+          pop();
           if (keyIsDown(32) === true) {
             player.interact = 0;
             cinematic_scene = 5;
             this.internal_seconds = 0;
+            this.position = (width * 0.85, height * 0.6);
+            this.jetpack_position = (width * 0.33, height * 0.58);
 
             //CREATE BODY AGAIN!
             player.removeFromWorld();
@@ -226,7 +301,7 @@ class Cinematics {
       //Do not start counting seconds until the player crashes.
       if (cinematic_seconds != seconds && player.crashed == 1) {
         this.internal_seconds++;
-        console.log(cinematic_seconds);
+        //console.log(cinematic_seconds);
       }
 
       //I cant move!

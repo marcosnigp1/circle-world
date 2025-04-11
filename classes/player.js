@@ -88,7 +88,7 @@ class Player {
         push();
         fill(150);
         text(
-          "(INSERT SPACEBAR ICON)",
+          "PRESS SPACEBAR",
           this.body.position.x - width * 0.07,
           this.body.position.y - height * 0.05
         );
@@ -98,7 +98,7 @@ class Player {
         push();
         fill(0);
         text(
-          "(INSERT SPACEBAR ICON)",
+          "PRESS SPACEBAR",
           this.body.position.x - width * 0.07,
           this.body.position.y - height * 0.05
         );
@@ -537,8 +537,8 @@ class Player_Rectangle extends Player {
         push();
         fill(150);
         text(
-          "(INSERT SPACEBAR ICON)",
-          this.body.position.x - width * 0.07,
+          "PRESS SPACEBAR",
+          this.body.position.x - width * 0.015,
           this.body.position.y - height * 0.05
         );
         textSize(width * 0.12);
@@ -547,8 +547,8 @@ class Player_Rectangle extends Player {
         push();
         fill(0);
         text(
-          "(INSERT SPACEBAR ICON)",
-          this.body.position.x - width * 0.07,
+          "PRESS SPACEBAR",
+          this.body.position.x - width * 0.015,
           this.body.position.y - height * 0.05
         );
         textSize(width * 0.12);

@@ -30,7 +30,7 @@ let levels;
 let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 2; //Tracks current position.
+let part = 1; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920; //Game should be created as a window, since this is lagging most machines...
@@ -74,6 +74,9 @@ let section_6_img;
 let arrow_keys;
 let spacebar;
 
+//Elements
+let jetpack;
+
 //Font
 let font;
 
@@ -96,6 +99,9 @@ function preload() {
   //HUD Images
   arrow_keys = loadImage("media/images/hud/arrowkeys.png");
   spacebar = loadImage("media/images/hud/spacebar.png");
+
+  //Elements
+  jetpack = loadImage("media/images/elements/jetpack.png");
 
   //Font
   font = loadFont("media/font/Comic_Neue/ComicNeue-bold.ttf");
@@ -597,7 +603,7 @@ function trackTime() {
   //Calculate seconds spent.
   d += deltaTime / 1000; //Counts seconds since start.
   seconds = round(d); //Round to nearest second.
-  console.log("Seconds spent:" + seconds);
+  //console.log("Seconds spent:" + seconds);
 }
 
 //Everything that is supposed to be the playable experience is here, just to make everything look nicer.
@@ -1221,6 +1227,10 @@ function keyPressed() {
   if (key == "c") {
     console.log(obstacles.length);
   }
+
+  if (key == "b") {
+    current_section = 6;
+  }
 }
 
 //The platforms have to be a specific index value...
@@ -1262,7 +1272,7 @@ function handleCollisions(event) {
       particleB instanceof Player &&
       current_section == 3
     ) {
-      console.log("Hello?");
+      //console.log("Hello?");
       swim_mode();
     }
 

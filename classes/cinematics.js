@@ -37,7 +37,7 @@ class Cinematics {
         fill(0);
         text(
           "I can not move!",
-          player.body.position.x - width * 0.03,
+          player.body.position.x - width * 0.02,
           player.body.position.y - height * 0.05
         );
         textSize(width * 0.12);
@@ -308,31 +308,40 @@ class Cinematics {
       if (this.internal_seconds < 1) {
         player.jetpack_state = 0;
         push();
-        fill(0);
+        crack1.resize(width, height);
+        image(crack1, 0, 0);
+
+        /*         fill(0);
         rect(0, 0, width * 1, height * 1);
 
         fill(255);
-        text("Crack #1", width * 0.5, height * 0.5);
+        text("Crack #1", width * 0.5, height * 0.5); */
         pop();
       }
 
       if (this.internal_seconds == 1) {
         push();
-        fill(0);
+        crack2.resize(width, height);
+        image(crack2, 0, 0);
+
+        /*         fill(0);
         rect(0, 0, width * 1, height * 1);
 
         fill(255);
-        text("Crack #2", width * 0.5, height * 0.5);
+        text("Crack #2", width * 0.5, height * 0.5); */
         pop();
       }
 
       if (this.internal_seconds == 2) {
         push();
-        fill(0);
+        crack3.resize(width, height);
+        image(crack3, 0, 0);
+
+        /*         fill(0);
         rect(0, 0, width * 1, height * 1);
 
         fill(255);
-        text("Crack #3", width * 0.5, height * 0.5);
+        text("Crack #3", width * 0.5, height * 0.5); */
         pop();
       }
 

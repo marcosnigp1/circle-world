@@ -1,6 +1,6 @@
 class UI {
   constructor() {
-    this.playerisat = 0; //Track where the player is in the UI or game.  //0 == Game Menu.
+    this.playerisat = 2; //Track where the player is in the UI or game.  //0 == Game Menu.
     this.language = 0; //0 == English  //1 == Arabic.
     this.animation_in_progress = 0; //Check if there is an animation in progress.
     this.time = 0; //For transition animations.
@@ -12,8 +12,8 @@ class UI {
 
   gameplay_bars() {
     push();
-    image(gameplay_hud, 0, 0);
     gameplay_hud.resize(width, height); //Alwayds do this for each element.
+    image(gameplay_hud, 0, 0);
     pop();
   }
 
@@ -21,8 +21,8 @@ class UI {
     push();
     /* fill(0); */
 
-    image(main_hud, 0, 0);
     main_hud.resize(width, height); //Alwayds do this for each element.
+    image(main_hud, 0, 0);
 
     //Left black bar.
     /*     rect(
@@ -55,8 +55,8 @@ class UI {
     this.side_bars();
 
     push();
-    image(language_selection_menu, 0, 0);
     language_selection_menu.resize(width, height); //Alwayds do this for each element.
+    image(language_selection_menu, 0, 0);
     pop();
 
     //-------- Language selection ------------
@@ -104,8 +104,8 @@ class UI {
     this.side_bars();
 
     push();
-    image(main_menu, 0, 0);
     main_menu.resize(width, height); //Alwayds do this for each element.
+    image(main_menu, 0, 0);
     pop();
 
     //-------- Language selection ------------
@@ -322,8 +322,9 @@ class UI {
         (part == 3 && cinematic_scene == 3)
       ) {
         push();
-        image(arrow_keys, 0, 0);
         arrow_keys.resize(width, height);
+        image(arrow_keys, 0, 0);
+
         pop();
 
         /*         //Left arrow
@@ -347,8 +348,9 @@ class UI {
         //Spacebar
 
         push();
-        image(spacebar, 0, 0);
         spacebar.resize(width, height);
+        image(spacebar, 0, 0);
+
         pop();
 
         /*         push();

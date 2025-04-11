@@ -30,7 +30,7 @@ let levels;
 let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 1; //Tracks current position.
+let part = 3; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920; //Game should be created as a window, since this is lagging most machines...
@@ -46,7 +46,7 @@ let time = 0; //Different from the seconds logic.
 
 //Cinematics
 let cinematics;
-let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Triangle has jetpack. 3 == Square appears and questions why this place does not have automatic roads.
+let cinematic_scene = 5; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Triangle has jetpack. 3 == Square appears and questions why this place does not have automatic roads.
 let cinematic_seconds = 0; //Keep track of cinematic internal time.
 
 //User Interface and variables to keep control of the game.
@@ -77,6 +77,11 @@ let spacebar;
 //Elements
 let jetpack;
 
+//Effects.
+let crack1;
+let crack2;
+let crack3;
+
 //Font
 let font;
 
@@ -102,6 +107,11 @@ function preload() {
 
   //Elements
   jetpack = loadImage("media/images/elements/jetpack.png");
+
+  //Effects
+  crack1 = loadImage("media/images/effects/crack1.png");
+  crack2 = loadImage("media/images/effects/crack2.png");
+  crack3 = loadImage("media/images/effects/crack3.png");
 
   //Font
   font = loadFont("media/font/Comic_Neue/ComicNeue-bold.ttf");
@@ -627,9 +637,8 @@ function gameLogic() {
 
   //Draw obstacles according to level.
   if (current_section == 0) {
-    image(section_0_img, 0, 0);
     section_0_img.resize(width, height);
-
+    image(section_0_img, 0, 0);
     for (let i = 0; i < obstacles.length; i++) {
       if (i == 0) {
         //obstacles[i].show();
@@ -654,8 +663,8 @@ function gameLogic() {
   }
 
   if (current_section == 1) {
-    image(section_1_img, 0, 0);
     section_1_img.resize(width, height);
+    image(section_1_img, 0, 0);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 1 && i <= 5) {
         //obstacles[i].show();
@@ -674,8 +683,8 @@ function gameLogic() {
   }
 
   if (current_section == 2) {
-    image(section_2_img, 0, 0);
     section_2_img.resize(width, height);
+    image(section_2_img, 0, 0);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 6 && i <= 14) {
         if ((i >= 7 && i <= 8) || i == 13) {
@@ -702,8 +711,8 @@ function gameLogic() {
   }
 
   if (current_section == 3) {
-    image(section_3_img, 0, 0);
     section_3_img.resize(width, height);
+    image(section_3_img, 0, 0);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 15 && i <= 21) {
         //obstacles[i].show();
@@ -731,8 +740,8 @@ function gameLogic() {
   }
 
   if (current_section == 4) {
-    image(section_4_img, 0, 0);
     section_4_img.resize(width, height);
+    image(section_4_img, 0, 0);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 22 && i <= 23) {
         //obstacles[i].show();
@@ -751,8 +760,8 @@ function gameLogic() {
   }
 
   if (current_section == 5) {
-    image(section_5_img, 0, 0);
     section_5_img.resize(width, height);
+    image(section_5_img, 0, 0);
     for (let i = 0; i < obstacles.length; i++) {
       if (i == 24) {
         //obstacles[i].show();
@@ -771,8 +780,8 @@ function gameLogic() {
   }
 
   if (current_section == 6) {
-    image(section_6_img, 0, 0);
     section_6_img.resize(width, height);
+    image(section_6_img, 0, 0);
     for (let i = 0; i < obstacles.length; i++) {
       if (i >= 25 && i <= 28) {
         //obstacles[i].show();

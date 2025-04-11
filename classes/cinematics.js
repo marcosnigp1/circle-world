@@ -1,7 +1,12 @@
 class Cinematics {
   constructor() {
-    this.position = createVector(0, 0);
-    this.jetpack_position = createVector(0, 0); //For jetpack.
+    //This is not good practice...
+    this.position1 = createVector(0, 0);
+    this.jetpack_position1 = createVector(0, 0); //For Triangle.
+
+    this.position2 = createVector(0, 0);
+    this.jetpack_position2 = createVector(0, 0); //For Rectangle.
+
     this.internal_seconds = 0;
     this.cinematic_started = 0;
 
@@ -20,8 +25,8 @@ class Cinematics {
     if (showing_results == 0) {
       //Initialize position.
       if (this.cinematic_started == 0) {
-        this.position = createVector(width * 0.85, height * 0.6);
-        this.jetpack_position = createVector(width * 0.5, height * 0.58);
+        this.position1 = createVector(width * 0.85, height * 0.6);
+        this.jetpack_position1 = createVector(width * 0.5, height * 0.58);
         this.cinematic_started = 1;
       }
 
@@ -52,12 +57,12 @@ class Cinematics {
 
         if (this.internal_seconds >= 5 && this.internal_seconds <= 7) {
           push();
-          this.position.x -= width * 0.002;
+          this.position1.x -= width * 0.002;
 
-          circle(this.position.x, this.position.y, width * 0.05);
+          circle(this.position1.x, this.position1.y, width * 0.05);
 
           //The Eyes.
-          translate(this.position.x, this.position.y);
+          translate(this.position1.x, this.position1.y);
           rotate(this.angle);
           rectMode(CENTER);
           line(0, height * 0.002, 0, height * 0.006);
@@ -73,20 +78,20 @@ class Cinematics {
           push();
 
           translate(
-            this.jetpack_position.x,
-            this.jetpack_position.y - height * 0.042
+            this.jetpack_position1.x,
+            this.jetpack_position1.y - height * 0.042
           );
-          this.jetpack_position.x -= width * 0.0015;
+          this.jetpack_position1.x -= width * 0.0015;
           image(jetpack, 0, 0);
           //rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
           pop();
 
           push();
 
-          circle(this.position.x, this.position.y, width * 0.05);
+          circle(this.position1.x, this.position1.y, width * 0.05);
 
           //The Eyes.
-          translate(this.position.x, this.position.y);
+          translate(this.position1.x, this.position1.y);
           rotate(this.angle);
           rectMode(CENTER);
           line(0, height * 0.002, 0, height * 0.006);
@@ -99,21 +104,21 @@ class Cinematics {
         if (this.internal_seconds >= 10 && this.internal_seconds <= 12) {
           push();
           translate(
-            this.jetpack_position.x,
-            this.jetpack_position.y - height * 0.042
+            this.jetpack_position1.x,
+            this.jetpack_position1.y - height * 0.042
           );
           image(jetpack, 0, 0);
           //rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
           pop();
 
           push();
-          this.position.x += width * 0.002;
-          circle(this.position.x, this.position.y, width * 0.05);
+          this.position1.x += width * 0.002;
+          circle(this.position1.x, this.position1.y, width * 0.05);
 
           //Display eyes for random circle.
 
           //The Eyes.
-          translate(this.position.x, this.position.y);
+          translate(this.position1.x, this.position1.y);
           rotate(this.angle);
           rectMode(CENTER);
           line(0, height * 0.002, 0, height * 0.006);
@@ -129,8 +134,8 @@ class Cinematics {
         if (this.internal_seconds >= 13 && this.internal_seconds <= 15) {
           push();
           translate(
-            this.jetpack_position.x,
-            this.jetpack_position.y - height * 0.042
+            this.jetpack_position1.x,
+            this.jetpack_position1.y - height * 0.042
           );
           image(jetpack, 0, 0);
           pop();
@@ -170,8 +175,8 @@ class Cinematics {
         player.interact = 1;
         push();
         translate(
-          this.jetpack_position.x,
-          this.jetpack_position.y - height * 0.042
+          this.jetpack_position1.x,
+          this.jetpack_position1.y - height * 0.042
         );
         image(jetpack, 0, 0);
         pop();
@@ -181,8 +186,8 @@ class Cinematics {
           cinematic_scene = 2;
           this.internal_seconds = 0;
 
-          this.position = (width * 0.85, height * 0.6);
-          this.jetpack_position = (width * 0.5, height * 0.58);
+          /*           this.position1 = (width * 0.85, height * 0.6);
+          this.jetpack_position1 = (width * 0.5, height * 0.58); */
           this.cinematic_started = 0;
 
           //CREATE BODY AGAIN!
@@ -202,16 +207,16 @@ class Cinematics {
     if (showing_results == 0) {
       //Initialize position.
       if (this.cinematic_started == 0) {
-        this.position = createVector(width * 0.85, height * 0.6);
-        this.jetpack_position = createVector(width * 0.33, height * 0.58);
+        this.position2 = createVector(width * 0.85, height * 0.6);
+        this.jetpack_position2 = createVector(width * 0.33, height * 0.58);
         this.cinematic_started = 1;
       }
 
       if (cinematic_scene == 3) {
         push();
         translate(
-          this.jetpack_position.x,
-          this.jetpack_position.y - height * 0.042
+          this.jetpack_position2.x,
+          this.jetpack_position2.y - height * 0.042
         );
         image(jetpack, 0, 0);
         pop();
@@ -224,8 +229,8 @@ class Cinematics {
         //Draw jetpack.
         push();
         translate(
-          this.jetpack_position.x,
-          this.jetpack_position.y - height * 0.042
+          this.jetpack_position2.x,
+          this.jetpack_position2.y - height * 0.042
         );
         image(jetpack, 0, 0);
         pop();
@@ -244,7 +249,7 @@ class Cinematics {
           rect(
             player.body.position.x - width * 0.01,
             player.body.position.y - height * 0.066,
-            width * 0.32,
+            width * 0.42,
             height * 0.02
           );
           pop();
@@ -264,8 +269,8 @@ class Cinematics {
           player.interact = 1;
           push();
           translate(
-            this.jetpack_position.x,
-            this.jetpack_position.y - height * 0.042
+            this.jetpack_position2.x,
+            this.jetpack_position2.y - height * 0.042
           );
           image(jetpack, 0, 0);
           pop();
@@ -273,8 +278,9 @@ class Cinematics {
             player.interact = 0;
             cinematic_scene = 5;
             this.internal_seconds = 0;
-            this.position = (width * 0.85, height * 0.6);
-            this.jetpack_position = (width * 0.33, height * 0.58);
+            this.cinematic_started = 0;
+            /*             this.position = (width * 0.85, height * 0.6);
+            this.jetpack_position2 = (width * 0.33, height * 0.58); */
 
             //CREATE BODY AGAIN!
             player.removeFromWorld();
@@ -292,11 +298,11 @@ class Cinematics {
   //Screen shows a rupture to then show the player hurt.
   start_cinematic_scene_3() {
     if (showing_results == 0) {
-      if (this.cinematic_started == 0) {
-        this.position = createVector(width * 0.85, height * 0.6);
-        this.jetpack_position = createVector(width * 0.3, height * 0.58);
+      /*       if (this.cinematic_started == 0) {
+        this.position3 = createVector(width * 0.85, height * 0.6);
+        this.jetpack_position3 = createVector(width * 0.3, height * 0.58);
         this.cinematic_started = 1;
-      }
+      } */
 
       //Do not start counting seconds until the player crashes.
       if (cinematic_seconds != seconds && player.crashed == 1) {

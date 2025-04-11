@@ -411,7 +411,7 @@ class UI {
       push();
       fill(255);
       textSize(width * 0.023);
-      text("Controls:", width * 0.86, height * 0.63);
+      text("Control keys:", width * 0.835, height * 0.63);
       pop();
 
       //Icons
@@ -420,23 +420,35 @@ class UI {
         (part == 2 && cinematic_scene == 0) ||
         (part == 3 && cinematic_scene == 3)
       ) {
-        push();
-        arrow_keys.resize(width, height);
-        image(arrow_keys, 0, 0);
+        //push();
+        /*         arrow_keys.resize(width, height); //Introduces a lot of lag.
+        image(arrow_keys, 0, 0); */
 
+        //pop();
+
+        //Left arrow
+        push();
+        fill(30);
+        rect(width * 0.83, height * 0.66, width * 0.05, height * 0.1);
         pop();
 
-        /*         //Left arrow
         push();
-        fill(0);
-        rect(width * 0.83, height * 0.66, width * 0.05, height * 0.1);
+        fill(255);
+        textSize(width * 0.032);
+        text("<-", width * 0.838, height * 0.72);
         pop();
 
         //Right arrow
         push();
-        fill(0);
+        fill(30);
         rect(width * 0.92, height * 0.66, width * 0.05, height * 0.1);
-        pop(); */
+        pop();
+
+        push();
+        fill(255);
+        textSize(width * 0.032);
+        text("->", width * 0.93, height * 0.72);
+        pop();
       } else if (cinematic_scene == 1 || cinematic_scene == 4) {
         push();
         fill(255);
@@ -445,17 +457,32 @@ class UI {
         pop();
       } else if (cinematic_scene == 2 || cinematic_scene == 5) {
         //Spacebar
+        /* push(); */
+        //Introduces a lot of lag.
+        /*         spacebar.resize(width, height);
+        image(spacebar, 0, 0); */
+        /*  pop(); */
 
         push();
-        spacebar.resize(width, height);
-        image(spacebar, 0, 0);
-
+        fill(30);
+        rect(width * 0.82, height * 0.66, width * 0.155, height * 0.1);
         pop();
 
-        /*         push();
-        fill(0);
-        rect(width * 0.83, height * 0.66, width * 0.145, height * 0.1);
-        pop(); */
+        push();
+        fill(255);
+        textSize(width * 0.02);
+        text("SPACEBAR", width * 0.85, height * 0.72);
+        pop();
+
+        push();
+        fill(255);
+        textSize(width * 0.01);
+        text(
+          "Tip: The jetpack is a bit... broken",
+          width * 0.825,
+          height * 0.79
+        );
+        pop();
       }
     }
   }

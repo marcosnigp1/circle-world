@@ -941,7 +941,7 @@ function mouseClicked() {
       mouseY >= height * 0.3 &&
       mouseY <= height * 0.3 + height * 0.2
     ) {
-      console.log("English!");
+      //console.log("English!");
       ui.animation_in_progress = 1;
       ui.transition();
       ui.language = 0;
@@ -954,7 +954,7 @@ function mouseClicked() {
       mouseY >= height * 0.63 &&
       mouseY <= height * 0.63 + height * 0.2
     ) {
-      console.log("Arabic!");
+      //console.log("Arabic!");
       ui.animation_in_progress = 1;
       ui.language = 1;
       ui.playerisat = 1;
@@ -970,7 +970,7 @@ function mouseClicked() {
       mouseY <= height * 0.3 + height * 0.2
     ) {
       //Add transition animation here.
-      console.log("Game start!");
+      //console.log("Game start!");
       ui.animation_in_progress = 1;
 
       //Apply force upwards to avoid player being stuck in something.
@@ -989,7 +989,7 @@ function mouseClicked() {
       mouseY <= height * 0.63 + height * 0.2
     ) {
       //Add transition animation here.
-      console.log("Credits!");
+      //console.log("Credits!");
       ui.animation_in_progress = 1;
       ui.playerisat = 3;
     }
@@ -1003,7 +1003,7 @@ function mouseClicked() {
       mouseY >= height * 0.63 &&
       mouseY <= height * 0.63 + height * 0.2
     ) {
-      console.log("Exit credits!");
+      //console.log("Exit credits!");
       ui.animation_in_progress = 1;
 
       ui.playerisat = 1;
@@ -1018,7 +1018,7 @@ function mouseClicked() {
       mouseY >= height * 0.63 &&
       mouseY <= height * 0.63 + height * 0.2
     ) {
-      console.log("Exit message!");
+      //console.log("Exit message!");
       ui.animation_in_progress = 1;
       ui.playerisat = 1;
       time = 0;
@@ -1036,7 +1036,7 @@ function mouseClicked() {
       mouseY >= height * 0.63 &&
       mouseY <= height * 0.63 + height * 0.2
     ) {
-      console.log("Continuing");
+      //console.log("Continuing");
       ui.animation_in_progress = 1;
       showing_results = 0;
       attempts = 0;

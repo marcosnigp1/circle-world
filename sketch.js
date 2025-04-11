@@ -573,13 +573,13 @@ function draw() {
     ui.theMessage();
   }
 
-  //Check for animation transitions.
-  if (ui.animation_in_progress == 1) {
-    ui.transition();
-  }
-
   if (showing_results == 1) {
     ui.results();
+  }
+
+  //Check for animation transitions. Should be drawn to last since it will cover everything.
+  if (ui.animation_in_progress == 1) {
+    ui.transition();
   }
 
   ui_seconds = seconds;
@@ -1008,6 +1008,7 @@ function mouseClicked() {
       mouseY <= height * 0.63 + height * 0.2
     ) {
       console.log("Continuing");
+      ui.animation_in_progress = 1;
       showing_results = 0;
       attempts = 0;
       time = 0;

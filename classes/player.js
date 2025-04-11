@@ -228,7 +228,6 @@ class Player {
   startInteraction() {
     if (this.interact == 1) {
       if (keyIsDown(32) === true) {
-        ui.animation_in_progress = 1;
         current_section = 0;
 
         //Reset Level Values (For example, it resets the value of the platform.)

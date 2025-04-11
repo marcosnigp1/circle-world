@@ -1,7 +1,7 @@
 class UI {
   constructor() {
     this.playerisat = 0; //Track where the player is in the UI or game.  //0 == Game Menu.
-    this.language = 1; //0 == English  //1 == Arabic.
+    this.language = 0; //0 == English  //1 == Arabic.
     this.animation_in_progress = 0; //Check if there is an animation in progress.
     this.time = 0; //For transition animations.
     this.fade = 255;

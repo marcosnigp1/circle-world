@@ -139,7 +139,7 @@ class Activable_Level_Obstacle extends Level_Obstacle {
     } else if (this.body.position.y < height * 0.728 && this.push == true) {
       //I need to change how force is applied to objects here...
       if (
-        player.body.position.x > width * 0.725 &&
+        player.body.position.x > width * 0.69 &&
         player.body.position.x < width * 0.725 + width * 0.073
       ) {
         Matter.Body.applyForce(

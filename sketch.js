@@ -22,6 +22,7 @@ let runner;
 //Player.
 let player;
 let swimming = 0; //Swimming mode.
+let attempts = 0; //Tracking how many times the player restarted the section (due to misc inconveniences.)
 
 //Level structure and design.
 let obstacles = [];
@@ -32,15 +33,16 @@ let platform_activation_started = false;
 let part = 1; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
-const baseWidth = 1920;
+const baseWidth = 1920; //Game should be created as a window, since this is lagging most machines...
 const baseHeight = 1080;
 const aspectRatio = baseWidth / baseHeight;
 let scaleFactor = 1;
 
 //Time variables. Made with help of the following sketch: https://editor.p5js.org/D10D3/sketches/h-OfMV0at
 let seconds = 0;
-let half_seconds = 0;
+let half_seconds = 0; ///Not used.
 let d = 0; //For animations.
+let time = 0; //Different from the seconds logic.
 
 //Cinematics
 let cinematics;
@@ -560,6 +562,7 @@ function draw() {
   if (ui.playerisat == 2) {
     gameLogic();
     ui.gameplay_bars();
+    ui.gameplay_info();
   }
 
   if (ui.playerisat == 3) {
@@ -591,15 +594,16 @@ function trackTime() {
 
 //Everything that is supposed to be the playable experience is here, just to make everything look nicer.
 function gameLogic() {
+  //Add one second to time when gameplay started.
+  if (ui_seconds != seconds && showing_results == 0) {
+    time++;
+  }
+
   //Draw levels.
   levels.level_test();
 
   player.clampVelocity(); //Check if surpasses fixed values of velocity, and if does, clamp it. Also makes sure the mass stays the same.
   player.checkCurrentPosition();
-
-  //Check collisions and activation.
-  player.detectActivator();
-  player.startInteraction();
 
   ///Check detector for cinematic #3 (where the player crashes and the screen shows a animated crack)
 
@@ -778,6 +782,10 @@ function gameLogic() {
 
   //Draw player.
   player.show();
+
+  //Check collisions and activation.
+  player.detectActivator();
+  player.startInteraction();
 
   // The platforms actions.
   if (platform_movement_started == true) {
@@ -984,6 +992,8 @@ function mouseClicked() {
       console.log("Exit message!");
       ui.animation_in_progress = 1;
       ui.playerisat = 1;
+      time = 0;
+      attempts = 0;
       resetGameValues();
       resetLevelValues();
     }
@@ -999,6 +1009,8 @@ function mouseClicked() {
     ) {
       console.log("Continuing");
       showing_results = 0;
+      attempts = 0;
+      time = 0;
     }
   }
 }
@@ -1054,6 +1066,9 @@ function checkInputs() {
         x: cos(player.body.angle) * 0.04,
         y: sin(player.body.angle) * -0.01,
       });
+      player.jetpack_state = 1;
+    } else {
+      player.jetpack_state = 0;
     }
 
     //Restart Key, exclusive to second and third part.
@@ -1097,6 +1112,9 @@ function checkInputs() {
         x: cos(player.body.angle) * 0.04,
         y: sin(player.body.angle) * -0.01,
       });
+      player.jetpack_state = 1;
+    } else {
+      player.jetpack_state = 0;
     }
 
     //Restart Key, exclusive to second and third part.
@@ -1168,6 +1186,9 @@ function keyPressed() {
     window.close(); ///Closes Electron.
   }
 
+  if (key == "r" || key == "R") {
+    attempts++;
+  }
   if (key === "w") {
     console.log(engine.world.bodies);
   }

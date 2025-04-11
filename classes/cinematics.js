@@ -51,6 +51,7 @@ class Cinematics {
         noFill();
 
         if (this.internal_seconds >= 5 && this.internal_seconds <= 7) {
+          push();
           this.position.x -= width * 0.002;
 
           circle(this.position.x, this.position.y, width * 0.05);
@@ -69,6 +70,7 @@ class Cinematics {
         }
 
         if (this.internal_seconds >= 8 && this.internal_seconds <= 9) {
+          push();
           this.jetpack_position.x -= width * 0.0015;
           rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
           circle(this.position.x, this.position.y, width * 0.05);
@@ -85,6 +87,7 @@ class Cinematics {
 
         //Only circle moves.
         if (this.internal_seconds >= 10 && this.internal_seconds <= 12) {
+          push();
           this.position.x += width * 0.002;
           rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
 
@@ -115,6 +118,7 @@ class Cinematics {
             player.body.position.y - height * 0.05
           );
           textSize(width * 0.12);
+          noFill();
           rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
 
           pop();
@@ -128,12 +132,16 @@ class Cinematics {
       //Jetpack and circle wonders what happened.
       if (this.jetpack_stays == 1) {
         player.interact = 1;
+        push();
+        noFill();
         rect(this.jetpack_position.x, this.jetpack_position.y, width * 0.04);
+        pop();
         if (keyIsDown(32) === true) {
           player.interact = 0;
           this.jetpack_stays = 0;
           cinematic_scene = 2;
           this.internal_seconds = 0;
+          this.cinematic_started = 0;
 
           //CREATE BODY AGAIN!
           player.removeFromWorld();
@@ -177,7 +185,7 @@ class Cinematics {
           push();
           fill(0);
           text(
-            "Why have they not build automatic roads?! " +
+            "Why have they not build automatic roads?! There is only a jetpack?!" +
               cinematics.internal_seconds,
             player.body.position.x - width * 0.07,
             player.body.position.y - height * 0.05
@@ -224,6 +232,7 @@ class Cinematics {
 
       //I cant move!
       if (this.internal_seconds < 1) {
+        player.jetpack_state = 0;
         push();
         fill(0);
         rect(0, 0, width * 1, height * 1);

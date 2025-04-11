@@ -228,6 +228,7 @@ class Player {
   startInteraction() {
     if (this.interact == 1) {
       if (keyIsDown(32) === true) {
+        ui.animation_in_progress = 1;
         current_section = 0;
 
         //Reset Level Values (For example, it resets the value of the platform.)
@@ -312,9 +313,6 @@ class Player_Triangle extends Player {
 
     //Jetpack
     this.jetpack_state = 0; //0 == OFF,  1 == ON;
-
-    //HUD
-    this.interact = 0;
   }
 
   show() {
@@ -370,7 +368,9 @@ class Player_Triangle extends Player {
 
     //Show pop up messages.
     if (this.interact == 1) {
+      console.log("Hello??!");
       if (seconds % 2 == 1) {
+        console.log("Hello??!");
         push();
         fill(150);
         text(
@@ -395,10 +395,21 @@ class Player_Triangle extends Player {
   }
 
   showJetpack() {
+    let angle = this.body.angle;
     push();
     noStroke();
     fill(200, 150, 50);
     translate(0, 0);
+
+    //Show animation.
+    if (this.jetpack_state == 1) {
+      push();
+      translate(this.rectangle.vertices[1].x, this.rectangle.vertices[1].y);
+      rotate(angle);
+      fill(200, 200, 0);
+      rect(width * 0.02, -height * 0.0, width * 0.02, height * 0.02);
+      pop();
+    }
 
     //Draw vertices, there are no simpler solution it seems..
     beginShape();
@@ -407,10 +418,6 @@ class Player_Triangle extends Player {
     vertex(this.rectangle.vertices[2].x, this.rectangle.vertices[2].y);
     vertex(this.rectangle.vertices[3].x, this.rectangle.vertices[3].y);
     endShape(CLOSE);
-
-    if (this.jetpack_state == 1) {
-      //Show animation.
-    }
 
     pop();
   }
@@ -553,10 +560,22 @@ class Player_Rectangle extends Player {
     }
   }
   showJetpack() {
+    let angle = this.body.angle;
+
     push();
     noStroke();
     fill(200, 150, 50);
     translate(0, 0);
+
+    //Show animation.
+    if (this.jetpack_state == 1) {
+      push();
+      translate(this.jetpack.vertices[3].x, this.jetpack.vertices[3].y);
+      rotate(angle);
+      fill(200, 200, 0);
+      rect(-width * 0.01, -height * 0.0, width * 0.02, height * 0.02);
+      pop();
+    }
 
     //Draw vertices, there are no simpler solution it seems..
     beginShape();
@@ -565,10 +584,6 @@ class Player_Rectangle extends Player {
     vertex(this.jetpack.vertices[2].x, this.jetpack.vertices[2].y);
     vertex(this.jetpack.vertices[3].x, this.jetpack.vertices[3].y);
     endShape(CLOSE);
-
-    if (this.jetpack_state == 1) {
-      //Show animation.
-    }
 
     pop();
   }

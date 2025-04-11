@@ -268,4 +268,74 @@ class UI {
     text("Continue", width * 0.45, height * 0.75);
     pop();
   }
+
+  gameplay_info() {
+    if (showing_results == 0) {
+      ///Seconds title
+      push();
+      fill(255);
+      textSize(width * 0.025);
+      text("Seconds spent:", width * 0.825, height * 0.15);
+      pop();
+
+      //Actual seconds.
+      push();
+      fill(255);
+      textSize(width * 0.023);
+      text(time, width * 0.89, height * 0.2);
+      pop();
+
+      ///Attempts title
+      push();
+      fill(255);
+      textSize(width * 0.025);
+      text("Attempts:", width * 0.85, height * 0.39);
+      pop();
+
+      ///Actual attempts
+      push();
+      fill(255);
+      textSize(width * 0.023);
+      text(attempts, width * 0.89, height * 0.44);
+      pop();
+
+      //----- Controls (They vary depending on the character.) ----//
+      push();
+      fill(255);
+      textSize(width * 0.023);
+      text("Controls:", width * 0.86, height * 0.63);
+      pop();
+
+      //Icons
+      if (
+        part == 1 ||
+        (part == 2 && cinematic_scene == 0) ||
+        (part == 3 && cinematic_scene == 3)
+      ) {
+        //Left arrow
+        push();
+        fill(0);
+        rect(width * 0.83, height * 0.66, width * 0.05, height * 0.1);
+        pop();
+
+        //Right arrow
+        push();
+        fill(0);
+        rect(width * 0.92, height * 0.66, width * 0.05, height * 0.1);
+        pop();
+      } else if (cinematic_scene == 1 || cinematic_scene == 4) {
+        push();
+        fill(255);
+        textSize(width * 0.03);
+        text("????", width * 0.869, height * 0.7);
+        pop();
+      } else if (cinematic_scene == 2 || cinematic_scene == 5) {
+        //Spacebar
+        push();
+        fill(0);
+        rect(width * 0.83, height * 0.66, width * 0.145, height * 0.1);
+        pop();
+      }
+    }
+  }
 }

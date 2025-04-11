@@ -30,7 +30,7 @@ let levels;
 let current_section = 0; //Level control: //0 == Very first section,  //1 == First Level. //2 = Second section.  //3 = Third Section
 let platform_movement_started = false;
 let platform_activation_started = false;
-let part = 3; //Tracks current position.
+let part = 1; //Tracks current position.
 
 //Fixed resolution: https://jslegenddev.substack.com/p/how-to-make-your-canvas-scale-to
 const baseWidth = 1920; //Game should be created as a window, since this is lagging most machines...
@@ -46,7 +46,7 @@ let time = 0; //Different from the seconds logic.
 
 //Cinematics
 let cinematics;
-let cinematic_scene = 5; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Triangle has jetpack. 3 == Square appears and questions why this place does not have automatic roads.
+let cinematic_scene = 0; //0 == No cinematic, 1 == Circle gives jetpack to triangle. 2 == Triangle has jetpack. 3 == Square appears and questions why this place does not have automatic roads.
 let cinematic_seconds = 0; //Keep track of cinematic internal time.
 
 //User Interface and variables to keep control of the game.
@@ -58,8 +58,10 @@ let showing_results = 0;
 //Menu Images
 let main_menu;
 let main_hud;
+let the_results;
 let gameplay_hud;
 let language_selection_menu;
+let reflection;
 
 //Section Images
 let section_0_img;
@@ -87,10 +89,14 @@ let font;
 
 function preload() {
   //Menu Images
-  main_menu = loadImage("media/images/main_menu.png");
-  main_hud = loadImage("media/images/menu_hud.png");
-  gameplay_hud = loadImage("media/images/gameplay_hud.png");
-  language_selection_menu = loadImage("media/images/language_selection.png");
+  main_menu = loadImage("media/images/menu/main_menu.png");
+  main_hud = loadImage("media/images/menu/menu_hud.png");
+  gameplay_hud = loadImage("media/images/menu/gameplay_hud.png");
+  language_selection_menu = loadImage(
+    "media/images/menu/language_selection.png"
+  );
+  the_results = loadImage("media/images/menu/results.png");
+  reflection = loadImage("media/images/menu/reflection.png");
 
   //Sections Images
   section_0_img = loadImage("media/images/sections/section_0.png");

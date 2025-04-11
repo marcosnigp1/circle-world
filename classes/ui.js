@@ -1,6 +1,6 @@
 class UI {
   constructor() {
-    this.playerisat = 2; //Track where the player is in the UI or game.  //0 == Game Menu.
+    this.playerisat = 0; //Track where the player is in the UI or game.  //0 == Game Menu.
     this.language = 0; //0 == English  //1 == Arabic.
     this.animation_in_progress = 0; //Check if there is an animation in progress.
     this.time = 0; //For transition animations.
@@ -138,10 +138,16 @@ class UI {
   //Player is at 3.
   theCredits() {
     //-------- Background ------------
+
     push();
+    the_results.resize(width, height);
+    image(the_results, 0, 0);
+    pop();
+
+    /*     push();
     fill(255);
     rect(width * 0.2, height * 0, width * 0.6, height * 1);
-    pop();
+    pop(); */
 
     //-------- Credits ------------
 
@@ -149,26 +155,76 @@ class UI {
     push();
     fill(0);
     textSize(width * 0.05);
-    text("Credits", width * 0.32, height * 0.15);
+    text("Credits", width * 0.42, height * 0.15);
     pop();
 
-    //Credits
+    //----- Credits ---------
+    //Programming and art title
     push();
     fill(0);
     textSize(width * 0.02);
-    text("These are the credits...", width * 0.32, height * 0.25);
+    text("Programming and art", width * 0.25, height * 0.25);
     pop();
 
-    //Exit button
+    //Programming and art
     push();
+    fill(0);
+    textSize(width * 0.014);
+    text("Marcos Hernández (marcosni_gp1)", width * 0.24, height * 0.3);
+    pop();
+
+    //Sounds title
+    push();
+    fill(0);
+    textSize(width * 0.02);
+    text("Sounds", width * 0.31, height * 0.4);
+    pop();
+
+    //Sounds
+    push();
+    fill(0);
+    textSize(width * 0.014);
+    text("-----------", width * 0.31, height * 0.45);
+    pop();
+
+    //Music title
+    push();
+    fill(0);
+    textSize(width * 0.02);
+    text("Music", width * 0.65, height * 0.25);
+    pop();
+
+    //Music
+    push();
+    fill(0);
+    textSize(width * 0.014);
+    text("------", width * 0.655, height * 0.3);
+    pop();
+
+    push();
+    fill(0);
+    textSize(width * 0.014);
+    text("------", width * 0.655, height * 0.35);
+    pop();
+
+    push();
+    fill(0);
+    textSize(width * 0.014);
+    text("------", width * 0.655, height * 0.4);
+    pop();
+
+    //----------------------
+
+    //Exit button
+    /*     push();
     fill(0, 0, 255);
     rect(width * 0.4, height * 0.63, width * 0.2, height * 0.2); //Parameters to use for condition.
-    pop();
+    pop(); */
 
     push();
     fill(255);
-    textSize(width * 0.03);
-    text("Exit", width * 0.45, height * 0.75);
+    textSize(width * 0.02);
+    text("Go to main menu", width * 0.425, height * 0.74);
     pop();
   }
 
@@ -199,46 +255,61 @@ class UI {
   //This is called after the player crashes, and the white effect animation finishes.
   theMessage() {
     //-------- Background ------------
+
     push();
+    reflection.resize(width, height);
+    image(reflection, 0, 0);
+    pop();
+
+    /*     push();
     fill(255);
     rect(width * 0.2, height * 0, width * 0.6, height * 1);
     pop();
-
+ */
     //-------- Language selection ------------
 
     //Title??
     push();
     fill(0);
     textSize(width * 0.05);
-    text("Message", width * 0.345, height * 0.15);
+    text("Message", width * 0.4, height * 0.15);
     pop();
 
     //Message
     push();
     fill(0);
-    textSize(width * 0.02);
-    text("Message", width * 0.32, height * 0.25);
+    textSize(width * 0.018);
+    text(
+      "We can not assume that this world meets every single, there are\nthere people who are different and need us to adapt our world\nto theirs.\n\nJust like that, we will be able to have a world where every single\nof us can coexist peacefully.",
+      width * 0.25,
+      height * 0.25
+    );
     pop();
 
     //Exit button
-    push();
+    /*     push();
     fill(0, 0, 255);
     rect(width * 0.4, height * 0.63, width * 0.2, height * 0.2); //Parameters to use for condition.
-    pop();
+    pop(); */
 
     push();
     fill(255);
-    textSize(width * 0.03);
-    text("Exit", width * 0.45, height * 0.75);
+    textSize(width * 0.02);
+    text("Go to main menu", width * 0.425, height * 0.74);
     pop();
   }
 
   results() {
     //-------- Background ------------
     push();
+    the_results.resize(width, height);
+    image(the_results, 0, 0);
+    pop();
+
+    /*     push();
     fill(255);
     rect(width * 0.2, height * 0, width * 0.6, height * 1);
-    pop();
+    pop(); */
 
     //-------- Results ------------
 
@@ -246,26 +317,54 @@ class UI {
     push();
     fill(0);
     textSize(width * 0.05);
-    text("Results", width * 0.32, height * 0.15);
+    text("Results", width * 0.42, height * 0.15);
     pop();
 
     //Results
-    push();
+    /*     push();
     fill(0);
     textSize(width * 0.02);
     text("These are the results...", width * 0.32, height * 0.25);
+    pop(); */
+
+    ///Seconds title
+    push();
+    fill(0);
+    textSize(width * 0.025);
+    text("Seconds spent:", width * 0.42, height * 0.28);
+    pop();
+
+    //Actual seconds.
+    push();
+    fill(0);
+    textSize(width * 0.023);
+    text(time, width * 0.49, height * 0.32);
+    pop();
+
+    ///Attempts title
+    push();
+    fill(0);
+    textSize(width * 0.025);
+    text("Attempts:", width * 0.45, height * 0.42);
+    pop();
+
+    //Actual Attempts
+    push();
+    fill(0);
+    textSize(width * 0.023);
+    text(attempts, width * 0.49, height * 0.46);
     pop();
 
     //Continue button
-    push();
+    /*     push();
     fill(0, 0, 255);
     rect(width * 0.4, height * 0.63, width * 0.2, height * 0.2); //Parameters to use for condition.
-    pop();
+    pop(); */
 
     push();
     fill(255);
     textSize(width * 0.03);
-    text("Continue", width * 0.45, height * 0.75);
+    text("Continue", width * 0.44, height * 0.75);
     pop();
   }
 

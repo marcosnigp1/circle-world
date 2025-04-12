@@ -8,6 +8,6 @@ class Audio_Control {
   }
 
   stop_music_2() {
-    music_2.setVolume(0, 2, 0.5);
+    music_2.setVolume(0, 4, 0.1);
   }
 }

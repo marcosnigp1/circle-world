@@ -65,7 +65,7 @@ class UI {
     push();
     fill(0);
     textSize(width * 0.05);
-    text("Select language", width * 0.32, height * 0.15);
+    text("Select language", width * 0.325, height * 0.15);
     pop();
 
     //English
@@ -134,6 +134,16 @@ class UI {
       textSize(width * 0.03);
       text("Credits", width * 0.45, height * 0.75);
       pop();
+
+      push();
+      fill(0);
+      textSize(width * 0.015);
+      text(
+        "Developed for the Madar Tolerance Contest",
+        width * 0.355,
+        height * 0.98
+      );
+      pop();
     } else if (this.language == 1) {
       push();
       fill(255);
@@ -153,6 +163,16 @@ class UI {
       display_text = reshaped_text.split("").reverse().join("");
 
       text(display_text, width * 0.43, height * 0.75);
+      pop();
+
+      push();
+      fill(0);
+      textSize(width * 0.015);
+      reshaped_text = ArabicReshaper.convertArabic(
+        "تم تطويره من أجل مسابقة مدار للتسامح"
+      );
+      display_text = reshaped_text.split("").reverse().join("");
+      text(display_text, width * 0.365, height * 0.98);
       pop();
     }
 
@@ -196,6 +216,13 @@ class UI {
       text("Sounds", width * 0.31, height * 0.4);
       pop();
 
+      //Song obtained from
+      push();
+      fill(0);
+      textSize(width * 0.014);
+      text("Obtained from freesound.org", width * 0.25, height * 0.45);
+      pop();
+
       //Music title
       push();
       fill(0);
@@ -233,7 +260,18 @@ class UI {
       reshaped_text = ArabicReshaper.convertArabic("الأصوات");
       display_text = reshaped_text.split("").reverse().join("");
       textSize(width * 0.02);
-      text(display_text, width * 0.3, height * 0.4);
+      text(display_text, width * 0.313, height * 0.4);
+      pop();
+
+      //Sounds obtained from
+      push();
+      fill(0);
+      reshaped_text = ArabicReshaper.convertArabic(
+        "تم الحصول عليها من gro.dnuoseerf"
+      );
+      display_text = reshaped_text.split("").reverse().join("");
+      textSize(width * 0.014);
+      text(display_text, width * 0.25, height * 0.45);
       pop();
 
       //Music title
@@ -242,7 +280,7 @@ class UI {
       reshaped_text = ArabicReshaper.convertArabic("الموسيقى");
       display_text = reshaped_text.split("").reverse().join("");
       textSize(width * 0.02);
-      text(display_text, width * 0.62, height * 0.25);
+      text(display_text, width * 0.63, height * 0.25);
       pop();
 
       push();
@@ -263,13 +301,6 @@ class UI {
     text("Marcos Hernández (marcosni_gp1)", width * 0.24, height * 0.3);
     pop();
 
-    //Sounds
-    push();
-    fill(0);
-    textSize(width * 0.014);
-    text("Obtained from freesound.org", width * 0.25, height * 0.45);
-    pop();
-
     //Music
     push();
     fill(0);
@@ -286,7 +317,7 @@ class UI {
     textSize(width * 0.011);
     text(
       "Kevin MacLeod - Song Name -\n     8bit Dungeon Level",
-      width * 0.61,
+      width * 0.6,
       height * 0.4
     );
     pop();
@@ -359,9 +390,9 @@ class UI {
       fill(0);
       textSize(width * 0.018);
       text(
-        "We can not assume that this world meets every single need, there\nare people who are different and need us to adapt the world\nto them.\n\nJust like that, we will be able to have a world where every single\nof us can coexist peacefully.",
-        width * 0.25,
-        height * 0.25
+        "There are people who are different and need us to adapt\nthe world to them; we can not assume that this world meets\nevery need. If we do not ignore this, we will be able to make\nthe first necessary steps. Which will help us have a world\nwhere every single one of us can coexist peacefully.",
+        width * 0.265,
+        height * 0.27
       );
       pop();
 
@@ -384,11 +415,11 @@ class UI {
       push();
       fill(0);
       reshaped_text = ArabicReshaper.convertArabic(
-        "لا يمكننا أن نفترض أن هذا العالم يلبي كل الاحتياجات، فهناك أناس مختلفون\n ويحتاجون منا أن نكيف العالم معهم. وبهذه الطريقة، سنتمكن\n من الحصول على عالم يتعايش فيه كل واحد منا بسلام."
+        "هناك أناس مختلفون\nويحتاجون منا أن نكيّف العالم معهم؛\nلا يمكننا أن نفترض أن هذا العالم يلبي كل احتياجاتهم.\nفإذا لم نتجاهل ذلك،\nسنكون قادرين على اتخاذ الخطوات الأولى الضرورية\nالأمر الذي سيساعدنا في الحصول على عالم يتعايش فيه الجميع بسلام."
       );
       display_text = reshaped_text.split("").reverse().join("");
       textSize(width * 0.017);
-      text(display_text, width * 0.225, height * 0.35);
+      text(display_text, width * 0.24, height * 0.3);
       pop();
 
       push();

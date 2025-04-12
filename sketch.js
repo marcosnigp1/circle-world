@@ -644,6 +644,7 @@ function draw() {
 
   if (showing_results == 1) {
     ui.results();
+    jetpack_sound.stop();
   }
 
   //Check for animation transitions. Should be drawn to last since it will cover everything.

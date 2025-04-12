@@ -400,7 +400,7 @@ class Player_Triangle extends Player {
           fill(150);
           text(
             "PRESS SPACEBAR",
-            this.body.position.x - width * 0.07,
+            this.body.position.x - width * 0.05,
             this.body.position.y - height * 0.05
           );
           textSize(width * 0.12);

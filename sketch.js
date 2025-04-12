@@ -143,7 +143,7 @@ function preload() {
   crack3 = loadImage("media/images/effects/crack3.png");
 
   //Font
-  font_english = loadFont("media/font/Comic_Neue/ComicNeue-bold.ttf");
+  font_english = loadFont("media/font/Comic_Neue/ComicNeue-Bold.ttf");
   font_arabic = loadFont("media/font/Noto_Sans_Arabic/NotoSansArabic-Bold.ttf");
 
   //Music

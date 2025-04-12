@@ -216,6 +216,10 @@ class Cinematics {
           this.jetpack_position1 = (width * 0.5, height * 0.58); */
           this.cinematic_started = 0;
 
+          //Stop previous music and start a new one.
+          music_1.stop();
+          music_2.loop();
+
           //CREATE BODY AGAIN!
           player.removeFromWorld();
           player = new Player_Triangle(
@@ -408,6 +412,7 @@ class Cinematics {
         rect(0, 0, width * 1, height * 1);
         pop();
       } else if (this.internal_seconds == 16) {
+        music_2.stop();
         ui.animation_in_progress = 1;
         ui.playerisat = 4;
         this.internal_seconds = 0;

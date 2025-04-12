@@ -267,27 +267,35 @@ class UI {
     push();
     fill(0);
     textSize(width * 0.014);
-    text("-----------", width * 0.31, height * 0.45);
+    text("Obtained from freesound.org", width * 0.25, height * 0.45);
     pop();
 
     //Music
     push();
     fill(0);
-    textSize(width * 0.014);
-    text("------", width * 0.655, height * 0.3);
+    textSize(width * 0.011);
+    text(
+      "Eric Skiff - Song Name - Underclocked -\n Available at http://EricSkiff.com/music",
+      width * 0.57,
+      height * 0.3
+    );
     pop();
 
     push();
     fill(0);
-    textSize(width * 0.014);
-    text("------", width * 0.655, height * 0.35);
+    textSize(width * 0.011);
+    text(
+      "Kevin MacLeod - Song Name -\n     8bit Dungeon Level",
+      width * 0.61,
+      height * 0.4
+    );
     pop();
 
-    push();
+    /*     push();
     fill(0);
     textSize(width * 0.014);
     text("------", width * 0.655, height * 0.4);
-    pop();
+    pop(); */
 
     //----------------------
 

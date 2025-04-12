@@ -151,6 +151,7 @@ class Activable_Level_Obstacle extends Level_Obstacle {
 
       platform_activation_started = false;
       this.push = false;
+      mechanism_sound_played = 0;
     }
   }
 }

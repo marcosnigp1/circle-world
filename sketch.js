@@ -90,6 +90,21 @@ let crack3;
 let font_english;
 let font_arabic;
 
+//Music
+let music_1; //Obtained from this source: https://youtu.be/hrgzWEgCCFg?si=UEF9v2QO5c2L3oRV
+let music_2; //Obtained from this source: https://youtu.be/tM5d0G0vue0?si=9mYJsrr5AWT4D5NO
+
+//Sounds
+let select_sound; //Obtained from this source: https://freesound.org/people/Krokulator/sounds/654411/
+let hit_sound; //Obtained from this source: https://freesound.org/people/jorickhoofd/sounds/161594/
+let mechanism_sound; //Obtained from this source: https://freesound.org/people/qubodup/sounds/752067/
+let mechanism_sound_played = 0; //Just a control for the previous variable.
+let jetpack_sound; //Obtained from this source: https://freesound.org/people/jacksonacademyashmore/sounds/402816/
+let crack_sound; //Obtained from this source: https://freesound.org/people/sunflora/sounds/665084/
+
+//Control for sounds.
+let audio_controller;
+
 function preload() {
   //Menu Images
   main_menu = loadImage("media/images/menu/main_menu.png");
@@ -126,6 +141,17 @@ function preload() {
   //Font
   font_english = loadFont("media/font/Comic_Neue/ComicNeue-bold.ttf");
   font_arabic = loadFont("media/font/Noto_Sans_Arabic/NotoSansArabic-Bold.ttf");
+
+  //Music
+  music_1 = loadSound("media/music/underclocked.ogg");
+  music_2 = loadSound("media/music/8bitdungeonlevel.ogg");
+
+  //SFX
+  select_sound = loadSound("media/sfx/select.wav");
+  hit_sound = loadSound("media/sfx/hit.wav");
+  mechanism_sound = loadSound("media/sfx/mechanism.ogg");
+  jetpack_sound = loadSound("media/sfx/jetpack.wav");
+  crack_sound = loadSound("media/sfx/cracking.mp3");
 }
 
 function setup() {
@@ -577,7 +603,8 @@ function setup() {
   //For cinematics.
   cinematics = new Cinematics();
 
-  //For arabic font.
+  //Audio controller
+  audio_controller = new Audio_Control();
 }
 
 function draw() {
@@ -958,6 +985,12 @@ function mouseClicked() {
       ui.transition();
       ui.language = 0;
       ui.playerisat = 1;
+
+      //Play sound.
+      select_sound.play();
+
+      //Loop music!
+      music_1.loop();
     }
 
     if (
@@ -970,6 +1003,12 @@ function mouseClicked() {
       ui.animation_in_progress = 1;
       ui.language = 1;
       ui.playerisat = 1;
+
+      //Play sound.
+      select_sound.play();
+
+      //Loop music!
+      music_1.loop();
     }
   }
 
@@ -992,6 +1031,9 @@ function mouseClicked() {
       );
 
       ui.playerisat = 2;
+
+      //Play sound.
+      select_sound.play();
     }
 
     if (
@@ -1004,6 +1046,9 @@ function mouseClicked() {
       //console.log("Credits!");
       ui.animation_in_progress = 1;
       ui.playerisat = 3;
+
+      //Play sound.
+      select_sound.play();
     }
   }
 
@@ -1019,6 +1064,9 @@ function mouseClicked() {
       ui.animation_in_progress = 1;
 
       ui.playerisat = 1;
+
+      //Play sound.
+      select_sound.play();
     }
   }
 
@@ -1037,6 +1085,16 @@ function mouseClicked() {
       attempts = 0;
       resetGameValues();
       resetLevelValues();
+
+      //Play sound.
+      select_sound.play();
+
+      //Restart initial music and later music values
+      music_1.setVolume(1);
+      music_2.setVolume(1);
+
+      //Play music 1
+      music_1.loop();
     }
   }
 
@@ -1053,6 +1111,9 @@ function mouseClicked() {
       showing_results = 0;
       attempts = 0;
       time = 0;
+
+      //Play sound.
+      select_sound.play();
     }
   }
 }
@@ -1091,10 +1152,12 @@ function checkInputs() {
   if (part == 2 && cinematic_scene == 0 && showing_results == 0) {
     if (keyIsDown(LEFT_ARROW) === true) {
       cinematic_scene = 1;
+      audio_controller.stop_music_1();
     }
 
     if (keyIsDown(RIGHT_ARROW) === true) {
       cinematic_scene = 1;
+      audio_controller.stop_music_1();
     }
   }
 
@@ -1109,7 +1172,9 @@ function checkInputs() {
         y: sin(player.body.angle) * -0.01,
       });
       player.jetpack_state = 1;
+      jetpackSound();
     } else {
+      jetpack_sound.stop();
       player.jetpack_state = 0;
     }
 
@@ -1155,7 +1220,9 @@ function checkInputs() {
         y: sin(player.body.angle) * -0.01,
       });
       player.jetpack_state = 1;
+      jetpackSound();
     } else {
+      jetpack_sound.stop();
       player.jetpack_state = 0;
     }
 
@@ -1171,6 +1238,14 @@ function checkInputs() {
       );
       Matter.Body.setAngle(player.body, 39);
     }
+  }
+}
+
+function jetpackSound() {
+  if (jetpack_sound.isPlaying()) {
+    //Nothing!
+  } else {
+    jetpack_sound.loop();
   }
 }
 
@@ -1224,9 +1299,9 @@ window.mobileAndTabletCheck = function () {
 
 //This should only be used for electron.
 function keyPressed() {
-  if (key === "q") {
-    window.close(); ///Closes Electron.
-  }
+  /*   if (key === "q") {
+    window.close(); ///Closes Electron. Should NOT be used for the web version.
+  } */
 
   if (
     (key == "r" || key == "R") &&
@@ -1234,30 +1309,31 @@ function keyPressed() {
     (cinematic_scene == 2 || cinematic_scene == 5)
   ) {
     attempts++;
+    select_sound.play();
   }
-  if (key === "w") {
+  /*   if (key === "w") {
     console.log(engine.world.bodies);
-  }
+  } */
 
-  if (key === "t") {
+  /*   if (key === "t") {
     resetLevelValues();
   }
 
   if (key == "z") {
     move_platforms();
-  }
+  } */
 
   /*   if (key == "x") {
     player.jump();
   } */
 
-  if (key == "c") {
+  /*   if (key == "c") {
     console.log(obstacles.length);
   }
 
   if (key == "b") {
     current_section = 6;
-  }
+  } */
 }
 
 //The platforms have to be a specific index value...
@@ -1268,6 +1344,10 @@ function move_platforms() {
 }
 
 function activate_platform() {
+  if (mechanism_sound_played == 0) {
+    mechanism_sound.play();
+    mechanism_sound_played = 1;
+  }
   platform_activation_started = true;
   obstacles[13].toggle_platform();
 }
@@ -1285,6 +1365,14 @@ function handleCollisions(event) {
     //Retrieve the particles associated with the colliding bodies via the plugin.
     let particleA = bodyA.plugin.particle;
     let particleB = bodyB.plugin.particle;
+
+    if (
+      particleA instanceof Level_Obstacle &&
+      particleB instanceof Player &&
+      ui.playerisat == 2
+    ) {
+      //hit_sound.play(); //Too many noices.
+    }
 
     if (
       particleA instanceof Activable_Level_Obstacle &&
@@ -1318,6 +1406,9 @@ function handleCollisions(event) {
       part == 3 &&
       player.cancrash == 1
     ) {
+      audio_controller.stop_music_2();
+      jetpack_sound.stop();
+      crack_sound.play();
       player.crashed = 1;
       cinematic_scene = 6;
     }

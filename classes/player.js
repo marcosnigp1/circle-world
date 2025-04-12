@@ -256,6 +256,8 @@ class Player {
     if (this.interact == 1) {
       if (keyIsDown(32) === true) {
         current_section = 0;
+        door_enter_sound.setVolume(2);
+        door_enter_sound.play();
 
         //Reset Level Values (For example, it resets the value of the platform.)
         resetLevelValues();
@@ -400,7 +402,7 @@ class Player_Triangle extends Player {
           fill(150);
           text(
             "PRESS SPACEBAR",
-            this.body.position.x - width * 0.05,
+            this.body.position.x - width * 0.035,
             this.body.position.y - height * 0.05
           );
           textSize(width * 0.12);
@@ -412,7 +414,7 @@ class Player_Triangle extends Player {
           let display_text = reshaped_text.split("").reverse().join("");
           text(
             display_text,
-            this.body.position.x - width * 0.05,
+            this.body.position.x - width * 0.035,
             this.body.position.y - height * 0.05
           );
           textSize(width * 0.12);
@@ -424,7 +426,7 @@ class Player_Triangle extends Player {
           fill(0);
           text(
             "PRESS SPACEBAR",
-            this.body.position.x - width * 0.05,
+            this.body.position.x - width * 0.035,
             this.body.position.y - height * 0.05
           );
           textSize(width * 0.12);
@@ -436,7 +438,7 @@ class Player_Triangle extends Player {
           let display_text = reshaped_text.split("").reverse().join("");
           text(
             display_text,
-            this.body.position.x - width * 0.05,
+            this.body.position.x - width * 0.035,
             this.body.position.y - height * 0.05
           );
           pop();

@@ -101,6 +101,10 @@ let mechanism_sound; //Obtained from this source: https://freesound.org/people/q
 let mechanism_sound_played = 0; //Just a control for the previous variable.
 let jetpack_sound; //Obtained from this source: https://freesound.org/people/jacksonacademyashmore/sounds/402816/
 let crack_sound; //Obtained from this source: https://freesound.org/people/sunflora/sounds/665084/
+let door_enter_sound; //Obtained from this source: https://freesound.org/people/Philip_Berger/sounds/788642/
+let underwater_sound; //Obtained from this source: https://freesound.org/people/Perel/sounds/173439/
+let gate_opening_sound; //Obtained from this source: https://freesound.org/people/Robinhood76/sounds/96173/
+let gate_opening_sound_played = 0; //Just a control for the previous variable.
 
 //Control for sounds.
 let audio_controller;
@@ -152,6 +156,9 @@ function preload() {
   mechanism_sound = loadSound("media/sfx/mechanism.ogg");
   jetpack_sound = loadSound("media/sfx/jetpack.wav");
   crack_sound = loadSound("media/sfx/cracking.mp3");
+  door_enter_sound = loadSound("media/sfx/door_enter.wav");
+  underwater_sound = loadSound("media/sfx/underwater.mp3");
+  gate_opening_sound = loadSound("media/sfx/gateopening.wav");
 }
 
 function setup() {
@@ -1339,6 +1346,10 @@ function keyPressed() {
 
 //The platforms have to be a specific index value...
 function move_platforms() {
+  if (gate_opening_sound.isPlaying()) {
+  } else if (obstacles[7].body.angle < 1.55) {
+    gate_opening_sound.play();
+  }
   platform_movement_started = true;
   obstacles[7].open_platform("positive");
   obstacles[8].open_platform("negative");
@@ -1390,6 +1401,11 @@ function handleCollisions(event) {
     ) {
       //console.log("Hello?");
       swim_mode();
+      if (underwater_sound.isPlaying()) {
+      } else {
+        underwater_sound.setVolume(2.5);
+        underwater_sound.loop();
+      }
     }
 
     if (
@@ -1397,6 +1413,7 @@ function handleCollisions(event) {
       particleB instanceof Player &&
       current_section == 3
     ) {
+      underwater_sound.stop();
       swimming = 0; //Disable swimming.
     }
 
@@ -1409,6 +1426,7 @@ function handleCollisions(event) {
     ) {
       audio_controller.stop_music_2();
       jetpack_sound.stop();
+      crack_sound.setVolume(2);
       crack_sound.play();
       player.crashed = 1;
       cinematic_scene = 6;

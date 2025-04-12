@@ -289,7 +289,7 @@ class Cinematics {
             pop();
 
             text(
-              "Why have they not build automatic roads?! There is only a jetpack?!",
+              "Why have they not built automatic roads?! There is only a jetpack?!",
               player.body.position.x - width * 0.01,
               player.body.position.y - height * 0.05
             );

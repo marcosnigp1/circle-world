@@ -1,4 +1,4 @@
-//Circle World - By Marcos Hernández
+//Circled World - By Marcos Hernández
 //Matter.JS for the physics. https://brm.io/matter-js/
 //Javascript-Arabic-Reshaper by Iouy  https://github.com/louy/Javascript-Arabic-Reshaper/releases/tag/v1.1.0
 
@@ -651,6 +651,9 @@ function draw() {
 
   if (showing_results == 1) {
     ui.results();
+
+    //If sounds continue to play somehow, stop them.
+    underwater_sound.stop();
     jetpack_sound.stop();
   }
 
@@ -1318,6 +1321,7 @@ function keyPressed() {
   ) {
     attempts++;
     select_sound.play();
+    resetLevelValues();
   }
   /*   if (key === "w") {
     console.log(engine.world.bodies);
@@ -1403,7 +1407,7 @@ function handleCollisions(event) {
       swim_mode();
       if (underwater_sound.isPlaying()) {
       } else {
-        underwater_sound.setVolume(2.5);
+        underwater_sound.setVolume(4);
         underwater_sound.loop();
       }
     }

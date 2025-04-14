@@ -162,6 +162,10 @@ function preload() {
 }
 
 function setup() {
+  //Configure songs to play in low volume
+  music_1.setVolume(0.6);
+  music_2.setVolume(0.6);
+
   //This canvas fits into every aspect ratio.
 
   frameRate(60); //A stable frame rate is better than one that is unpredictable. Thus, above 60 fps will make everything go too fast.
@@ -1001,6 +1005,7 @@ function mouseClicked() {
       select_sound.play();
 
       //Loop music!
+      music_1.setVolume(0.6);
       music_1.loop();
     }
 
@@ -1019,6 +1024,7 @@ function mouseClicked() {
       select_sound.play();
 
       //Loop music!
+      music_1.setVolume(0.6);
       music_1.loop();
     }
   }
@@ -1101,8 +1107,8 @@ function mouseClicked() {
       select_sound.play();
 
       //Restart initial music and later music values
-      music_1.setVolume(1);
-      music_2.setVolume(1);
+      music_1.setVolume(0.6);
+      music_2.setVolume(0.6);
 
       //Play music 1
       music_1.loop();
@@ -1431,7 +1437,10 @@ function handleCollisions(event) {
       audio_controller.stop_music_2();
       jetpack_sound.stop();
       crack_sound.setVolume(2);
-      crack_sound.play();
+      if (crack_sound.isPlaying()) {
+      } else {
+        crack_sound.play();
+      }
       player.crashed = 1;
       cinematic_scene = 6;
     }

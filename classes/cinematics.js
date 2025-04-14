@@ -218,6 +218,7 @@ class Cinematics {
 
           //Stop previous music and start a new one.
           music_1.stop();
+          music_2.setVolume(0.6);
           music_2.loop();
 
           //CREATE BODY AGAIN!

@@ -1328,6 +1328,7 @@ function keyPressed() {
     attempts++;
     select_sound.play();
     resetLevelValues();
+    underwater_sound.stop();
   }
   /*   if (key === "w") {
     console.log(engine.world.bodies);

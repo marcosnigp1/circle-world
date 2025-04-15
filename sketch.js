@@ -101,6 +101,7 @@ let mechanism_sound; //Obtained from this source: https://freesound.org/people/q
 let mechanism_sound_played = 0; //Just a control for the previous variable.
 let jetpack_sound; //Obtained from this source: https://freesound.org/people/jacksonacademyashmore/sounds/402816/
 let crack_sound; //Obtained from this source: https://freesound.org/people/sunflora/sounds/665084/
+let crack_sound_played = 0; //Just a control for the previous variable.
 let door_enter_sound; //Obtained from this source: https://freesound.org/people/Philip_Berger/sounds/788642/
 let underwater_sound; //Obtained from this source: https://freesound.org/people/Perel/sounds/173439/
 let gate_opening_sound; //Obtained from this source: https://freesound.org/people/Robinhood76/sounds/96173/
@@ -346,9 +347,9 @@ function setup() {
 
   obstacles.push(
     new Activable_Level_Obstacle(
-      width * 0.725,
+      width * 0.73,
       height * 0.727,
-      width * 0.073,
+      width * 0.06,
       height * 0.06,
       0
     )
@@ -796,6 +797,12 @@ function gameLogic() {
         //obstacles[i].show();
         obstacles[i].body.isSensor = false;
       }
+
+      //Another just in case line.
+      if (part == 3 && player.crashed == 0) {
+        player.crashed = 1;
+        cinematic_scene = 6;
+      }
     }
   }
 
@@ -1102,6 +1109,12 @@ function mouseClicked() {
       attempts = 0;
       resetGameValues();
       resetLevelValues();
+
+      //Just in case.
+      swimming = 0;
+
+      //Reset crack audio.
+      crack_sound_played = 0;
 
       //Play sound.
       select_sound.play();
@@ -1439,7 +1452,8 @@ function handleCollisions(event) {
       jetpack_sound.stop();
       crack_sound.setVolume(2);
       if (crack_sound.isPlaying()) {
-      } else {
+      } else if (crack_sound_played == 0) {
+        crack_sound_played = 1;
         crack_sound.play();
       }
       player.crashed = 1;
